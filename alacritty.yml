@@ -728,5 +728,3 @@ background_opacity: 0.95
 
   # Print all received window events.
   #print_events: false
-#fixes the mouse issue
-set ttymouse: sgr

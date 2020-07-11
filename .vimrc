@@ -50,6 +50,9 @@ set smartindent
 set noshowmode
 let mapleader = " "
 
+" fixes the alacrity issue with mouse
+set ttymouse=sgr
+
 nmap <C-t> gt
 
 let NERDTreeMapOpenInTab='\r'
