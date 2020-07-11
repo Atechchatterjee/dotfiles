@@ -24,6 +24,7 @@ Plug 'https://github.com/leafgarland/typescript-vim.git'
 Plug 'https://github.com/xavierd/clang_complete.git'
 Plug 'chiel92/vim-autoformat'
 Plug 'honza/vim-snippets'
+Plug 'https://github.com/vifm/vifm.vim.git'
 
 "Themes-Plugins
 Plug 'morhetz/gruvbox'
@@ -49,9 +50,8 @@ set smartindent
 set noshowmode
 let mapleader = " "
 
-inoremap ii <esc>
-vnoremap ii <esc>
 nmap <C-t> gt
+
 let NERDTreeMapOpenInTab='\r'
 
 "syntastic settings
@@ -66,10 +66,8 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_cpp_compiler = "g++"
 let g:syntastic_cpp_compiler_options = "-std=c++17 -Wall -Wextra -Wpedantic"
 
+" changes cursor when in insert and normal mode
 autocmd InsertEnter,InsertLeave * set cul!
-
-" neformat on save
-"hautocmd BufWritePre *.js Neoformat
 
 "buid and run cpp code
 set autowrite
@@ -85,12 +83,20 @@ set laststatus=2
 hi! Normal ctermbg=NONE guibg=NONE
 hi! NonText ctermbg=NONE guibg=NONE
 
+" Enable true color(fixes colors for tmux)
+if exists('+termguicolors')
+  let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+  let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+  set termguicolors
+endif
+
 nnoremap <leader>h :wincmd h <CR>
 nnoremap <leader>l :wincmd l <CR>
 nnoremap <leader>j :wincmd j <CR>
 nnoremap <leader>k :wincmd k <CR>
 nnoremap <C-c> :!g++ -o  %:r.out % -std=c++17<Enter>
 nnoremap <C-x> :!./%:r.out
+
 "run cpp program
 nnoremap <c-r> :!g++ -std=c++17 -o %:r.out %<enter><enter>
 nnoremap <c-m> :!%:r.out<enter><enter>
@@ -162,10 +168,10 @@ let g:coc_global_extensions = [
 command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 " use <tab> for trigger completion and navigate to the next complete item
-"function! s:check_back_space() abort
-  "let col = col('.') - 1
-  "return !col || getline('.')[col - 1]  =~ '\s'
-"endfunction
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
 
 inoremap <silent><expr> <Tab>
 	  \ pumvisible() ? "\<C-n>" :

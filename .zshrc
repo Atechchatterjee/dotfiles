@@ -4,7 +4,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH="/home/anish/.oh-my-zsh"
 
-ZSH_THEME="agnoster"
+ZSH_THEME="mh"
 
 plugins=(git)
 plugins=(zsh-autosuggestions)
@@ -76,10 +76,13 @@ bindkey '^Z' ctrlz
 alias h="cd ~"
 alias systop="systemctl stop docker mysql mongodb apache2"
 alias weather="curl wttr.in"
+alias tmuxComp="tmux attach-session -t competitive-coding"
+
 jrun() { javac $1.java && java $1 ; }
 cpTemp() { cp ~/coding/Cpp/template.cpp ./$1.cpp; }
 cppTemp() { cp ~/coding/Cpp/template.cpp ./$1.cpp && vim ./$1.cpp }
 grun() { g++ -std=c++17 $1.cpp -o $1 && ./$1 }
 xset r rate 300 100
+
 export VISUAL=vim;
 export EDITOR=vim;
