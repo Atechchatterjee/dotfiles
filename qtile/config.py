@@ -1,29 +1,3 @@
-# Copyright (c) 2010 Aldo Cortesi
-# Copyright (c) 2010, 2014 dequis
-# Copyright (c) 2012 Randall Ma
-# Copyright (c) 2012-2014 Tycho Andersen
-# Copyright (c) 2012 Craig Barnes
-# Copyright (c) 2013 horsik
-# Copyright (c) 2013 Tao Sauvage
-#
-# Permission is hereby granted, free of charge, to any person obtaining a copy
-# of this software and associated documentation files (the "Software"), to deal
-# in the Software without restriction, including without limitation the rights
-# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-# copies of the Software, and to permit persons to whom the Software is
-# furnished to do so, subject to the following conditions:
-#
-# The above copyright notice and this permission notice shall be included in
-# all copies or substantial portions of the Software.
-#
-# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-# FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-# SOFTWARE.
-
 import os
 import subprocess
 import psutil
@@ -39,7 +13,7 @@ from libqtile.utils import guess_terminal
 mod = "mod4"
 terminal = guess_terminal()
 myBrowser = "google-chrome"
-default_margin = 4
+default_margin = 6
 
 # @hook.subscribe.startup_once
 # def start_once():
@@ -51,6 +25,7 @@ os.system("nitrogen --restore &")
 keys = [
         Key([mod, "shift"], "m", lazy.spawn("dmenu_run")),
         Key([mod], "c", lazy.spawn("code")),
+        Key([mod], "b", lazy.spawn(myBrowser)),
         # Switch between windows in current stack pane
         Key([mod], "k", lazy.layout.down(),
             desc="Move focus down in stack pane"),
@@ -132,6 +107,8 @@ keys = [
                 lazy.layout.increase_nmaster(),
                 ),
         Key(["control", "shift"], "f", lazy.window.toggle_floating()),
+        # Key([mod], "=", os.system("exec amixer -q -D pulse set Master 2%+")),
+        # Key([mod], "-", os.system("exec amixer -q -D pulse set Master 2%-")),
 
         Key([mod, "shift"], "j", lazy.layout.shuffle_down()),
         Key([mod, "shift"], "k", lazy.layout.shuffle_up()),
@@ -165,7 +142,7 @@ for i in groups:
         ])
 
 def init_layout_theme():
-    return {"border_width": 3,
+    return {"border_width": 0,
             "margin": 0,
             "border_focus": "#800000",
             "border_normal": "#50EDCE"
@@ -175,11 +152,11 @@ def init_layout_theme():
 
 
 layouts = [
+        layout.Columns(margin=default_margin),
         layout.Tile(margin=default_margin),
         layout.Max(margin=default_margin),
         layout.Stack(num_stacks=2,margin=default_margin),
         layout.Bsp(margin=default_margin),
-        layout.Columns(margin=default_margin),
         layout.Matrix(margin=default_margin),
         layout.MonadTall(margin=default_margin),
         layout.MonadWide(margin=default_margin),
@@ -196,10 +173,22 @@ widget_defaults = dict(
         )
 extension_defaults = widget_defaults.copy()
 
+# colors
+onedarkBlue="#3C909B"
+onedarkRed="#BE5046"
+purple = "#783C96"
+gruvboxRed="#F94B3F"
+gruvboxAqua="#689D6A"
+gruvboxBrown="#1D2021"
+gruvboxOrange="#D65F34"
 topBar_bg = "#292d3e"
 blue_bg = "#2bbac5"
-time_bg="#783C96"
-shutdown_color="#783C96"
+
+currentLayout_bg = topBar_bg
+net_bg = onedarkRed
+time_bg = purple
+shutdown_bg = purple
+
 
 months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
 mn = str(datetime.datetime.now())[5:7]
@@ -208,17 +197,20 @@ screens = [
         Screen(
             top=bar.Bar(#1D96FF
                 [
-                    widget.TextBox(
-                        text='',
-                        background = topBar_bg,
-                        foreground = blue_bg,
-                        padding = 10,
-                        fontsize = 17
-                        ),
+                    widget.Sep(
+                        background = currentLayout_bg,
+                        foreground = currentLayout_bg,
+                        padding=10,
+                   ),
                     widget.CurrentLayout(
                         foreground = "#ffffff",
-                        background = topBar_bg
+                        background = currentLayout_bg
                         ),
+                    widget.Sep(
+                        background = currentLayout_bg,
+                        foreground = currentLayout_bg,
+                        padding=10,
+                   ),
                     widget.GroupBox(
                         background = topBar_bg
                     ),
@@ -226,7 +218,7 @@ screens = [
                     widget.TextBox(
                         text='vol:',
                         background = topBar_bg,
-                        foreground = blue_bg,
+                        foreground = onedarkBlue,
                         padding = 1,
                         fontsize = 14
                         ),
@@ -234,45 +226,43 @@ screens = [
                         background = topBar_bg,
                         padding = 8,
                         get_volume_command="",
-                        volume_up_command=mod+"up",
-                        volume_down_command=mod+"down"
-                        ),
-                    widget.TextBox(
-                        text='',
-                        background = topBar_bg,
-                        foreground = blue_bg,
-                        padding = 1,
-                        fontsize = 30
+                        volume_up_command="amixer -q -D pulse set Master 3%+",
+                        volume_down_command="amixer -q -D pulse set Master 3%-"
                         ),
                     widget.Sep(
-                        background = topBar_bg, 
-                        foreground = topBar_bg,
-                        padding=6,
+                        background = net_bg, 
+                        foreground = net_bg,
+                        padding=10,
                    ),
-                    widget.Net(background = topBar_bg),
+                    widget.Net(background = net_bg),
                     widget.Chord(
                         chords_colors={
                             'launch': ("#1D96F9", "#ffff00"),
                             },
-                        background = topBar_bg,
+                        background = net_bg,
                         name_transform=lambda name: name.upper(),
                         ),
-                    widget.Systray(background = topBar_bg),
+                    widget.Systray(background = onedarkBlue),
                     widget.Sep(
-                        background = topBar_bg, 
-                        foreground = topBar_bg,
+                        background = net_bg, 
+                        foreground = net_bg,
+                        padding=10,
+                   ),
+                    widget.Sep(
+                        background = time_bg,
+                        foreground = time_bg,
                         padding=10,
                    ),
                     widget.TextBox(
                         text='',
-                        background = topBar_bg,
-                        foreground = blue_bg,
+                        background = time_bg,
+                        foreground = gruvboxBrown,
                         padding = 1,
                         fontsize = 25
                         ),
                     widget.Sep(
-                        background = topBar_bg, 
-                        foreground = topBar_bg,
+                        background = time_bg,
+                        foreground = time_bg,
                         padding=10,
                    ),
                     widget.Clock(
@@ -282,19 +272,19 @@ screens = [
                         padding = 2
                         ),
                     widget.Sep(
-                        background = shutdown_color, 
-                        foreground = shutdown_color,
+                        background = time_bg, 
+                        foreground = time_bg,
                         padding=10,
                         height_percent=100
                    ),
                     widget.QuickExit(
-                            background = shutdown_color,
+                            background = shutdown_bg,
                             default_text = "",
                             fontsize = 17
                     ),
                     widget.Sep(
-                        background = shutdown_color, 
-                        foreground = shutdown_color,
+                        background = shutdown_bg, 
+                        foreground = shutdown_bg,
                         padding=10,
                    ),
                     ],
