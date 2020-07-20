@@ -13,7 +13,7 @@ from libqtile.utils import guess_terminal
 mod = "mod4"
 terminal = guess_terminal()
 myBrowser = "google-chrome"
-default_margin = 6
+default_margin = 7
 
 # @hook.subscribe.startup_once
 # def start_once():
@@ -26,6 +26,7 @@ keys = [
         Key([mod, "shift"], "m", lazy.spawn("dmenu_run")),
         Key([mod], "c", lazy.spawn("code")),
         Key([mod], "b", lazy.spawn(myBrowser)),
+        Key([mod], "n", lazy.spawn("nitrogen")),
         # Switch between windows in current stack pane
         Key([mod], "k", lazy.layout.down(),
             desc="Move focus down in stack pane"),
@@ -173,6 +174,7 @@ widget_defaults = dict(
         )
 extension_defaults = widget_defaults.copy()
 
+
 # colors
 onedarkBlue="#3C909B"
 onedarkRed="#BE5046"
@@ -186,7 +188,7 @@ blue_bg = "#2bbac5"
 
 currentLayout_bg = topBar_bg
 net_bg = onedarkRed
-time_bg = purple
+time_bg = purple 
 shutdown_bg = purple
 
 
@@ -204,17 +206,25 @@ screens = [
                    ),
                     widget.CurrentLayout(
                         foreground = "#ffffff",
-                        background = currentLayout_bg
+                        background = currentLayout_bg,
                         ),
                     widget.Sep(
                         background = currentLayout_bg,
                         foreground = currentLayout_bg,
                         padding=10,
                    ),
+                        
                     widget.GroupBox(
+                        border=onedarkRed,
+                        border_width=2,
                         background = topBar_bg
                     ),
-                    widget.WindowName(background = topBar_bg),
+                    widget.Sep(
+                        background = topBar_bg,
+                        foreground = topBar_bg,
+                        padding=10,
+                   ),
+                    widget.WindowName(background = topBar_bg, foreground = topBar_bg),
                     widget.TextBox(
                         text='vol:',
                         background = topBar_bg,
@@ -222,12 +232,21 @@ screens = [
                         padding = 1,
                         fontsize = 14
                         ),
+                        
                     widget.Volume(
                         background = topBar_bg,
                         padding = 8,
                         get_volume_command="",
                         volume_up_command="amixer -q -D pulse set Master 3%+",
                         volume_down_command="amixer -q -D pulse set Master 3%-"
+                        ),
+
+                    widget.TextBox(
+                        text = "",
+                        background = topBar_bg,
+                        foreground = net_bg,
+                        fontsize=57,
+                        padding = -12 
                         ),
                     widget.Sep(
                         background = net_bg, 
@@ -242,12 +261,25 @@ screens = [
                         background = net_bg,
                         name_transform=lambda name: name.upper(),
                         ),
+                    widget.Sep(
+                        background = net_bg, 
+                        foreground = net_bg,
+                        padding=10,
+                   ),
                     widget.Systray(background = onedarkBlue),
                     widget.Sep(
                         background = net_bg, 
                         foreground = net_bg,
                         padding=10,
                    ),
+
+                    widget.TextBox(
+                        text = "",
+                        background = net_bg,
+                        foreground = time_bg,
+                        fontsize=57,
+                        padding = -12 
+                        ),
                     widget.Sep(
                         background = time_bg,
                         foreground = time_bg,
@@ -277,6 +309,7 @@ screens = [
                         padding=10,
                         height_percent=100
                    ),
+
                     widget.QuickExit(
                             background = shutdown_bg,
                             default_text = "",
@@ -328,12 +361,4 @@ floating_layout = layout.Floating(float_rules=[
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 
-# XXX: Gasp! We're lying here. In fact, nobody really uses or cares about this
-# string besides java UI toolkits; you can see several discussions on the
-# mailing lists, GitHub issues, and other WM documentation that suggest setting
-# this string if your java app doesn't work correctly. We may as well just lie
-# and say that we're a working one by default.
-#
-# We choose LG3D to maximize irony: it is a 3D non-reparenting WM written in
-# java that happens to be on java's whitelist.
 wmname = "LG3D"
