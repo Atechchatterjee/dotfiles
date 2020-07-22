@@ -23,7 +23,7 @@ os.system("exec compton -b")
 os.system("nitrogen --restore &")
 
 keys = [
-        Key([mod, "shift"], "m", lazy.spawn("dmenu_run")),
+        Key([mod], "m", lazy.spawn("dmenu_run")),
         Key([mod], "c", lazy.spawn("code")),
         Key([mod], "b", lazy.spawn(myBrowser)),
         Key([mod], "n", lazy.spawn("nitrogen")),
@@ -32,12 +32,16 @@ keys = [
             desc="Move focus down in stack pane"),
         Key([mod], "j", lazy.layout.up(),
             desc="Move focus up in stack pane"),
-
+        Key([mod], "h", lazy.layout.left(),
+            desc="Move focus up in stack pane"),
+        Key([mod], "l", lazy.layout.right(),
+            desc="Move focus up in stack pane"),
+    
         # Move windows up or down in current stack
-        # Key([mod, "control"], "k", lazy.layout.shuffle_down(),
-            # desc="Move window down in current stack "),
-        # Key([mod, "control"], "j", lazy.layout.shuffle_up(),
-            # desc="Move window up in current stack "),
+        Key([mod, "control"], "k", lazy.layout.shuffle_down(),
+            desc="Move window down in current stack "),
+        Key([mod, "control"], "j", lazy.layout.shuffle_up(),
+            desc="Move window up in current stack "),
 
         # Switch window focus to other pane(s) of stack
         Key([mod], "space", lazy.layout.next(),
@@ -107,9 +111,11 @@ keys = [
                 lazy.layout.shrink(),
                 lazy.layout.increase_nmaster(),
                 ),
-        Key(["control", "shift"], "f", lazy.window.toggle_floating()),
-        # Key([mod], "=", os.system("exec amixer -q -D pulse set Master 2%+")),
-        # Key([mod], "-", os.system("exec amixer -q -D pulse set Master 2%-")),
+        Key([mod, "control"], "f", lazy.window.toggle_floating()),
+
+        # Also allow changing volume the old fashioned way.
+        Key([mod], "equal", lazy.spawn("amixer -c 0 -q set Master 2dB+")),
+        Key([mod], "minus", lazy.spawn("amixer -c 0 -q set Master 2dB-")),
 
         Key([mod, "shift"], "j", lazy.layout.shuffle_down()),
         Key([mod, "shift"], "k", lazy.layout.shuffle_up()),
@@ -149,17 +155,16 @@ def init_layout_theme():
             "border_normal": "#50EDCE"
             }
 
-# layout_theme = init_layout_theme()
-
+layout_theme = init_layout_theme()
 
 layouts = [
+        layout.MonadTall(margin=default_margin),
         layout.Columns(margin=default_margin),
         layout.Tile(margin=default_margin),
         layout.Max(margin=default_margin),
         layout.Stack(num_stacks=2,margin=default_margin),
         layout.Bsp(margin=default_margin),
         layout.Matrix(margin=default_margin),
-        layout.MonadTall(margin=default_margin),
         layout.MonadWide(margin=default_margin),
         layout.RatioTile(margin=default_margin),
         layout.TreeTab(margin=default_margin),
@@ -183,17 +188,26 @@ gruvboxRed="#F94B3F"
 gruvboxAqua="#689D6A"
 gruvboxBrown="#1D2021"
 gruvboxOrange="#D65F34"
-topBar_bg = "#292d3e"
 blue_bg = "#2bbac5"
+nordRed = "#BF616A"
+nordGreen = "#A3BE8C"
+nordBlue = "#81A1C1"
+nordDBlue = "#2D333E"
+nordPurple = "#B48EAD"
+deepBlue = "#292d3e" 
+
+topBar_bg = nordDBlue 
 
 currentLayout_bg = topBar_bg
-net_bg = onedarkRed
-time_bg = purple 
-shutdown_bg = purple
+memory_bg = nordPurple
+net_bg = nordBlue
+time_bg = nordRed 
+shutdown_bg = nordRed
 
 
 months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
 mn = str(datetime.datetime.now())[5:7]
+
 
 screens = [
         Screen(
@@ -217,7 +231,10 @@ screens = [
                     widget.GroupBox(
                         border=onedarkRed,
                         border_width=2,
-                        background = topBar_bg
+                        background = topBar_bg,
+                        highlight_color=purple,
+                        highlight_method = "line",
+                        rounded=True
                     ),
                     widget.Sep(
                         background = topBar_bg,
@@ -240,10 +257,22 @@ screens = [
                         volume_up_command="amixer -q -D pulse set Master 3%+",
                         volume_down_command="amixer -q -D pulse set Master 3%-"
                         ),
-
                     widget.TextBox(
                         text = "",
                         background = topBar_bg,
+                        foreground = memory_bg,
+                        fontsize=57,
+                        padding = -12 
+                        ),
+                    widget.Memory(
+                        background = memory_bg,
+                        padding = 5,
+                        mouse_callbacks = {'Button1': lambda qtile: qtile.cmd_spawn(terminal + ' -e htop')},
+                        ),
+
+                    widget.TextBox(
+                        text = "",
+                        background = memory_bg,
                         foreground = net_bg,
                         fontsize=57,
                         padding = -12 
@@ -301,7 +330,8 @@ screens = [
                         format='%d / %m %a [%I:%M] %p',
                         background = time_bg,
                         foreground = "#ffffff",
-                        padding = 2
+                        padding = 2,
+                        mouse_callbacks = {'Button1': lambda qtile: qtile.cmd_spawn(terminal + ' -e tty-clock -c -C 1 -b -s')},
                         ),
                     widget.Sep(
                         background = time_bg, 
