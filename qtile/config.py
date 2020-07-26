@@ -12,7 +12,8 @@ from libqtile.utils import guess_terminal
 
 mod = "mod4"
 terminal = guess_terminal()
-myBrowser = "google-chrome"
+myBrowser = "brave-browser"
+guiFileManager = "dolphin"
 default_margin = 7
 
 # @hook.subscribe.startup_once
@@ -21,12 +22,15 @@ default_margin = 7
 
 os.system("exec compton -b")
 os.system("nitrogen --restore &")
+os.system("setxkbmap us") # changes keyboard layout to english us
 
 keys = [
         Key([mod], "m", lazy.spawn("dmenu_run")),
         Key([mod], "c", lazy.spawn("code")),
         Key([mod], "b", lazy.spawn(myBrowser)),
         Key([mod], "n", lazy.spawn("nitrogen")),
+        Key([mod, "control"], "d", lazy.spawn(guiFileManager)),
+        
         # Switch between windows in current stack pane
         Key([mod], "k", lazy.layout.down(),
             desc="Move focus down in stack pane"),
@@ -60,7 +64,7 @@ keys = [
         Key([mod], "Return", lazy.spawn(terminal), desc="Launch terminal"),
 
         # Toggle between different layouts as defined below
-        Key([mod], "w", lazy.window.kill(), desc="Kill focused window"),
+        Key([mod], "q", lazy.window.kill(), desc="Kill focused window"),
 
         Key([mod, "control"], "r", lazy.restart(), desc="Restart qtile"),
         Key([mod, "control"], "q", lazy.shutdown(), desc="Shutdown qtile"),
@@ -181,14 +185,19 @@ extension_defaults = widget_defaults.copy()
 
 
 # colors
+purple = "#783C96"
+blue_bg = "#2bbac5"
+
 onedarkBlue="#3C909B"
 onedarkRed="#BE5046"
-purple = "#783C96"
+
 gruvboxRed="#F94B3F"
 gruvboxAqua="#689D6A"
 gruvboxBrown="#1D2021"
 gruvboxOrange="#D65F34"
-blue_bg = "#2bbac5"
+gruvboxBlue="#458587"
+
+
 nordRed = "#BF616A"
 nordGreen = "#A3BE8C"
 nordBlue = "#81A1C1"
@@ -196,13 +205,29 @@ nordDBlue = "#2D333E"
 nordPurple = "#B48EAD"
 deepBlue = "#292d3e" 
 
-topBar_bg = nordDBlue 
+# nord/dracula/onedark theme
+# topBar_bg = nordDBlue 
+
+# currentLayout_bg = topBar_bg
+# memory_bg = nordPurple
+# net_bg = nordBlue
+# time_bg = nordRed 
+# shutdown_bg = nordRed
+
+# gruvbox theme
+topBar_bg = gruvboxBrown 
 
 currentLayout_bg = topBar_bg
-memory_bg = nordPurple
-net_bg = nordBlue
-time_bg = nordRed 
-shutdown_bg = nordRed
+memory_bg = topBar_bg
+net_bg = topBar_bg
+time_bg = topBar_bg 
+shutdown_bg = topBar_bg
+
+memory_fg = gruvboxOrange
+net_fg = gruvboxAqua
+time_fg = gruvboxOrange
+
+universal_fontsize = 10
 
 
 months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
@@ -221,6 +246,7 @@ screens = [
                     widget.CurrentLayout(
                         foreground = "#ffffff",
                         background = currentLayout_bg,
+                        fontsize = universal_fontsize
                         ),
                     widget.Sep(
                         background = currentLayout_bg,
@@ -232,95 +258,122 @@ screens = [
                         border=onedarkRed,
                         border_width=2,
                         background = topBar_bg,
-                        highlight_color=purple,
+                        highlight_color=gruvboxAqua,
                         highlight_method = "line",
-                        rounded=True
+                        rounded=True,
+                        fontsize = universal_fontsize
                     ),
                     widget.Sep(
                         background = topBar_bg,
                         foreground = topBar_bg,
                         padding=10,
                    ),
-                    widget.WindowName(background = topBar_bg, foreground = topBar_bg),
+                    widget.WindowName(
+                        background = topBar_bg,
+                        foreground = topBar_bg,
+                        fontsize = universal_fontsize
+                    ),
                     widget.TextBox(
                         text='vol:',
                         background = topBar_bg,
                         foreground = onedarkBlue,
                         padding = 1,
-                        fontsize = 14
+                        fontsize = universal_fontsize
                         ),
-                        
                     widget.Volume(
                         background = topBar_bg,
                         padding = 8,
                         get_volume_command="",
                         volume_up_command="amixer -q -D pulse set Master 3%+",
-                        volume_down_command="amixer -q -D pulse set Master 3%-"
+                        volume_down_command="amixer -q -D pulse set Master 3%-",
+                        fontsize = universal_fontsize
                         ),
-                    widget.TextBox(
-                        text = "",
-                        background = topBar_bg,
-                        foreground = memory_bg,
-                        fontsize=57,
-                        padding = -12 
-                        ),
+                    # widget.TextBox(
+                        # text = "",
+                        # background = topBar_bg,
+                        # foreground = memory_bg,
+                        # fontsize=universal_fontsize+47,
+                        # padding = -12 
+                        # ),
+                    widget.Sep(
+                        background = currentLayout_bg,
+                        foreground = currentLayout_bg,
+                   ),
                     widget.Memory(
                         background = memory_bg,
-                        padding = 5,
+                        foreground = memory_fg,
+                        padding = 8,
                         mouse_callbacks = {'Button1': lambda qtile: qtile.cmd_spawn(terminal + ' -e htop')},
+                        fontsize = universal_fontsize
                         ),
 
-                    widget.TextBox(
-                        text = "",
-                        background = memory_bg,
-                        foreground = net_bg,
-                        fontsize=57,
-                        padding = -12 
-                        ),
+                    # widget.TextBox(
+                        # text = "",
+                        # background = memory_bg,
+                        # foreground = net_bg,
+                        # fontsize=57,
+                        # padding = -12 
+                        # ),
+
+                    widget.Sep(
+                        background = currentLayout_bg,
+                        # foreground = currentLayout_bg,
+                       ),
                     widget.Sep(
                         background = net_bg, 
                         foreground = net_bg,
                         padding=10,
                    ),
-                    widget.Net(background = net_bg),
+                    widget.Net(
+                        background = net_bg,
+                        fontsize = universal_fontsize,
+                        foreground = net_fg,
+                        ),
                     widget.Chord(
                         chords_colors={
                             'launch': ("#1D96F9", "#ffff00"),
                             },
                         background = net_bg,
                         name_transform=lambda name: name.upper(),
+                        fontsize = universal_fontsize
                         ),
                     widget.Sep(
                         background = net_bg, 
                         foreground = net_bg,
                         padding=10,
                    ),
-                    widget.Systray(background = onedarkBlue),
+                    widget.Systray(
+                            background = onedarkBlue, 
+                        fontsize = universal_fontsize
+                            ),
                     widget.Sep(
                         background = net_bg, 
                         foreground = net_bg,
                         padding=10,
                    ),
 
-                    widget.TextBox(
-                        text = "",
-                        background = net_bg,
-                        foreground = time_bg,
-                        fontsize=57,
-                        padding = -12 
-                        ),
+                    # widget.TextBox(
+                        # text = "",
+                        # background = net_bg,
+                        # foreground = time_bg,
+                        # fontsize=57,
+                        # padding = -12 
+                        # ),
+                    widget.Sep(
+                        background = currentLayout_bg,
+                        # foreground = currentLayout_bg,
+                   ),
                     widget.Sep(
                         background = time_bg,
                         foreground = time_bg,
-                        padding=10,
+                        padding=3,
                    ),
-                    widget.TextBox(
-                        text='',
-                        background = time_bg,
-                        foreground = gruvboxBrown,
-                        padding = 1,
-                        fontsize = 25
-                        ),
+                    # widget.TextBox(
+                        # text='',
+                        # background = time_bg,
+                        # foreground = purple,
+                        # fontsize = universal_fontsize + 10
+                        # ),
                     widget.Sep(
                         background = time_bg,
                         foreground = time_bg,
@@ -329,27 +382,28 @@ screens = [
                     widget.Clock(
                         format='%d / %m %a [%I:%M] %p',
                         background = time_bg,
-                        foreground = "#ffffff",
+                        foreground = time_fg,
                         padding = 2,
                         mouse_callbacks = {'Button1': lambda qtile: qtile.cmd_spawn(terminal + ' -e tty-clock -c -C 1 -b -s')},
+                        fontsize = universal_fontsize 
                         ),
                     widget.Sep(
                         background = time_bg, 
                         foreground = time_bg,
-                        padding=10,
+                        padding=7,
                         height_percent=100
                    ),
 
-                    widget.QuickExit(
-                            background = shutdown_bg,
-                            default_text = "",
-                            fontsize = 17
-                    ),
-                    widget.Sep(
-                        background = shutdown_bg, 
-                        foreground = shutdown_bg,
-                        padding=10,
-                   ),
+                    # widget.QuickExit(
+                            # background = shutdown_bg,
+                            # default_text = "",
+                            # fontsize = universal_fontsize + 2
+                    # ),
+                    # widget.Sep(
+                        # background = shutdown_bg, 
+                        # foreground = shutdown_bg,
+                        # padding=10,
+                   # ),
                     ],
                 20,
                 ),
