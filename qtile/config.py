@@ -13,7 +13,7 @@ mod = "mod4"
 terminal = guess_terminal()
 myBrowser = "brave-browser"
 guiFileManager = "dolphin"
-default_margin = 3
+default_margin = 9
 
 # @hook.subscribe.startup_once
 # def start_once():
@@ -23,6 +23,7 @@ default_margin = 3
 os.system("exec compton -b")
 os.system("nitrogen --restore &")
 os.system("setxkbmap us")  # changes keyboard layout to english us
+os.system("systemctl stop docker mysql mongodb apache2")
 
 keys = [
     Key([mod], "m", lazy.spawn("dmenu_run")),
@@ -150,39 +151,57 @@ keys = [
     Key([mod, "shift"], "h", lazy.layout.flip_left()),
 ]
 
-groups = [Group(i) for i in "asdfuio"]
+# groups = [Group(i) for i in "asdfuio"]
 
-for i in groups:
-    keys.extend([
-        # mod1 + letter of group = switch to group
-        Key([mod], i.name, lazy.group[i.name].toscreen(),
-            desc="Switch to group {}".format(i.name)),
+# for i in groups:
+    # keys.extend([
+        # # mod1 + letter of group = switch to group
+        # Key([mod], i.name, lazy.group[i.name].toscreen(),
+            # desc="Switch to group {}".format(i.name)),
 
-        # mod1 + shift + letter of group = switch to & move focused window to group
-        Key([mod, "shift"], i.name, lazy.window.togroup(i.name, switch_group=True),
-            desc="Switch to & move focused window to group {}".format(i.name)),
-        # Or, use below if you prefer not to switch to that group.
-        # # mod1 + shift + letter of group = move focused window to group
-        Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-            desc="move focused window to group {}".format(i.name)),
-    ])
+        # # mod1 + shift + letter of group = switch to & move focused window to group
+        # Key([mod, "shift"], i.name, lazy.window.togroup(i.name, switch_group=True),
+            # desc="Switch to & move focused window to group {}".format(i.name)),
+        # # Or, use below if you prefer not to switch to that group.
+        # # # mod1 + shift + letter of group = move focused window to group
+        # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
+            # desc="move focused window to group {}".format(i.name)),
+    # ])
 
-    def init_layout_theme():
-        return {"border_width": 0,
-                "margin": 0,
-                "border_focus": "#800000",
-                "border_normal": "#50EDCE"
-                }
+group_names = [("Web", {'layout': 'monadtall'}),
+               ("Dev", {'layout': 'monadtall'}),
+               ("Class", {'layout': 'monadtall'}),
+               ("Conf", {'layout': 'monadtall'}),
+               ("Test", {'layout': 'monadtall'}),
+               ("Med", {'layout': 'monadtall'}),
+               ("Float", {'layout': 'floating'}),
+               ("Other", {'layout': 'monadtall'})
+               ]
 
-        layout_theme = init_layout_theme()
+groups = [Group(name, **kwargs) for name, kwargs in group_names]
+
+for i, (name, kwargs) in enumerate(group_names, 1):
+    keys.append(Key([mod], str(i), lazy.group[name].toscreen()))        # Switch to another group
+    keys.append(Key([mod, "shift"], str(i), lazy.window.togroup(name))) # Send current window to another group
+
+
+def init_layout_theme():
+    return {"border_width": 0,
+            "margin": 8,
+            "border_focus": "#FF5454",
+            "border_normal": "#50EDCE"
+            }
+
+layout_theme = init_layout_theme()
+
+def init_border_args():
+    return {"border_width": 2}
 
 layouts = [
-    layout.MonadTall(margin=default_margin,
-                     border_focus="#7470FF", border_width=1),
-    layout.Max(margin=default_margin),
-    layout.Floating(margin=default_margin),
+    layout.MonadTall(border_focus="#7470FF", border_width=1, margin=default_margin),
+    layout.Max(),
+    layout.Floating(),
 ]
-
 widget_defaults = dict(
     font='sans',
     fontsize=12,
@@ -228,7 +247,7 @@ memory_fg = white
 net_fg = white
 time_fg = white
 
-universal_fontsize = 11
+universal_fontsize = 10
 
 screens = [
     Screen(
@@ -370,10 +389,11 @@ screens = [
                 ),
 
             ],
-            16,
-            opacity=0.9
+            20,
+            opacity=0.9,
         ),
-    )
+    ),
+
 ]
 
 # Drag floating layouts.
