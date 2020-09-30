@@ -23,7 +23,6 @@ Plug 'justmao945/vim-clang'
 Plug 'https://github.com/xavierd/clang_complete.git'
 Plug 'voldikss/vim-floaterm'
 Plug 'https://github.com/skammer/vim-css-color.git'
-Plug 'uiiaoo/java-syntax.vim'
 
 "Themes-Plugins
 Plug 'morhetz/gruvbox'
@@ -49,6 +48,9 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'whatyouhide/vim-gotham'
 Plug 'hzchirs/vim-material'
 Plug 'HerringtonDarkholme/yats.vim' "Typescript syntax highlight
+Plug 'https://github.com/jpo/vim-railscasts-theme.git'
+Plug 'https://github.com/tpope/vim-vividchalk.git'
+Plug 'sainnhe/gruvbox-material'
 
 call plug#end()
 
@@ -59,15 +61,15 @@ syntime on
 let base16colorspace=256
 set termguicolors
 syntax enable
-let g:gruvbox_contrast_dark = 'soft'
-colorscheme gruvbox
+let g:gruvbox_contrast_dark = 'hard'
+colorscheme base16-default-dark
 "let g:material_style='palenight'
-"let g:gruvbox_termcolors=16
+let g:gruvbox_termcolors=16
 set background=dark
 set laststatus=2
 
 set number relativenumber
-"set cursorline
+set cursorline
 set sidescroll=1
 set nowrap
 set noswapfile
@@ -75,11 +77,12 @@ set tabstop=4 softtabstop=4
 set shiftwidth=4
 set smartindent
 set noshowmode
+set backspace=indent,eol,start
 
 let mapleader = " "
 
+" java autocomplete
 let java_highlight_functions = 1
-highlight link JavaIdentifier NONE
 
 " color highlight
  let g:cssColorVimDoNotMessMyUpdatetime = 1
@@ -114,6 +117,7 @@ let g:syntastic_check_on_wq = 0
 let g:syntastic_cpp_compiler = "g++"
 let g:syntastic_cpp_compiler_options = "-std=c++17 -Wall -Wextra -Wpedantic"
 let g:syntastic_quiet_messages={'level':'warnings'}
+let g:syntastic_java_javac_classpath = '/usr/lib/jvm/java-6-openjdk/'
 
 " changes cursor when in insert and normal mode
 autocmd InsertEnter,InsertLeave * set cul!
@@ -194,6 +198,8 @@ let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
 let g:clang_library_path='/usr/lib/llvm-3.8/lib'
 "or path directly to the library file
 let g:clang_library_path='/usr/lib/llvm-9/lib'
+let g:syntastic_python_flake8_exec = 'python3'
+let g:syntastic_python_flake8_args = ['-m', 'flake8']
 
 " coc config
 let g:coc_disable_startup_warning = 1
@@ -258,3 +264,5 @@ imap <silent><CR> <CR><Plug>AutoPairsReturn
 "typescript indend
 let g:typescript_indent_disable = 1
 let g:typescript_compiler_binary = 'tsc'
+
+let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ["python"],'passive_filetypes': [] }

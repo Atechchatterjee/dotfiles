@@ -11,13 +11,9 @@ from libqtile.utils import guess_terminal
 
 mod = "mod4"
 terminal = guess_terminal()
-myBrowser = "brave-browser"
+myBrowser = "google-chrome"
 guiFileManager = "dolphin"
-default_margin = 9
-
-# @hook.subscribe.startup_once
-# def start_once():
-# subprocess.call('/home/anish/.config/qtile/autostart.sh')
+default_margin = 0
 
 # autostart applications
 os.system("exec compton -b")
@@ -25,12 +21,24 @@ os.system("nitrogen --restore &")
 os.system("setxkbmap us")  # changes keyboard layout to english us
 os.system("systemctl stop docker mysql mongodb apache2")
 
+def hide_show_bar(qtile):
+    bar = qtile.currentScreen.top
+    if bar.size == 0:
+        bar.size = 30
+        bar.window.unhide()
+    else:
+        bar.size = 0
+        bar.window.hide()
+        qtile.currentGroup.layoutAll()
+
 keys = [
+    Key([mod], "z", lazy.hide_show_bar("top")),
     Key([mod], "m", lazy.spawn("dmenu_run")),
     Key([mod], "c", lazy.spawn("code")),
     Key([mod], "b", lazy.spawn(myBrowser)),
     Key([mod], "n", lazy.spawn("nitrogen")),
     Key([mod], "g", lazy.spawn("google-chrome")),
+    Key([mod], "v", lazy.spawn(terminal+" -e vifm")),
     Key([mod, "control"], "d", lazy.spawn(guiFileManager)),
     Key([mod, "shift"], "q",
         lazy.spawn(terminal+" -e shutdown now"),
@@ -151,23 +159,6 @@ keys = [
     Key([mod, "shift"], "h", lazy.layout.flip_left()),
 ]
 
-# groups = [Group(i) for i in "asdfuio"]
-
-# for i in groups:
-    # keys.extend([
-        # # mod1 + letter of group = switch to group
-        # Key([mod], i.name, lazy.group[i.name].toscreen(),
-            # desc="Switch to group {}".format(i.name)),
-
-        # # mod1 + shift + letter of group = switch to & move focused window to group
-        # Key([mod, "shift"], i.name, lazy.window.togroup(i.name, switch_group=True),
-            # desc="Switch to & move focused window to group {}".format(i.name)),
-        # # Or, use below if you prefer not to switch to that group.
-        # # # mod1 + shift + letter of group = move focused window to group
-        # Key([mod, "shift"], i.name, lazy.window.togroup(i.name),
-            # desc="move focused window to group {}".format(i.name)),
-    # ])
-
 group_names = [("Web", {'layout': 'monadtall'}),
                ("Dev", {'layout': 'monadtall'}),
                ("Class", {'layout': 'monadtall'}),
@@ -178,11 +169,12 @@ group_names = [("Web", {'layout': 'monadtall'}),
                ("Other", {'layout': 'monadtall'})
                ]
 
+group_keys = "a,s,d,f,u,i,o,p".split(",")
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
 
 for i, (name, kwargs) in enumerate(group_names, 1):
-    keys.append(Key([mod], str(i), lazy.group[name].toscreen()))        # Switch to another group
-    keys.append(Key([mod, "shift"], str(i), lazy.window.togroup(name))) # Send current window to another group
+    keys.append(Key([mod], str(group_keys[i-1]), lazy.group[name].toscreen()))        # Switch to another group
+    keys.append(Key([mod, "shift"], str(group_keys[i-1]), lazy.window.togroup(name))) # Send current window to another group
 
 
 def init_layout_theme():
@@ -233,14 +225,15 @@ nordPurple = "#B48EAD"
 deepBlue = "#292d3e"
 
 # gruvbox theme
-topBar_bg = "#24252D"
+topBar_bg = "#282828"
 
 # background colors
 currentLayout_bg = topBar_bg
-memory_bg = purple
-net_bg = onedarkBlue
-time_bg = purple
+memory_bg = nordDBlue
+net_bg = gruvboxBrown 
+time_bg = nordDBlue
 shutdown_bg = topBar_bg
+groupBoxHighlight = gruvboxAqua
 
 # foregroung colors
 memory_fg = white
@@ -256,24 +249,15 @@ screens = [
                 widget.Sep(
                     background=currentLayout_bg,
                     foreground=currentLayout_bg,
-                    padding=10,
-                ),
-                widget.CurrentLayout(
-                    foreground="#ffffff",
-                    background=currentLayout_bg,
-                    fontsize=universal_fontsize
-                ),
-                widget.Sep(
-                    background=currentLayout_bg,
-                    foreground=currentLayout_bg,
-                    padding=10,
+                    padding=5,
                 ),
 
                 widget.GroupBox(
                     border=onedarkRed,
                     border_width=2,
                     background=topBar_bg,
-                    highlight_color="#424454",
+                    foreground=purple,
+                    highlight_color=groupBoxHighlight,
                     highlight_method="line",
                     rounded=True,
                     fontsize=universal_fontsize,
@@ -299,13 +283,26 @@ screens = [
                     background=topBar_bg,
                     padding=8,
                     get_volume_command="",
-                    volume_up_command="amixer -q -D pulse set Master 3%+",
-                    volume_down_command="amixer -q -D pulse set Master 3%-",
+                    volume_up_command="amixer -q -D pulse set Master 1%+",
+                    volume_down_command="amixer -q -D pulse set Master 1%-",
                     fontsize=universal_fontsize,
                 ),
                 widget.TextBox(
                     text="",
                     background=topBar_bg,
+                    foreground=net_bg,
+                    fontsize=universal_fontsize+47,
+                    padding=-12,
+                ),
+                widget.CurrentLayout(
+                    foreground="#ffffff",
+                    background=net_bg,
+                    fontsize=universal_fontsize,
+                    padding=8
+                ),
+                widget.TextBox(
+                    text="",
+                    background=net_bg,
                     foreground=memory_bg,
                     fontsize=universal_fontsize+47,
                     padding=-12,
@@ -327,16 +324,16 @@ screens = [
                     padding=-12
                 ),
 
-                widget.Sep(
-                    background=net_bg,
-                    foreground=net_bg,
-                    padding=10,
-                ),
-                widget.Net(
-                    background=net_bg,
-                    fontsize=universal_fontsize,
-                    foreground=net_fg,
-                ),
+                # widget.Sep(
+                    # background=net_bg,
+                    # foreground=net_bg,
+                    # padding=10,
+                # ),
+                # widget.Net(
+                    # background=net_bg,
+                    # fontsize=universal_fontsize,
+                    # foreground=net_fg,
+                # ),
                 widget.Chord(
                     chords_colors={
                         'launch': ("#1D96F9", "#ffff00"),
@@ -348,16 +345,16 @@ screens = [
                 widget.Sep(
                     background=net_bg,
                     foreground=net_bg,
-                    padding=10,
+                    padding=0,
                 ),
                 widget.Systray(
-                    background=onedarkBlue,
+                    background=net_bg,
                     fontsize=universal_fontsize,
                 ),
                 widget.Sep(
                     background=net_bg,
                     foreground=net_bg,
-                    padding=10,
+                    padding=0,
                 ),
 
                 widget.TextBox(
@@ -373,7 +370,7 @@ screens = [
                     padding=3,
                 ),
                 widget.Clock(
-                    format='%d / %m %a [%I:%M] %p',
+                        format='%d / %m %a %I:%M:%S %p',
                     background=time_bg,
                     foreground=time_fg,
                     padding=2,
@@ -390,7 +387,7 @@ screens = [
 
             ],
             20,
-            opacity=0.9,
+            opacity=1,
         ),
     ),
 

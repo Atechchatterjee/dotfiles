@@ -1,13 +1,12 @@
-# If you come from bash you might have to change your $PATH.
-# export PATH=$HOME/bin:/usr/local/bin:$PATH
+#echo "\n"
+#echo -e "\e[1;44m     " "\e[1;41m     ""\e[1;42m     " "\e[1;47m     "
 
-# Path to your oh-my-zsh installation.
+#echo "\n"
 export ZSH="/home/anish/.oh-my-zsh"
 
-ZSH_THEME="mh"
+ZSH_THEME="gianu"
 
-plugins=(git)
-plugins=(zsh-autosuggestions)
+plugins=(git zsh-autosuggestions zsh-abbr)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -73,16 +72,33 @@ zle -N ctrlz
 bindkey '^Z' ctrlz
 
 # alias
+alias sz="source ~/.zshrc"
 alias h="cd ~"
 alias systop="systemctl stop docker mysql mongodb apache2"
 alias weather="curl wttr.in"
 alias tmuxComp="tmux attach-session -t competitive-coding"
+alias tt="tmux -u"
+alias sw="nitrogen --restore &"
+alias muteToggle="amixer -q -D pulse set Master toggle"
+alias showWifi="nmcli d wifi list"
+alias clock="tty-clock -c -C 1 -b -s -S"
+alias at="alacritty-theme-switch"
+alias alc="nvim ~/.config/alacritty/alacritty.yml"
+alias qt="nvim ~/.config/qtile/config.py"
+alias ra="ranger"
 
 jrun() { javac $1.java && java $1 ; }
 cpTemp() { cp ~/coding/Cpp/template.cpp ./$1.cpp; }
 cppTemp() { cp ~/coding/Cpp/template.cpp ./$1.cpp && vim ./$1.cpp }
 grun() { g++ -std=c++17 $1.cpp -o $1 && ./$1 }
+vp() { amixer -q -D pulse set Master $1%+ }
+vd() { amixer -q -D pulse set Master $1%- }
+
+ZSH_AUTOSUGGEST_HIGHLIGHT_STYLE="fg=#ff00ff,bg=cyan,bold,underline"
+
 xset r rate 300 100
 
-export VISUAL=vim;
-export EDITOR=vim;
+export VISUAL="nvim";
+export EDITOR="nvim";
+
+source /home/anish/.config/broot/launcher/bash/br

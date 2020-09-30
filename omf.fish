@@ -4,21 +4,21 @@ set -q XDG_DATA_HOME
   or set -gx OMF_PATH "$HOME/.local/share/omf"
 
 # changes cursor in insert and normal mode
-function fish_vi_cursor --on-variable fish_bind_mode
-    switch $fish_bind_mode
-        case insert
-            printf '\e]50;CursorShape=1\x7'
-        case default
-            printf '\e]50;CursorShape=0\x7'
-        case "*"
-            printf '\e]50;CursorShape=0\x7'
-    end
-end
+#function fish_vi_cursor --on-variable fish_bind_mode
+    #switch $fish_bind_mode
+        #case insert
+            #printf '\e]50;CursorShape=1\x7'
+        #case default
+            #printf '\e]50;CursorShape=0\x7'
+        #case "*"
+            #printf '\e]50;CursorShape=0\x7'
+    #end
+#end
 
-fish_vi_cursor
-set fish_cursor_default line
-set fish_cursor_insert line
-set fish_cursor_visual block
+#fish_vi_cursor
+#set fish_cursor_insert line
+#set fish_cursor_default line
+#set fish_cursor_visual block
 
 # removes the fish greeting prompt
 set fish_greeting
@@ -37,7 +37,6 @@ abbr h "cd ~"
 abbr systop "systemctl stop docker mysql mongodb apache2"
 abbr weather "curl wttr.in"
 abbr tmuxComp "tmux attach-session -t competitive-coding"
-abbr tt "tmux -u"
 abbr swallpaper "nitrogen --restore &"
 abbr muteToggle "amixer -q -D pulse set Master toggle"
 abbr showWifi "nmcli d wifi list"
@@ -51,10 +50,31 @@ abbr ss "systemctl suspend"
 abbr in "nvim ~/dotfiles/init.vim"
 abbr ns "npm start"
 
-alias l "ls -la"
+alias ls 'exa -al --color=always --group-directories-first' 
+alias la 'exa -a --color=always --group-directories-first' 
+alias ll 'exa -l --color=always --group-directories-first'  
+alias lt 'exa -aT --color=always --group-directories-first' 
+alias cp "cp -i"
+alias tmux "tmux -u"
 
 function grun
 	g++ -std=c++17 $argv.cpp -o $argv && ./$argv 
+end
+
+function ccp
+	cp ~/coding/Cpp/template.cpp ./$argv.cpp
+end
+
+function jrun
+	javac $argv.java && java $argv
+end
+
+function create_react_app
+	npx create-react-app $argv --template typescript	
+end
+
+function stop_port
+	kill -9 (sudo lsof -t -i:$argv)
 end
 
 # Load Oh My Fish configuration.
