@@ -6,7 +6,7 @@ export ZSH="/home/anish/.oh-my-zsh"
 
 ZSH_THEME="gianu"
 
-plugins=(git zsh-autosuggestions zsh-abbr)
+plugins=(git zsh-abbr)
 
 source $ZSH/oh-my-zsh.sh
 
@@ -83,9 +83,9 @@ alias muteToggle="amixer -q -D pulse set Master toggle"
 alias showWifi="nmcli d wifi list"
 alias clock="tty-clock -c -C 1 -b -s -S"
 alias at="alacritty-theme-switch"
-alias alc="nvim ~/.config/alacritty/alacritty.yml"
 alias qt="nvim ~/.config/qtile/config.py"
 alias ra="ranger"
+
 
 jrun() { javac $1.java && java $1 ; }
 cpTemp() { cp ~/coding/Cpp/template.cpp ./$1.cpp; }
