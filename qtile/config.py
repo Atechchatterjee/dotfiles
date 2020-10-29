@@ -5,22 +5,33 @@ from typing import List  # noqa: F401
 
 import psutil
 from libqtile import bar, hook, layout, widget
-from libqtile.config import Click, Drag, Group, Key, Screen
+from libqtile.config import Click, Drag, Group, Key, Screen, ScratchPad, DropDown, Key
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 
+# default constants 
 mod = "mod4"
 terminal = guess_terminal()
-myBrowser = "google-chrome"
+myBrowser = "brave-browser"
 guiFileManager = "dolphin"
-default_margin = 0
+default_margin = 6
+default_border_color = "#F28282"
+default_border_width = 1
+bar_opacity = 1
 
 # autostart applications
 os.system("exec compton -b")
 os.system("nitrogen --restore &")
 os.system("setxkbmap us")  # changes keyboard layout to english us
 os.system("systemctl stop docker mysql mongodb apache2")
+os.system("xset r rate 250 100")
+# Switches the primary display as the external display 
+os.system("xrandr --output HDMI-1 --primary")
+# sets the resolution of the external display
+os.system("xrandr -s 1920x1080")
 
+
+# hide the topbar
 def hide_show_bar(qtile):
     bar = qtile.currentScreen.top
     if bar.size == 0:
@@ -30,6 +41,7 @@ def hide_show_bar(qtile):
         bar.size = 0
         bar.window.hide()
         qtile.currentGroup.layoutAll()
+
 
 keys = [
     Key([mod], "z", lazy.hide_show_bar("top")),
@@ -47,7 +59,7 @@ keys = [
     Key([mod, "shift"], "r",
         lazy.spawn(terminal+" -e reboot"),
         desc='Shutdown Qtile'
-        ),
+    ),
     Key([mod, "control"], "s", lazy.spawn(terminal+" -e systemctl suspend")),
 
     # Switch between windows in current stack pane
@@ -173,8 +185,11 @@ group_keys = "a,s,d,f,u,i,o,p".split(",")
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
 
 for i, (name, kwargs) in enumerate(group_names, 1):
-    keys.append(Key([mod], str(group_keys[i-1]), lazy.group[name].toscreen()))        # Switch to another group
-    keys.append(Key([mod, "shift"], str(group_keys[i-1]), lazy.window.togroup(name))) # Send current window to another group
+    # Switch to another group
+    keys.append(Key([mod], str(group_keys[i-1]), lazy.group[name].toscreen()))
+    # Send current window to another group
+    keys.append(Key([mod, "shift"], str(
+        group_keys[i-1]), lazy.window.togroup(name)))
 
 
 def init_layout_theme():
@@ -184,13 +199,17 @@ def init_layout_theme():
             "border_normal": "#50EDCE"
             }
 
+
 layout_theme = init_layout_theme()
+
 
 def init_border_args():
     return {"border_width": 2}
 
+
 layouts = [
-    layout.MonadTall(border_focus="#7470FF", border_width=1, margin=default_margin),
+    layout.MonadTall(border_focus=default_border_color,
+                     border_width=default_border_width, margin=default_margin),
     layout.Max(),
     layout.Floating(),
 ]
@@ -202,7 +221,7 @@ widget_defaults = dict(
 extension_defaults = widget_defaults.copy()
 
 
-# colors
+# available colors for topbar
 purple = "#783C96"
 blue_bg = "#2bbac5"
 white = "#ffffff"
@@ -216,7 +235,6 @@ gruvboxBrown = "#1D2021"
 gruvboxOrange = "#D65F34"
 gruvboxBlue = "#458587"
 
-
 nordRed = "#BF616A"
 nordGreen = "#A3BE8C"
 nordBlue = "#81A1C1"
@@ -224,18 +242,17 @@ nordDBlue = "#2D333E"
 nordPurple = "#B48EAD"
 deepBlue = "#292d3e"
 
-# gruvbox theme
-topBar_bg = "#282828"
+topBar_bg = gruvboxBrown 
 
-# background colors
+# setting the background colors
 currentLayout_bg = topBar_bg
 memory_bg = nordDBlue
-net_bg = gruvboxBrown 
+net_bg = gruvboxBrown
 time_bg = nordDBlue
 shutdown_bg = topBar_bg
-groupBoxHighlight = gruvboxAqua
+groupBoxHighlight = nordRed
 
-# foregroung colors
+# setting the foregroung colors
 memory_fg = white
 net_fg = white
 time_fg = white
@@ -259,6 +276,7 @@ screens = [
                     foreground=purple,
                     highlight_color=groupBoxHighlight,
                     highlight_method="line",
+                    center_aligned=True,
                     rounded=True,
                     fontsize=universal_fontsize,
                 ),
@@ -323,17 +341,6 @@ screens = [
                     fontsize=57,
                     padding=-12
                 ),
-
-                # widget.Sep(
-                    # background=net_bg,
-                    # foreground=net_bg,
-                    # padding=10,
-                # ),
-                # widget.Net(
-                    # background=net_bg,
-                    # fontsize=universal_fontsize,
-                    # foreground=net_fg,
-                # ),
                 widget.Chord(
                     chords_colors={
                         'launch': ("#1D96F9", "#ffff00"),
@@ -350,6 +357,15 @@ screens = [
                 widget.Systray(
                     background=net_bg,
                     fontsize=universal_fontsize,
+                ),
+                widget.Battery(
+                    format=' {percent:2.0%} ',
+                    battery=0,
+                    background=net_bg,
+                    charge_char='<',
+                    discharge_char='*',
+                    low_percentage=0.2,
+                    low_foreground=onedarkRed
                 ),
                 widget.Sep(
                     background=net_bg,
@@ -370,7 +386,7 @@ screens = [
                     padding=3,
                 ),
                 widget.Clock(
-                        format='%d / %m %a %I:%M:%S %p',
+                    format='%d / %m %a %I:%M:%S %p',
                     background=time_bg,
                     foreground=time_fg,
                     padding=2,
@@ -386,11 +402,10 @@ screens = [
                 ),
 
             ],
-            20,
-            opacity=1,
+            18,
+            opacity=bar_opacity,
         ),
     ),
-
 ]
 
 # Drag floating layouts.
