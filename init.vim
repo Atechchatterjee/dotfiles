@@ -118,6 +118,9 @@ let java_highlight_functions = 1
 nmap <C-t> gt
 nmap <C-b> :NERDTreeToggle<CR>
 
+nmap ( {
+nmap ) }
+
 "control-/
 nmap <C-_>   <Plug>NERDCommenterToggle
 vmap <C-_>   <Plug>NERDCommenterToggle<CR>gv
