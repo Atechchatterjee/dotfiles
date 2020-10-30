@@ -93,7 +93,7 @@ let base16colorspace=256
 set termguicolors
 syntax enable
 let g:gruvbox_contrast_dark = 'hard' 
-colorscheme gruvbox-material
+colorscheme gruvbox
 let g:gruvbox_termcolors=16
 set background=dark
 set laststatus=2
@@ -132,11 +132,17 @@ noremap <A-r> :FloatermNew --name=ranger ranger<CR>
 noremap <A-v> :FloatermNew --name="vifm" vifm<CR>
 noremap <A-t> :FloatermNew --width=0.4 --wintype=normal --position=right <CR>
 noremap <A-d> :FloatermNew --height=0.4 --wintype=normal --position=bottom <CR>
-noremap <C-c> :FloatermNew g++ -std=c++17 @% -o $argv && ./@% <CR>
+"noremap <C-c> :FloatermNew g++ -std=c++17 @% -o $argv && ./@% <CR>
 let g:floaterm_keymap_new = '<Leader>f'
 let g:floaterm_keymap_toggle = '<F1>'
 let g:floaterm_keymap_next = '<F3>'
 let g:floaterm_keymap_prev = '<F2>'
+
+" CTRL-X and SHIFT-Del are Cut
+vnoremap <C-X> "+x
+
+" CTRL-C and CTRL-Insert are Copy
+vnoremap <C-C> "+y
 
 " switch tabs
 noremap <leader>1 1gt
