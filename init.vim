@@ -1,6 +1,6 @@
 call plug#begin('~/.vim/plugged')
 
-"General Plugins 
+"General Plugins
 Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree' |
 			\ Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -11,56 +11,47 @@ Plug 'ryanoasis/vim-devicons'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/nerdcommenter'
 Plug 'junegunn/goyo.vim'
-"Plug 'https://github.com/ctrlpvim/ctrlp.vim.git'
 Plug 'https://github.com/tc50cal/vim-terminal.git'
-Plug 'https://github.com/sonph/onehalf.git'
 Plug 'https://github.com/tpope/vim-surround.git'
-Plug 'https://github.com/leafgarland/typescript-vim.git'
 Plug 'https://github.com/xavierd/clang_complete.git'
-Plug 'chiel92/vim-autoformat'
 Plug 'honza/vim-snippets'
 Plug 'https://github.com/vifm/vifm.vim.git'
 Plug 'justmao945/vim-clang'
 Plug 'https://github.com/xavierd/clang_complete.git'
 Plug 'voldikss/vim-floaterm'
 Plug 'https://github.com/skammer/vim-css-color.git'
-Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'https://github.com/Shougo/vimfiler.vim.git'
+Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
+Plug 'vimwiki/vimwiki'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 "Themes Plugins
 Plug 'morhetz/gruvbox'
-Plug 'ayu-theme/ayu-vim'
 Plug 'chriskempson/base16-vim'
-Plug 'jacoborus/tender.vim'
 Plug 'drewtempelmeyer/palenight.vim'
-Plug 'https://github.com/jnurmine/Zenburn.git'
 Plug 'tomasiser/vim-code-dark'
 Plug 'https://github.com/dunstontc/vim-vscode-theme.git'
 Plug 'https://github.com/sickill/vim-monokai.git'
-Plug 'https://github.com/blueshirts/darcula.git'
 Plug 'https://github.com/joshdick/onedark.vim.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
-Plug 'https://github.com/leafgarland/typescript-vim.git'
 Plug 'https://github.com/arcticicestudio/nord-vim.git'
 Plug 'danilo-augusto/vim-afterglow'
-Plug 'NLKNguyen/papercolor-theme'
-Plug 'hzchirs/vim-material'
-Plug 'https://github.com/jpo/vim-railscasts-theme.git'
-Plug 'https://github.com/tpope/vim-vividchalk.git'
 Plug 'sainnhe/gruvbox-material'
 
 " Syntax highlighting plugins
-Plug 'https://github.com/vim-python/python-syntax.git' 
-Plug 'HerringtonDarkholme/yats.vim'
+Plug 'https://github.com/vim-python/python-syntax.git'
 Plug 'uiiaoo/java-syntax.vim'
+Plug 'HerringtonDarkholme/yats.vim' "TS
+Plug 'pangloss/vim-javascript'
+Plug 'tasn/vim-tsx'
 
 call plug#end()
 
 " General settings
 syntax on
 syntime on
-set number 
-"set cursorline
+set number
 set sidescroll=1
 set nowrap
 set noswapfile
@@ -76,30 +67,40 @@ set encoding=UTF-8
 let mapleader = " "
 let g:yats_host_keyword = 1
 
-" -- fzf settings --
-" Empty value to disable preview window altogether
-let g:fzf_preview_window = ''
-" Always enable preview window on the right with 60% width
-let g:fzf_preview_window = 'right:60%'
+"keeps the cursor shape block in insert mode
+set guicursor=n-v-c:block-Cursor
+set guicursor+=i:ver100-iCursor
+set guicursor+=n-v-c:blinkon0
+set guicursor+=i:blinkwait10
 
 " fixes the alacrity issue with mouse
 if !has('nvim')
 	set ttymouse=sgr
 endif
+
 set mouse=a
 
+" fzf settings
+command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, <bang>0)
+
 " -- Themes settings & Syntax highlighting --
-let base16colorspace=256
-set termguicolors
 syntax enable
-let g:gruvbox_contrast_dark = 'hard' 
-colorscheme gruvbox
-let g:gruvbox_termcolors=16
+set termguicolors
 set background=dark
 set laststatus=2
-let g:cssColorVimDoNotMessMyUpdatetime = 1 "color highlight 
+colorscheme gruvbox 
+let base16colorspace=256
+let g:gruvbox_contrast_dark = 'hard'
+let g:gruvbox_termcolors=16
+let g:cssColorVimDoNotMessMyUpdatetime = 1 "color highlight
 let g:python_highlight_all = 1
+
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx " set filetypes as typescript.tsx
+
+"typescript indend
+let g:typescript_indent_disable = 1
+let g:typescript_compiler_binary = 'tsc'
+let g:tsx_ext_required = 1
 
 " Enable true color(fixes colors for tmux)
 if exists('+termguicolors')
@@ -114,9 +115,17 @@ execute "set t_8b=\e[48;2;%lu;%lu;%lum"
 " java autocomplete
 let java_highlight_functions = 1
 
-" -- all remaps -- 
+" -- all remaps --
 nmap <C-t> gt
 nmap <C-b> :NERDTreeToggle<CR>
+nmap <A-S-P> :PrettierAsync <CR>
+
+" toggle spelling mistakes
+nmap <F5> :setlocal spell! <CR>
+
+"fzf remaps
+nmap <C-p> :Files <CR>
+nmap <C-S-R> :Rg <CR>
 
 nmap ( {
 nmap ) }
@@ -135,7 +144,6 @@ noremap <A-r> :FloatermNew --name=ranger ranger<CR>
 noremap <A-v> :FloatermNew --name="vifm" vifm<CR>
 noremap <A-t> :FloatermNew --width=0.4 --wintype=normal --position=right <CR>
 noremap <A-d> :FloatermNew --height=0.4 --wintype=normal --position=bottom <CR>
-"noremap <C-c> :FloatermNew g++ -std=c++17 @% -o $argv && ./@% <CR>
 let g:floaterm_keymap_new = '<Leader>f'
 let g:floaterm_keymap_toggle = '<F1>'
 let g:floaterm_keymap_next = '<F3>'
@@ -197,22 +205,13 @@ hi! NonText ctermbg=NONE guibg=NONE
 
 syntax match myTodo /\v<(TODO|FIXME|NOTE).*/ containedin=.*Comment
 
+
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
-
-" optional reset cursor on start:
-"augroup myCmds
-	"au!
-	"autocmd VimEnter * silent !echo -ne "\e[2 q"
-"augroup END
 
 if !has('gui_running')
 	set t_Co=256
 endif
-
-" Ctrl P config
-"let g:ctrlp_map = '<c-p>'
-"let g:ctrlp_cmd = 'CtrlP'
 
 " Add your own custom formats or override the defaults
 let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
@@ -221,9 +220,6 @@ let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
 let g:clang_library_path='/usr/lib/llvm-3.8/lib'
 "or path directly to the library file
 let g:clang_library_path='/usr/lib/llvm-9/lib'
-"let g:syntastic_python_flake8_exec = 'python3'
-"let g:syntastic_python_flake8_args = ['-m', 'flake8']
-"let g:syntastic_python_pylint_args = "--load-plugins pylint_django"
 
 " coc config
 let g:coc_disable_startup_warning = 1
@@ -232,15 +228,14 @@ let g:coc_global_extensions = [
 			\ 'coc-eslint',
 			\ 'coc-json',
 			\ 'coc-clangd',
-			\ 'coc-prettier',
 			\ 'coc-java',
 			\ 'coc-emmet',
 			\ 'coc-python',
-			\ 'coc-prettier',
+			"\ 'coc-prettier',
 			\ 'coc-tsserver'
 			\]
 
-command! -nargs=0 Prettier :CocCommand prettier.formatFile
+"command! -nargs=0 Prettier :CocCommand prettier.formatFile
 
 " use <tab> for trigger completion and navigate to the next complete item
 function! s:check_back_space() abort
@@ -255,7 +250,7 @@ inoremap <silent><expr> <Tab>
 
 " closes the preview window uptop
 autocmd! CompleteDone * if pumvisible() == 0 | pclose | endif
- 
+
 " Use <C-l> for trigger snippet expand.
 imap <C-l> <Plug>(coc-snippets-expand)
 
@@ -282,16 +277,132 @@ let g:lightline = {
 			\}
 
 function! LightlineStatuslineTabs() abort
-  return join(map(range(1, tabpagenr('$')),
-		\ '(v:val == tabpagenr() ? "[*] " : "") . lightline#tab#filename(v:val)'), " \u2b81 ")
+	return join(map(range(1, tabpagenr('$')),
+				\ '(v:val == tabpagenr() ? "[*] " : "") . lightline#tab#filename(v:val)'), " \u2b81 ")
 endfunction
 
 " resolves the clash b/w clangd and auto-pairs
 let g:AutoPairsMapCR = 0
-imap <silent><CR> <CR><Plug>AutoPairsReturn
 
-"typescript indend
-let g:typescript_indent_disable = 1
-let g:typescript_compiler_binary = 'tsc'
+" ====== COC-default settings ========
 
-"let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': ["python"],'passive_filetypes': [] }
+" TextEdit might fail if hidden is not set.
+set hidden
+
+" Use tab for trigger completion with characters ahead and navigate.
+" NOTE: Use command ':verbose imap <tab>' to make sure tab is not mapped by
+" other plugin before putting this into your config.
+inoremap <silent><expr> <TAB>
+			\ pumvisible() ? "\<C-n>" :
+			\ <SID>check_back_space() ? "\<TAB>" :
+			\ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+	let col = col('.') - 1
+	return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+"" Use <c-space> to trigger completion.
+if has('nvim')
+	inoremap <silent><expr> <c-space> coc#refresh()
+else
+	inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+			\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+"" Use `[g` and `]g` to navigate diagnostics
+"" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+"" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+"" Use K to show documentation in preview window.
+"nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+	if (index(['vim','help'], &filetype) >= 0)
+		execute 'h '.expand('<cword>')
+	elseif (coc#rpc#ready())
+		call CocActionAsync('doHover')
+	else
+		execute '!' . &keywordprg . " " . expand('<cword>')
+	endif
+endfunction
+
+"" Highlight the symbol and its references when holding the cursor.
+"autocmd CursorHold * silent call CocActionAsync('highlight')
+
+"" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+"" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+"augroup mygroup
+"autocmd!
+"" Setup formatexpr specified filetype(s).
+"autocmd FileType typescript,json setl formatexpr=CocAction('formatSelected')
+"" Update signature help on jump placeholder.
+"autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+"augroup end
+
+"" Applying codeAction to the selected region.
+"" Example: `<leader>aap` for current paragraph
+"xmap <leader>a  <Plug>(coc-codeaction-selected)
+"nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+"" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>qf  <Plug>(coc-fix-current)
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+" Note coc#float#scroll works on neovim >= 0.4.3 or vim >= 8.2.0750
+nnoremap <nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+nnoremap <nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+inoremap <nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+inoremap <nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Add (Neo)Vim's native statusline support.
+" NOTE: Please see `:h coc-status` for integrations with external plugins that
+" provide custom statusline: lightline.vim, vim-airline.
+set statusline^=%{coc#status()}%{get(b:,'coc_current_function','')}
+
+"" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
