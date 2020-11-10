@@ -4,20 +4,15 @@ call plug#begin('~/.vim/plugged')
 Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree' |
 			\ Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'https://github.com/pangloss/vim-javascript.git'
 Plug 'neoclide/coc.nvim', {'branch':'release'}
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/nerdcommenter'
-Plug 'junegunn/goyo.vim'
-Plug 'https://github.com/tc50cal/vim-terminal.git'
-Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'https://github.com/xavierd/clang_complete.git'
+Plug 'justmao945/vim-clang'
 Plug 'honza/vim-snippets'
 Plug 'https://github.com/vifm/vifm.vim.git'
-Plug 'justmao945/vim-clang'
-Plug 'https://github.com/xavierd/clang_complete.git'
 Plug 'voldikss/vim-floaterm'
 Plug 'https://github.com/skammer/vim-css-color.git'
 Plug 'https://github.com/Shougo/vimfiler.vim.git'
@@ -29,22 +24,20 @@ Plug 'junegunn/fzf.vim'
 "Themes Plugins
 Plug 'morhetz/gruvbox'
 Plug 'chriskempson/base16-vim'
-Plug 'drewtempelmeyer/palenight.vim'
 Plug 'tomasiser/vim-code-dark'
-Plug 'https://github.com/dunstontc/vim-vscode-theme.git'
 Plug 'https://github.com/sickill/vim-monokai.git'
 Plug 'https://github.com/joshdick/onedark.vim.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
-Plug 'https://github.com/arcticicestudio/nord-vim.git'
 Plug 'danilo-augusto/vim-afterglow'
 Plug 'sainnhe/gruvbox-material'
 
 " Syntax highlighting plugins
+Plug 'HerringtonDarkholme/yats.vim' "TS
+Plug 'w0rp/ale'
 Plug 'https://github.com/vim-python/python-syntax.git'
 Plug 'uiiaoo/java-syntax.vim'
-Plug 'HerringtonDarkholme/yats.vim' "TS
 Plug 'pangloss/vim-javascript'
-Plug 'tasn/vim-tsx'
+Plug 'maxmellon/vim-jsx-pretty'
 
 call plug#end()
 
@@ -73,6 +66,11 @@ set guicursor+=i:ver100-iCursor
 set guicursor+=n-v-c:blinkon0
 set guicursor+=i:blinkwait10
 
+"ale settings
+let g:ale_sign_error = '●' " Less aggressive than the default '>>'
+let g:ale_sign_warning = '.'
+let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
+
 " fixes the alacrity issue with mouse
 if !has('nvim')
 	set ttymouse=sgr
@@ -88,7 +86,7 @@ syntax enable
 set termguicolors
 set background=dark
 set laststatus=2
-colorscheme gruvbox 
+colorscheme gruvbox
 let base16colorspace=256
 let g:gruvbox_contrast_dark = 'hard'
 let g:gruvbox_termcolors=16
@@ -96,6 +94,10 @@ let g:cssColorVimDoNotMessMyUpdatetime = 1 "color highlight
 let g:python_highlight_all = 1
 
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx " set filetypes as typescript.tsx
+
+" Prettier on save
+"let g:prettier#quickfix_enabled = 0
+"autocmd TextChanged,InsertLeave *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
 
 "typescript indend
 let g:typescript_indent_disable = 1
@@ -118,29 +120,29 @@ let java_highlight_functions = 1
 " -- all remaps --
 nmap <C-t> gt
 nmap <C-b> :NERDTreeToggle<CR>
-nmap <A-S-P> :PrettierAsync <CR>
+nmap <A-S-P> :Prettier <CR>
 
 " toggle spelling mistakes
 nmap <F5> :setlocal spell! <CR>
 
 "fzf remaps
 nmap <C-p> :Files <CR>
-nmap <C-S-R> :Rg <CR>
+nmap <A-r> :Rg <CR>
 
 nmap ( {
 nmap ) }
 
-"control-/
+" nerdcommenter: <C-/>
 nmap <C-_>   <Plug>NERDCommenterToggle
 vmap <C-_>   <Plug>NERDCommenterToggle<CR>gv
-nmap <C-s> :w <CR>
+nmap <C-s> :Prettier :w <CR>
 
 inoremap jj <Esc>
 nnoremap <leader>h :wincmd h <CR>
 nnoremap <leader>l :wincmd l <CR>
 nnoremap <leader>j :wincmd j <CR>
 nnoremap <leader>k :wincmd k <CR>
-noremap <A-r> :FloatermNew --name=ranger ranger<CR>
+"noremap <A-r> :FloatermNew --name=ranger ranger<CR>
 noremap <A-v> :FloatermNew --name="vifm" vifm<CR>
 noremap <A-t> :FloatermNew --width=0.4 --wintype=normal --position=right <CR>
 noremap <A-d> :FloatermNew --height=0.4 --wintype=normal --position=bottom <CR>
@@ -177,7 +179,6 @@ nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 nnoremap <silent> <Leader>, :exe "vertical resize -10" <CR>
 nnoremap <silent> <Leader>. :exe "vertical resize +10" <CR>
 
-
 let NERDTreeMapOpenInTab='\r'
 
 "syntastic settings
@@ -195,7 +196,7 @@ let g:syntastic_quiet_messages={'level':'warnings'}
 let g:syntastic_java_javac_classpath = '/usr/lib/jvm/java-6-openjdk/'
 
 " changes cursor when in insert and normal mode
-"autocmd InsertEnter,InsertLeave * set cul!
+ autocmd InsertEnter, InsertLeave * set cul!
 
 "buid and run cpp code
 set autowrite
@@ -204,7 +205,6 @@ hi! Normal ctermbg=NONE guibg=NONE
 hi! NonText ctermbg=NONE guibg=NONE
 
 syntax match myTodo /\v<(TODO|FIXME|NOTE).*/ containedin=.*Comment
-
 
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
