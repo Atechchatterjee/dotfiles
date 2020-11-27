@@ -1,10 +1,11 @@
 #echo "\n"
 #echo -e "\e[1;44m     " "\e[1;41m     ""\e[1;42m     " "\e[1;47m     "
+#echo "\n"
 
 #echo "\n"
 export ZSH="/home/anish/.oh-my-zsh"
 
-ZSH_THEME="gianu"
+ZSH_THEME="afowler"
 
 plugins=(git zsh-abbr)
 
@@ -68,24 +69,47 @@ preexec() { echo -ne '\e[5 q' ;} # Use beam shape cursor for each new prompt.
 	zle push-input
   fi
 }
+
 zle -N ctrlz
 bindkey '^Z' ctrlz
 
 # alias
-alias sz="source ~/.zshrc"
+alias activatevenv="source ./venv/bin/activate"
 alias h="cd ~"
+alias oz="nvim ~/.zshrc"
+alias sz="source ~/.zshrc"
+alias ov="nvim ~/.vimrc"
+alias of="nvim ~/dotfiles/omf.fish"
+alias sf="source ~/dotfiles/omf.fish"
 alias systop="systemctl stop docker mysql mongodb apache2"
 alias weather="curl wttr.in"
 alias tmuxComp="tmux attach-session -t competitive-coding"
-alias tt="tmux -u"
-alias sw="nitrogen --restore &"
+alias swallpaper="nitrogen --restore &"
 alias muteToggle="amixer -q -D pulse set Master toggle"
-alias showWifi="nmcli d wifi list"
+alias show_wifi="nmcli d wifi list"
 alias clock="tty-clock -c -C 1 -b -s -S"
 alias at="alacritty-theme-switch"
+alias alc="nvim ~/.config/alacritty/alacritty.yml"
 alias qt="nvim ~/.config/qtile/config.py"
 alias ra="ranger"
+alias p="pwd"
+alias ss="systemctl suspend"
+alias in="nvim ~/dotfiles/init.vim"
+alias ns="npm start"
+alias pys="python manage.py runserver"
+alias sys="systemctl"
+alias change_default_browser="sudo update-alternatives --config x-www-browser"
+alias db="sudo psql"
 
+alias ls='exa -al --color=always --group-directories-first' 
+alias la='exa -a --color=always --group-directories-first' 
+alias ll='exa -l --color=always --group-directories-first'  
+alias lt='exa -aT --color=always --group-directories-first' 
+alias cp="cp -i"
+alias tmux="tmux -u"
+alias yarn="yarnpkg"
+alias ...="cd ../../"
+alias ....="cd ../../../"
 
 jrun() { javac $1.java && java $1 ; }
 cpTemp() { cp ~/coding/Cpp/template.cpp ./$1.cpp; }
@@ -102,3 +126,5 @@ export VISUAL="nvim";
 export EDITOR="nvim";
 
 source /home/anish/.config/broot/launcher/bash/br
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

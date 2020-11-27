@@ -20,6 +20,7 @@ Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'https://github.com/ap/vim-css-color.git'
 
 "Themes Plugins
 Plug 'morhetz/gruvbox'
@@ -33,7 +34,6 @@ Plug 'sainnhe/gruvbox-material'
 
 " Syntax highlighting plugins
 Plug 'HerringtonDarkholme/yats.vim' "TS
-Plug 'w0rp/ale'
 Plug 'https://github.com/vim-python/python-syntax.git'
 Plug 'uiiaoo/java-syntax.vim'
 Plug 'pangloss/vim-javascript'
@@ -61,15 +61,11 @@ let mapleader = " "
 let g:yats_host_keyword = 1
 
 "keeps the cursor shape block in insert mode
-set guicursor=n-v-c:block-Cursor
-set guicursor+=i:ver100-iCursor
-set guicursor+=n-v-c:blinkon0
-set guicursor+=i:blinkwait10
+"set guicursor=n-v-c:block-Cursor
+"set guicursor+=i:ver100-iCursor
+"set guicursor+=n-v-c:blinkon0
 
-"ale settings
-let g:ale_sign_error = '●' " Less aggressive than the default '>>'
-let g:ale_sign_warning = '.'
-let g:ale_lint_on_enter = 0 " Less distracting when opening a new file
+"set guicursor+=i:blinkwait10
 
 " fixes the alacrity issue with mouse
 if !has('nvim')
@@ -86,10 +82,9 @@ syntax enable
 set termguicolors
 set background=dark
 set laststatus=2
-colorscheme gruvbox
-let base16colorspace=256
 let g:gruvbox_contrast_dark = 'hard'
 let g:gruvbox_termcolors=16
+colorscheme gruvbox
 let g:cssColorVimDoNotMessMyUpdatetime = 1 "color highlight
 let g:python_highlight_all = 1
 
@@ -127,6 +122,7 @@ nmap <F5> :setlocal spell! <CR>
 
 "fzf remaps
 nmap <C-p> :Files <CR>
+nmap <A-g> :GFiles <CR>
 nmap <A-r> :Rg <CR>
 
 nmap ( {
@@ -263,7 +259,7 @@ nmap <C-n> :NERDTreeToggle<CR>
 nmap <leader>rn <Plug>(coc-rename)
 
 let g:lightline = {
-			\ 'colorscheme': 'wombat',
+			\ 'colorscheme': 'onedark',
 			\ 'active': {
 			\   'left': [ [ 'mode', 'paste'  ],
 			\             [ 'gitbranch', 'readonly', 'filename', 'modified' ], [ 'statuslinetabs' ] ]
