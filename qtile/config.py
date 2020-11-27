@@ -1,23 +1,22 @@
 import datetime
 import os
 import subprocess
-from typing import List  # noqa: F401
-
 import psutil
 from libqtile import bar, hook, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Screen, ScratchPad, DropDown, Key
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
+from typing import List  # noqa: F401
 
 # default constants 
 mod = "mod4"
 terminal = guess_terminal()
-myBrowser = "brave-browser"
+myBrowser = "google-chrome"
 guiFileManager = "dolphin"
 default_margin = 6
 default_border_color = "#F28282"
 default_border_width = 1
-bar_opacity = 1
+bar_opacity = 0.8
 
 # autostart applications
 os.system("exec compton -b")
@@ -44,6 +43,9 @@ def hide_show_bar(qtile):
 
 
 keys = [
+    Key([mod], "l", lazy.spawn("/usr/lib/kscreenlocker_greet")),
+    Key([mod, "shift"], "n", lazy.spawn('rofi -show drun -show-icons')),
+    Key([mod], "Tab", lazy.spawn('rofi -show window')),
     Key([mod], "z", lazy.hide_show_bar("top")),
     Key([mod], "m", lazy.spawn("dmenu_run")),
     Key([mod], "c", lazy.spawn("code")),
@@ -210,7 +212,8 @@ def init_border_args():
 layouts = [
     layout.MonadTall(border_focus=default_border_color,
                      border_width=default_border_width, margin=default_margin),
-    layout.Max(),
+    layout.Max(border_focus=default_border_color,
+                     border_width=default_border_width, margin=default_margin),
     layout.Floating(),
 ]
 widget_defaults = dict(
@@ -225,6 +228,7 @@ extension_defaults = widget_defaults.copy()
 purple = "#783C96"
 blue_bg = "#2bbac5"
 white = "#ffffff"
+black = "#0A0A0A"
 
 onedarkBlue = "#3C909B"
 onedarkRed = "#BE5046"
@@ -242,15 +246,16 @@ nordDBlue = "#2D333E"
 nordPurple = "#B48EAD"
 deepBlue = "#292d3e"
 
-topBar_bg = gruvboxBrown 
+topBar_bg = black 
 
 # setting the background colors
 currentLayout_bg = topBar_bg
 memory_bg = nordDBlue
-net_bg = gruvboxBrown
-time_bg = nordDBlue
+net_bg = gruvboxBrown 
+time_bg = nordDBlue 
 shutdown_bg = topBar_bg
-groupBoxHighlight = nordRed
+
+groupBoxHighlight = nordDBlue 
 
 # setting the foregroung colors
 memory_fg = white
@@ -365,7 +370,8 @@ screens = [
                     charge_char='<',
                     discharge_char='*',
                     low_percentage=0.2,
-                    low_foreground=onedarkRed
+                    low_foreground=onedarkRed,
+                    padding=10
                 ),
                 widget.Sep(
                     background=net_bg,
