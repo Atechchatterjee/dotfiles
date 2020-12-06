@@ -1,38 +1,38 @@
 font:
   normal:
-    family: Hack
+    family: Consolas
     style: Regular
   size: 13
-background_opacity: 0.9
+background_opacity: 1
 window:
   padding:
     x: 5
     'y': 5
 colors:
   primary:
-    background: '0x1e2127'
-    foreground: '0xabb2bf'
+    background: '0x1e282d'
+    foreground: '0xc4c7d1'
     dim_foreground: '0xdbdbdb'
     bright_foreground: '0xd9d9d9'
     dim_background: '0x202020'
     bright_background: '0x3a3a3a'
   normal:
-    black: '0x1e2127'
-    red: '0xe06c75'
-    green: '0x98c379'
-    yellow: '0xd19a66'
-    blue: '0x61afef'
-    magenta: '0xc678dd'
-    cyan: '0x56b6c2'
-    white: '0xabb2bf'
+    black: '0x666666'
+    red: '0xeb606b'
+    green: '0xc3e88d'
+    yellow: '0xf7eb95'
+    blue: '0x80cbc4'
+    magenta: '0xff2f90'
+    cyan: '0xaeddff'
+    white: '0xffffff'
   bright:
-    black: '0x5c6370'
-    red: '0xe06c75'
-    green: '0x98c379'
-    yellow: '0xd19a66'
-    blue: '0x61afef'
-    magenta: '0xc678dd'
-    cyan: '0x56b6c2'
+    black: '0xa1a1a1'
+    red: '0xeb606b'
+    green: '0xc3e88d'
+    yellow: '0xf7eb95'
+    blue: '0x7dc6bf'
+    magenta: '0x6c71c4'
+    cyan: '0x35434d'
     white: '0xffffff'
   dim:
     black: '0x232323'
@@ -44,6 +44,8 @@ colors:
     cyan: '0x5c8482'
     white: '0x828282'
   cursor:
-    text: '0xd8d8d8'
+    text: '0x000000'
     cursor: '0xd8d8d8'
+    background: '0xf0f0f0'
+    foreground: '0x26282a'
   indexed_colors: []

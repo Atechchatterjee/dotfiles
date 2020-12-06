@@ -31,11 +31,12 @@ Plug 'https://github.com/joshdick/onedark.vim.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
 Plug 'danilo-augusto/vim-afterglow'
 Plug 'sainnhe/gruvbox-material'
+Plug 'mhartington/oceanic-next'
 
 " Syntax highlighting plugins
 Plug 'HerringtonDarkholme/yats.vim' "TS
 Plug 'https://github.com/vim-python/python-syntax.git'
-Plug 'uiiaoo/java-syntax.vim'
+"Plug 'uiiaoo/java-syntax.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 
@@ -61,11 +62,11 @@ let mapleader = " "
 let g:yats_host_keyword = 1
 
 "keeps the cursor shape block in insert mode
-"set guicursor=n-v-c:block-Cursor
-"set guicursor+=i:ver100-iCursor
-"set guicursor+=n-v-c:blinkon0
+set guicursor=n-v-c:block-Cursor
+set guicursor+=i:ver100-iCursor
+set guicursor+=n-v-c:blinkon0
 
-"set guicursor+=i:blinkwait10
+set guicursor+=i:blinkwait10
 
 " fixes the alacrity issue with mouse
 if !has('nvim')
@@ -84,7 +85,7 @@ set background=dark
 set laststatus=2
 let g:gruvbox_contrast_dark = 'hard'
 let g:gruvbox_termcolors=16
-colorscheme gruvbox
+colorscheme OceanicNext
 let g:cssColorVimDoNotMessMyUpdatetime = 1 "color highlight
 let g:python_highlight_all = 1
 
@@ -259,7 +260,7 @@ nmap <C-n> :NERDTreeToggle<CR>
 nmap <leader>rn <Plug>(coc-rename)
 
 let g:lightline = {
-			\ 'colorscheme': 'onedark',
+			\ 'colorscheme': 'wombat',
 			\ 'active': {
 			\   'left': [ [ 'mode', 'paste'  ],
 			\             [ 'gitbranch', 'readonly', 'filename', 'modified' ], [ 'statuslinetabs' ] ]

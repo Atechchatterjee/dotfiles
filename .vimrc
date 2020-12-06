@@ -49,7 +49,7 @@ Plug 'tasn/vim-tsx'
 call plug#end()
 
 " General settings
-syntax on
+"syntax on
 syntime on
 set number
 set sidescroll=1
@@ -84,11 +84,11 @@ set mouse=a
 command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, <bang>0)
 
 " -- Themes settings & Syntax highlighting --
-syntax enable
+syntax on
 set termguicolors
 set background=dark
 set laststatus=2
-colorscheme default 
+colorscheme base16-default-dark 
 let base16colorspace=256
 let g:gruvbox_contrast_dark = 'hard'
 let g:gruvbox_termcolors=16
@@ -199,7 +199,7 @@ let g:syntastic_quiet_messages={'level':'warnings'}
 let g:syntastic_java_javac_classpath = '/usr/lib/jvm/java-6-openjdk/'
 
 " changes cursor when in insert and normal mode
-"autocmd InsertEnter,InsertLeave * set cul!
+autocmd InsertEnter,InsertLeave * set cul!
 
 "buid and run cpp code
 set autowrite

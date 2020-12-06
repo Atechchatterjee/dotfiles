@@ -4,39 +4,45 @@ set -q XDG_DATA_HOME
   or set -gx OMF_PATH "$HOME/.local/share/omf"
 
 # fish shell change cursor in vi mode --
-function set_mode_pre_execution --on-event fish_preexec
-	set command (expr $argv : '\([^ ]*\).*')
-	set -g __last_fish_bind_mode $fish_bind_mode
-	if test $command = 'node'
-		or echo $command | grep 'python' >/dev/null ^/dev/null
-	else
-		printf '\e]50;CursorShape=0\x7'
-	end
-end
+#function set_mode_pre_execution --on-event fish_preexec
+	#set command (expr $argv : '\([^ ]*\).*')
+	#set -g __last_fish_bind_mode $fish_bind_mode
+	#if test $command = 'node'
+		#or echo $command | grep 'python' >/dev/null ^/dev/null
+	#else
+		#printf '\e]50;CursorShape=0\x7'
+	#end
+#end
 
-function set_mode_post_execution --on-event fish_postexec
-	set temp $__last_fish_bind_mode
-	set -e __last_fish_bind_mode
-	set -g fish_bind_mode $temp
-	fish_vi_cursor
-end
+#function set_mode_post_execution --on-event fish_postexec
+	#set temp $__last_fish_bind_mode
+	#set -e __last_fish_bind_mode
+	#set -g fish_bind_mode $temp
+	#fish_vi_cursor
+#end
 
-function fish_vi_cursor --on-variable fish_bind_mode
-	if set -q __last_fish_bind_mode
-		and test $__last_fish_bind_mode = $fish_bind_mode
-		return
-	end
-	set -g __last_fish_bind_mode $fish_bind_mode
-	switch $fish_bind_mode
-		case insert
-			printf '\e]50;CursorShape=1\x7'
-		case default
-			printf '\e]50;CursorShape=0\x7'
-		case "*"
-			printf '\e]50;CursorShape=0\x7'
-	end
-end
+#function fish_vi_cursor --on-variable fish_bind_mode
+	#if set -q __last_fish_bind_mode
+		#and test $__last_fish_bind_mode = $fish_bind_mode
+		#return
+	#end
+	#set -g __last_fish_bind_mode $fish_bind_mode
+	#switch $fish_bind_mode
+		#case insert
+			#printf '\e]50;CursorShape=1\x7'
+		#case default
+			#printf '\e]50;CursorShape=0\x7'
+		#case "*"
+			#printf '\e]50;CursorShape=0\x7'
+	#end
+#end
 # --
+
+# Set the cursor shapes for the different vi modes.
+set fish_cursor_default     block      blink
+set fish_cursor_insert      line       blink
+set fish_cursor_replace_one underscore blink
+set fish_cursor_visual      block
 
 fish_vi_cursor
 
