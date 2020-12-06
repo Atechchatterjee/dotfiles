@@ -8,22 +8,13 @@ from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from typing import List  # noqa: F401
 
-# default constants 
-mod = "mod4"
-terminal = guess_terminal()
-myBrowser = "google-chrome"
-guiFileManager = "dolphin"
-default_margin = 6
-default_border_color = "#F28282"
-default_border_width = 1
-bar_opacity = 0.8
-
 # autostart applications
 os.system("exec compton -b")
 os.system("nitrogen --restore &")
 os.system("setxkbmap us")  # changes keyboard layout to english us
 os.system("systemctl stop docker mysql mongodb apache2")
 os.system("xset r rate 250 100")
+
 # Switches the primary display as the external display 
 os.system("xrandr --output HDMI-1 --primary")
 # sets the resolution of the external display
@@ -42,8 +33,45 @@ def hide_show_bar(qtile):
         qtile.currentGroup.layoutAll()
 
 
+# color palete
+purple = "#783C96"
+blue_bg = "#2bbac5"
+white = "#ffffff"
+black = "#0A0A0A"
+
+onedarkBlue = "#3C909B"
+onedarkRed = "#BE5046"
+
+gruvboxRed = "#F94B3F"
+gruvboxAqua = "#689D6A"
+gruvboxBrown = "#1D2021"
+gruvboxOrange = "#D65F34"
+gruvboxBlue = "#458587"
+
+nordRed = "#BF616A"
+nordGreen = "#A3BE8C"
+nordBlue = "#81A1C1"
+nordDBlue = "#2D333E"
+nordPurple = "#B48EAD"
+deepBlue = "#292d3e"
+
+draculaYellow = "#F1FA8C"
+draculaRed = "#FF5555"
+draculaGreen = "#50FA7B"
+
+
+# default constants 
+mod = "mod4"
+terminal = guess_terminal()
+myBrowser = "google-chrome"
+guiFileManager = "dolphin"
+default_margin = 0
+default_border_color = white
+default_border_width = 1
+bar_opacity = 0.9
+
+
 keys = [
-    Key([mod], "l", lazy.spawn("/usr/lib/kscreenlocker_greet")),
     Key([mod, "shift"], "n", lazy.spawn('rofi -show drun -show-icons')),
     Key([mod], "Tab", lazy.spawn('rofi -show window')),
     Key([mod], "z", lazy.hide_show_bar("top")),
@@ -173,14 +201,11 @@ keys = [
     Key([mod, "shift"], "h", lazy.layout.flip_left()),
 ]
 
-group_names = [("Web", {'layout': 'monadtall'}),
-               ("Dev", {'layout': 'monadtall'}),
-               ("Class", {'layout': 'monadtall'}),
-               ("Conf", {'layout': 'monadtall'}),
-               ("Test", {'layout': 'monadtall'}),
-               ("Med", {'layout': 'monadtall'}),
-               ("Float", {'layout': 'floating'}),
-               ("Other", {'layout': 'monadtall'})
+group_names = [("WEB", {'layout': 'monadtall'}),
+               ("DEV", {'layout': 'monadtall'}),
+               ("CLASS", {'layout': 'monadtall'}),
+               ("CONF", {'layout': 'monadtall'}),
+               ("TEST", {'layout': 'monadtall'}),
                ]
 
 group_keys = "a,s,d,f,u,i,o,p".split(",")
@@ -198,7 +223,7 @@ def init_layout_theme():
     return {"border_width": 0,
             "margin": 8,
             "border_focus": "#FF5454",
-            "border_normal": "#50EDCE"
+            "border_normal": "#ffffff"
             }
 
 
@@ -211,11 +236,12 @@ def init_border_args():
 
 layouts = [
     layout.MonadTall(border_focus=default_border_color,
-                     border_width=default_border_width, margin=default_margin),
+                     border_width=default_border_width, margin=default_margin, fullscreen_border_width=0),
     layout.Max(border_focus=default_border_color,
                      border_width=default_border_width, margin=default_margin),
-    layout.Floating(),
+    layout.Floating(border_focus=white),
 ]
+
 widget_defaults = dict(
     font='sans',
     fontsize=12,
@@ -223,51 +249,24 @@ widget_defaults = dict(
 )
 extension_defaults = widget_defaults.copy()
 
-
-# available colors for topbar
-purple = "#783C96"
-blue_bg = "#2bbac5"
-white = "#ffffff"
-black = "#0A0A0A"
-
-onedarkBlue = "#3C909B"
-onedarkRed = "#BE5046"
-
-gruvboxRed = "#F94B3F"
-gruvboxAqua = "#689D6A"
-gruvboxBrown = "#1D2021"
-gruvboxOrange = "#D65F34"
-gruvboxBlue = "#458587"
-
-nordRed = "#BF616A"
-nordGreen = "#A3BE8C"
-nordBlue = "#81A1C1"
-nordDBlue = "#2D333E"
-nordPurple = "#B48EAD"
-deepBlue = "#292d3e"
-
-topBar_bg = black 
-
 # setting the background colors
+topBar_bg = "#101219"
 currentLayout_bg = topBar_bg
-memory_bg = nordDBlue
-net_bg = gruvboxBrown 
-time_bg = nordDBlue 
+memory_bg = gruvboxAqua
+net_bg = gruvboxBlue
+time_bg =  gruvboxAqua
 shutdown_bg = topBar_bg
 
-groupBoxHighlight = nordDBlue 
+groupBoxHighlight = nordDBlue
 
 # setting the foregroung colors
 memory_fg = white
 net_fg = white
 time_fg = white
 
-universal_fontsize = 10
+universal_fontsize = 11
 
-screens = [
-    Screen(
-        top=bar.Bar(
-            [
+top_bar_config1 = [
                 widget.Sep(
                     background=currentLayout_bg,
                     foreground=currentLayout_bg,
@@ -283,18 +282,21 @@ screens = [
                     highlight_method="line",
                     center_aligned=True,
                     rounded=True,
-                    fontsize=universal_fontsize,
+                    fontsize=universal_fontsize-2,
                 ),
+
                 widget.Sep(
                     background=topBar_bg,
                     foreground=topBar_bg,
                     padding=10,
                 ),
+
                 widget.WindowName(
                     background=topBar_bg,
                     foreground=topBar_bg,
                     fontsize=universal_fontsize,
                 ),
+
                 widget.TextBox(
                     text='vol:',
                     background=topBar_bg,
@@ -391,11 +393,20 @@ screens = [
                     foreground=time_bg,
                     padding=3,
                 ),
+
+               widget.TextBox(
+                   text = '🕞',
+                   background = time_bg,
+                   foreground = white,
+                   padding = 5,
+                   fontsize = 11
+                ),
+
                 widget.Clock(
-                    format='%d / %m %a %I:%M:%S %p',
+                    format='%d / %m  [ %a ]  %I:%M:%S %p',
                     background=time_bg,
                     foreground=time_fg,
-                    padding=2,
+                    padding=5,
                     mouse_callbacks={'Button1': lambda qtile: qtile.cmd_spawn(
                         terminal + ' -e tty-clock -c -C 1 -b -s')},
                     fontsize=universal_fontsize,
@@ -407,8 +418,192 @@ screens = [
                     height_percent=100,
                 ),
 
-            ],
-            18,
+            ]
+
+seperator_height = 50
+
+top_bar_config2 = [
+                widget.Sep(
+                    background=currentLayout_bg,
+                    foreground=currentLayout_bg,
+                    padding=5,
+                ),
+
+                widget.GroupBox(
+                    border=onedarkRed,
+                    border_width=2,
+                    background=topBar_bg,
+                    foreground=purple,
+                    highlight_color=groupBoxHighlight,
+                    highlight_method="line",
+                    center_aligned=True,
+                    rounded=True,
+                    fontsize=universal_fontsize-2,
+                ),
+
+                widget.Sep(
+                    background=topBar_bg,
+                    foreground=topBar_bg,
+                    padding=10
+                ),
+
+                widget.WindowName(
+                    background=topBar_bg,
+                    foreground=topBar_bg,
+                    fontsize=universal_fontsize-2,
+                ),
+
+                widget.TextBox(
+                    text="📢",
+                    background=topBar_bg,
+                    foreground=onedarkBlue,
+                    padding=1,
+                    fontsize=11,
+                ),
+
+                widget.Volume(
+                    background=topBar_bg,
+                    padding=10,
+                    get_volume_command="",
+                    volume_up_command="amixer -q -D pulse set Master 1%+",
+                    volume_down_command="amixer -q -D pulse set Master 1%-",
+                    fontsize=universal_fontsize,
+                ),
+
+                widget.Sep(
+                    background=topBar_bg,
+                    foreground=white,
+                    height_percent=seperator_height,
+                    padding=0,
+                ),
+
+                widget.TextBox(
+                    text="💻",
+                    background=topBar_bg,
+                    foreground=onedarkBlue,
+                    padding=5,
+                    fontsize=11,
+                ),
+
+                widget.CurrentLayout(
+                    foreground=nordPurple,
+                    background=topBar_bg,
+                    fontsize=universal_fontsize,
+                    padding=10
+                ),
+
+                widget.Sep(
+                    background=topBar_bg,
+                    foreground=white,
+                    height_percent=60,
+                    padding=5,
+                ),
+
+                widget.TextBox(
+                    text="Mem:",
+                    background=topBar_bg,
+                    foreground=onedarkBlue,
+                    padding=5,
+                    fontsize=11,
+                ),
+
+
+                widget.Memory(
+                    background=topBar_bg,
+                    foreground=gruvboxAqua,
+                    padding=10,
+                    mouse_callbacks={'Button1': lambda qtile: qtile.cmd_spawn(
+                        terminal + ' -e htop')},
+                    fontsize=universal_fontsize,
+                ),
+
+                widget.Chord(
+                    chords_colors={
+                        'launch': ("#1D96F9", "#ffff00"),
+                    },
+                    background=topBar_bg,
+                    name_transform=lambda name: name.upper(),
+                    fontsize=universal_fontsize,
+                ),
+
+                widget.Systray(
+                    background=topBar_bg,
+                    fontsize=universal_fontsize-5,
+                    padding=10
+                ),
+
+                widget.Sep(
+                    background=topBar_bg,
+                    foreground=topBar_bg,
+                    height_percent=seperator_height,
+                    padding=4,
+                ),
+
+                widget.Sep(
+                    background=topBar_bg,
+                    foreground=white,
+                    height_percent=seperator_height,
+                    padding=4,
+                ),
+
+               widget.TextBox(
+                   text = '🛢',
+                   background = topBar_bg,
+                   foreground = white,
+                   padding = 5,
+                   fontsize = universal_fontsize+2
+                ),
+
+                widget.Battery(
+                    format=' {percent:2.0%} ',
+                    battery=0,
+                    background=topBar_bg,
+                    foreground=nordBlue,
+                    charge_char='<',
+                    discharge_char='*',
+                    low_percentage=0.2,
+                    low_foreground=onedarkRed,
+                    padding=5
+                ),
+
+                widget.Sep(
+                    background=topBar_bg,
+                    foreground=white,
+                    height_percent=seperator_height,
+                    padding=4,
+                ),
+
+               widget.TextBox(
+                   text = '🕞',
+                   background = topBar_bg,
+                   foreground = white,
+                   padding = 10,
+                   fontsize = 11
+                ),
+
+                widget.Clock(
+                    format='%d | %m  [ %a ]  ( %I:%M %p )',
+                    background=topBar_bg,
+                    foreground=draculaYellow,
+                    padding=5,
+                    mouse_callbacks={'Button1': lambda qtile: qtile.cmd_spawn(
+                        terminal + ' -e tty-clock -c -C 1 -b -s')},
+                    fontsize=universal_fontsize,
+                ),
+
+                widget.Sep(
+                    background=topBar_bg,
+                    foreground=topBar_bg,
+                    padding=7,
+                    height_percent=seperator_height,
+                ),
+
+            ]
+
+screens = [
+    Screen(
+        top=bar.Bar(
+            top_bar_config2, 20,
             opacity=bar_opacity,
         ),
     ),
