@@ -43,20 +43,23 @@ Plug 'maxmellon/vim-jsx-pretty'
 call plug#end()
 
 " General settings
-syntax on
-syntime on
+syntax on 
+set ruler
 set number
-set sidescroll=1
 set nowrap
-set noswapfile
-set tabstop=4 softtabstop=4
-set shiftwidth=4
-set smartindent
+set hlsearch
 set noshowmode
-set backspace=indent,eol,start
-set ttimeoutlen=0
+set noswapfile
+set smartindent
 set scrolloff=7
+set sidescroll=1
+set shiftwidth=4
 set encoding=UTF-8
+set ttimeoutlen=0
+set tabstop=4 softtabstop=4
+set backspace=indent,eol,start
+
+"highlight Comment ctermfg=green
 
 let mapleader = " "
 let g:yats_host_keyword = 1
@@ -79,13 +82,20 @@ set mouse=a
 command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, <bang>0)
 
 " -- Themes settings & Syntax highlighting --
-syntax enable
-set termguicolors
+
+" Enable true color(fixes colors for tmux)
+"if exists('+termguicolors')
+	"let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+	"let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+	"set termguicolors
+"endif
+
+"set termguicolors
 set background=dark
 set laststatus=2
 let g:gruvbox_contrast_dark = 'hard'
 let g:gruvbox_termcolors=16
-colorscheme OceanicNext
+colorscheme default
 let g:cssColorVimDoNotMessMyUpdatetime = 1 "color highlight
 let g:python_highlight_all = 1
 
@@ -99,13 +109,6 @@ autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx " set filetyp
 let g:typescript_indent_disable = 1
 let g:typescript_compiler_binary = 'tsc'
 let g:tsx_ext_required = 1
-
-" Enable true color(fixes colors for tmux)
-if exists('+termguicolors')
-	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-	set termguicolors
-endif
 
 execute "set t_8f=\e[38;2;%lu;%lu;%lum"
 execute "set t_8b=\e[48;2;%lu;%lu;%lum"
@@ -178,8 +181,8 @@ nnoremap <silent> <Leader>. :exe "vertical resize +10" <CR>
 
 let NERDTreeMapOpenInTab='\r'
 
-"syntastic settings
-"execute pathogen#infect()
+" syntastic settings
+" execute pathogen#infect()
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -193,9 +196,10 @@ let g:syntastic_quiet_messages={'level':'warnings'}
 let g:syntastic_java_javac_classpath = '/usr/lib/jvm/java-6-openjdk/'
 
 " changes cursor when in insert and normal mode
- autocmd InsertEnter, InsertLeave * set cul!
+autocmd InsertEnter, InsertLeave * set cul!
+ 
 
-"buid and run cpp code
+" buid and run cpp code
 set autowrite
 
 hi! Normal ctermbg=NONE guibg=NONE
@@ -402,4 +406,3 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-

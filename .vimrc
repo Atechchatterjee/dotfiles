@@ -4,20 +4,15 @@ call plug#begin('~/.vim/plugged')
 Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree' |
 			\ Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'https://github.com/pangloss/vim-javascript.git'
 Plug 'neoclide/coc.nvim', {'branch':'release'}
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/nerdcommenter'
-Plug 'junegunn/goyo.vim'
-Plug 'https://github.com/tc50cal/vim-terminal.git'
-Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'https://github.com/xavierd/clang_complete.git'
+Plug 'justmao945/vim-clang'
 Plug 'honza/vim-snippets'
 Plug 'https://github.com/vifm/vifm.vim.git'
-Plug 'justmao945/vim-clang'
-Plug 'https://github.com/xavierd/clang_complete.git'
 Plug 'voldikss/vim-floaterm'
 Plug 'https://github.com/skammer/vim-css-color.git'
 Plug 'https://github.com/Shougo/vimfiler.vim.git'
@@ -25,44 +20,47 @@ Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'https://github.com/ap/vim-css-color.git'
 
 "Themes Plugins
 Plug 'morhetz/gruvbox'
 Plug 'chriskempson/base16-vim'
-Plug 'drewtempelmeyer/palenight.vim'
 Plug 'tomasiser/vim-code-dark'
-Plug 'https://github.com/dunstontc/vim-vscode-theme.git'
 Plug 'https://github.com/sickill/vim-monokai.git'
 Plug 'https://github.com/joshdick/onedark.vim.git'
 Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
-Plug 'https://github.com/arcticicestudio/nord-vim.git'
 Plug 'danilo-augusto/vim-afterglow'
 Plug 'sainnhe/gruvbox-material'
+Plug 'mhartington/oceanic-next'
 
 " Syntax highlighting plugins
-Plug 'https://github.com/vim-python/python-syntax.git'
-Plug 'uiiaoo/java-syntax.vim'
 Plug 'HerringtonDarkholme/yats.vim' "TS
+Plug 'https://github.com/vim-python/python-syntax.git'
+"Plug 'uiiaoo/java-syntax.vim'
 Plug 'pangloss/vim-javascript'
-Plug 'tasn/vim-tsx'
+Plug 'maxmellon/vim-jsx-pretty'
 
 call plug#end()
 
 " General settings
-"syntax on
-syntime on
+syntax on
+set ai
+set ruler
 set number
-set sidescroll=1
 set nowrap
-set noswapfile
-set tabstop=4 softtabstop=4
-set shiftwidth=4
-set smartindent
+set hlsearch
 set noshowmode
-set backspace=indent,eol,start
-set ttimeoutlen=0
+set noswapfile
+set smartindent
 set scrolloff=7
+set sidescroll=1
+set shiftwidth=4
 set encoding=UTF-8
+set ttimeoutlen=0
+set tabstop=4 softtabstop=4
+set backspace=indent,eol,start
+
+highlight Comment ctermfg=green
 
 let mapleader = " "
 let g:yats_host_keyword = 1
@@ -71,6 +69,7 @@ let g:yats_host_keyword = 1
 set guicursor=n-v-c:block-Cursor
 set guicursor+=i:ver100-iCursor
 set guicursor+=n-v-c:blinkon0
+
 set guicursor+=i:blinkwait10
 
 " fixes the alacrity issue with mouse
@@ -84,16 +83,14 @@ set mouse=a
 command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, <bang>0)
 
 " -- Themes settings & Syntax highlighting --
-syntax on
-set termguicolors
-set background=dark
+"set termguicolors
+"set background=dark
 set laststatus=2
-colorscheme base16-default-dark 
-let base16colorspace=256
-let g:gruvbox_contrast_dark = 'hard'
-let g:gruvbox_termcolors=16
-let g:cssColorVimDoNotMessMyUpdatetime = 1 "color highlight
-let g:python_highlight_all = 1
+"let g:gruvbox_contrast_dark = 'hard'
+"let g:gruvbox_termcolors=16
+"colorscheme OceanicNext 
+"let g:cssColorVimDoNotMessMyUpdatetime = 1 "color highlight
+"let g:python_highlight_all = 1
 
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx " set filetypes as typescript.tsx
 
@@ -107,14 +104,14 @@ let g:typescript_compiler_binary = 'tsc'
 let g:tsx_ext_required = 1
 
 " Enable true color(fixes colors for tmux)
-if exists('+termguicolors')
-	let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-	let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-	set termguicolors
-endif
+"if exists('+termguicolors')
+	"let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
+	"let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
+	"set termguicolors
+"endif
 
-execute "set t_8f=\e[38;2;%lu;%lu;%lum"
-execute "set t_8b=\e[48;2;%lu;%lu;%lum"
+"execute "set t_8f=\e[38;2;%lu;%lu;%lum"
+"execute "set t_8b=\e[48;2;%lu;%lu;%lum"
 
 " java autocomplete
 let java_highlight_functions = 1
@@ -129,12 +126,13 @@ nmap <F5> :setlocal spell! <CR>
 
 "fzf remaps
 nmap <C-p> :Files <CR>
-nmap <C-S-R> :Rg <CR>
+nmap <A-g> :GFiles <CR>
+nmap <A-r> :Rg <CR>
 
 nmap ( {
 nmap ) }
 
-"control-/
+" nerdcommenter: <C-/>
 nmap <C-_>   <Plug>NERDCommenterToggle
 vmap <C-_>   <Plug>NERDCommenterToggle<CR>gv
 nmap <C-s> :Prettier :w <CR>
@@ -144,7 +142,7 @@ nnoremap <leader>h :wincmd h <CR>
 nnoremap <leader>l :wincmd l <CR>
 nnoremap <leader>j :wincmd j <CR>
 nnoremap <leader>k :wincmd k <CR>
-noremap <A-r> :FloatermNew --name=ranger ranger<CR>
+"noremap <A-r> :FloatermNew --name=ranger ranger<CR>
 noremap <A-v> :FloatermNew --name="vifm" vifm<CR>
 noremap <A-t> :FloatermNew --width=0.4 --wintype=normal --position=right <CR>
 noremap <A-d> :FloatermNew --height=0.4 --wintype=normal --position=bottom <CR>
@@ -181,7 +179,6 @@ nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 nnoremap <silent> <Leader>, :exe "vertical resize -10" <CR>
 nnoremap <silent> <Leader>. :exe "vertical resize +10" <CR>
 
-
 let NERDTreeMapOpenInTab='\r'
 
 "syntastic settings
@@ -199,7 +196,7 @@ let g:syntastic_quiet_messages={'level':'warnings'}
 let g:syntastic_java_javac_classpath = '/usr/lib/jvm/java-6-openjdk/'
 
 " changes cursor when in insert and normal mode
-autocmd InsertEnter,InsertLeave * set cul!
+ autocmd InsertEnter, InsertLeave * set cul!
 
 "buid and run cpp code
 set autowrite
@@ -208,7 +205,6 @@ hi! Normal ctermbg=NONE guibg=NONE
 hi! NonText ctermbg=NONE guibg=NONE
 
 syntax match myTodo /\v<(TODO|FIXME|NOTE).*/ containedin=.*Comment
-
 
 let &t_SI = "\e[6 q"
 let &t_EI = "\e[2 q"
@@ -409,4 +405,3 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
-
