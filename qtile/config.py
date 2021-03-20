@@ -255,7 +255,7 @@ net_bg = gruvboxBrown
 time_bg =  nordDBlue
 shutdown_bg = topBar_bg
 
-groupBoxHighlight = nordDBlue
+groupBoxHighlight = onedarkRed
 
 # setting the foregroung colors
 memory_fg = white
@@ -265,22 +265,26 @@ time_fg = white
 universal_fontsize = 11
 
 top_bar_config1 = [
-                widget.Sep(
-                    background=currentLayout_bg,
-                    foreground=currentLayout_bg,
-                    padding=5,
+                widget.TextBox(
+                    text=' ',
+                    background=nordDBlue,
+                    foreground=draculaYellow,
+                    padding=8,
+                    margin_y = 2,
+                    fontsize=universal_fontsize + 2,
                 ),
 
                 widget.GroupBox(
-                    border=onedarkRed,
-                    border_width=2,
+                    margin_y = 5,
+                    padding = 3,
                     background=topBar_bg,
                     foreground=purple,
                     highlight_color=groupBoxHighlight,
                     highlight_method="line",
                     center_aligned=True,
-                    rounded=True,
+                    # rounded=True,
                     fontsize=universal_fontsize-2,
+                    this_current_screen_border = groupBoxHighlight
                 ),
 
                 widget.Sep(
@@ -291,23 +295,24 @@ top_bar_config1 = [
 
                 widget.WindowName(
                     background=topBar_bg,
-                    foreground=topBar_bg,
-                    fontsize=universal_fontsize,
+                    foreground=white,
+                    fontsize=0,
                 ),
 
                 widget.TextBox(
                     text=' ',
-                    background=topBar_bg,
+                    background=memory_bg,
                     foreground=onedarkRed,
-                    padding=1,
+                    padding=10,
                     fontsize=universal_fontsize + 3,
                 ),
+
                 widget.Volume(
-                    background=topBar_bg,
+                    background=memory_bg,
                     padding=8,
-                    get_volume_command="",
-                    volume_up_command="amixer -q -D pulse set Master 1%+",
-                    volume_down_command="amixer -q -D pulse set Master 1%-",
+                    mute_command="amixer -q -D pulse set Master toggle",
+                    volume_up_command="amixer -c 0 -q set Master 2dB+",
+                    volume_down_command="amixer -c 0 -q set Master 2dB-",
                     fontsize=universal_fontsize,
                 ),
                 # widget.TextBox(
