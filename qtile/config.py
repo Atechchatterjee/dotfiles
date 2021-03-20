@@ -20,7 +20,6 @@ os.system("xrandr --output HDMI-1 --primary")
 # sets the resolution of the external display
 os.system("xrandr -s 1920x1080")
 
-
 # hide the topbar
 def hide_show_bar(qtile):
     bar = qtile.currentScreen.top
@@ -63,12 +62,12 @@ draculaGreen = "#50FA7B"
 # default constants 
 mod = "mod4"
 terminal = guess_terminal()
-myBrowser = "google-chrome"
+myBrowser = "brave-browser"
 guiFileManager = "dolphin"
-default_margin = 0
+default_margin = 10
 default_border_color = white
 default_border_width = 1
-bar_opacity = 0.9
+bar_opacity = 1
 
 
 keys = [
@@ -219,20 +218,6 @@ for i, (name, kwargs) in enumerate(group_names, 1):
         group_keys[i-1]), lazy.window.togroup(name)))
 
 
-def init_layout_theme():
-    return {"border_width": 0,
-            "margin": 8,
-            "border_focus": "#FF5454",
-            "border_normal": "#ffffff"
-            }
-
-
-layout_theme = init_layout_theme()
-
-
-def init_border_args():
-    return {"border_width": 2}
-
 
 layouts = [
     layout.MonadTall(border_focus=default_border_color,
@@ -241,6 +226,19 @@ layouts = [
                      border_width=default_border_width, margin=default_margin),
     layout.Floating(border_focus=white),
 ]
+
+def init_layout_theme():
+    return {"border_width": 0,
+            "margin": 8,
+            "border_focus": "#FF5454",
+            "border_normal": "#ffffff"
+            }
+
+layout_theme = init_layout_theme()
+
+def init_border_args():
+    return {"border_width": 2}
+
 
 widget_defaults = dict(
     font='sans',
@@ -252,9 +250,9 @@ extension_defaults = widget_defaults.copy()
 # setting the background colors
 topBar_bg = "#101219"
 currentLayout_bg = topBar_bg
-memory_bg = gruvboxAqua
-net_bg = gruvboxBlue
-time_bg =  gruvboxAqua
+memory_bg = nordDBlue
+net_bg = gruvboxBrown
+time_bg =  nordDBlue
 shutdown_bg = topBar_bg
 
 groupBoxHighlight = nordDBlue
@@ -298,11 +296,11 @@ top_bar_config1 = [
                 ),
 
                 widget.TextBox(
-                    text='vol:',
+                    text=' ',
                     background=topBar_bg,
-                    foreground=onedarkBlue,
+                    foreground=onedarkRed,
                     padding=1,
-                    fontsize=universal_fontsize,
+                    fontsize=universal_fontsize + 3,
                 ),
                 widget.Volume(
                     background=topBar_bg,
@@ -312,26 +310,35 @@ top_bar_config1 = [
                     volume_down_command="amixer -q -D pulse set Master 1%-",
                     fontsize=universal_fontsize,
                 ),
-                widget.TextBox(
-                    text="",
-                    background=topBar_bg,
-                    foreground=net_bg,
-                    fontsize=universal_fontsize+47,
-                    padding=-12,
-                ),
+                # widget.TextBox(
+                    # text="",
+                    # background=topBar_bg,
+                    # foreground=net_bg,
+                    # fontsize=universal_fontsize+47,
+                    # padding=-12,
+                # ),
                 widget.CurrentLayout(
                     foreground="#ffffff",
                     background=net_bg,
                     fontsize=universal_fontsize,
                     padding=8
                 ),
-                widget.TextBox(
-                    text="",
-                    background=net_bg,
-                    foreground=memory_bg,
-                    fontsize=universal_fontsize+47,
-                    padding=-12,
+                # widget.TextBox(
+                    # text="",
+                    # background=net_bg,
+                    # foreground=memory_bg,
+                    # fontsize=universal_fontsize+47,
+                    # padding=-12,
+                # ),
+
+               widget.TextBox(
+                   text = 'memory :',
+                   background = time_bg,
+                   foreground = draculaYellow,
+                   padding = 10,
+                   fontsize = universal_fontsize
                 ),
+
                 widget.Memory(
                     background=memory_bg,
                     foreground=memory_fg,
@@ -341,13 +348,13 @@ top_bar_config1 = [
                     fontsize=universal_fontsize,
                 ),
 
-                widget.TextBox(
-                    text="",
-                    background=memory_bg,
-                    foreground=net_bg,
-                    fontsize=57,
-                    padding=-12
-                ),
+                # widget.TextBox(
+                    # text="",
+                    # background=memory_bg,
+                    # foreground=net_bg,
+                    # fontsize=57,
+                    # padding=-12
+                # ),
                 widget.Chord(
                     chords_colors={
                         'launch': ("#1D96F9", "#ffff00"),
@@ -365,6 +372,13 @@ top_bar_config1 = [
                     background=net_bg,
                     fontsize=universal_fontsize,
                 ),
+                widget.TextBox(
+                        text=" ",
+                    background=net_bg,
+                    foreground=nordGreen,
+                    fontsize=universal_fontsize,
+                    padding = 7
+                ),
                 widget.Battery(
                     format=' {percent:2.0%} ',
                     battery=0,
@@ -381,13 +395,13 @@ top_bar_config1 = [
                     padding=0,
                 ),
 
-                widget.TextBox(
-                    text="",
-                    background=net_bg,
-                    foreground=time_bg,
-                    fontsize=57,
-                    padding=-12,
-                ),
+                # widget.TextBox(
+                    # text="",
+                    # background=net_bg,
+                    # foreground=time_bg,
+                    # fontsize=57,
+                    # padding=-12,
+                # ),
                 widget.Sep(
                     background=time_bg,
                     foreground=time_bg,
@@ -395,11 +409,11 @@ top_bar_config1 = [
                 ),
 
                widget.TextBox(
-                   text = '🕞',
+                   text = '',
                    background = time_bg,
                    foreground = white,
-                   padding = 5,
-                   fontsize = 11
+                   padding = 10,
+                   fontsize = 15
                 ),
 
                 widget.Clock(
@@ -418,6 +432,15 @@ top_bar_config1 = [
                     height_percent=100,
                 ),
 
+                widget.TextBox(
+                    text=" ",
+                    background=onedarkRed,
+                    foreground = net_fg,
+                    fontsize=universal_fontsize+1,
+                    padding=8,
+                    mouse_callbacks={'Button1': lambda qtile: qtile.cmd_spawn(
+                        terminal + ' -e shutdown')} 
+                ),
             ]
 
 seperator_height = 50
@@ -593,17 +616,24 @@ top_bar_config2 = [
 
                 widget.Sep(
                     background=topBar_bg,
-                    foreground=topBar_bg,
+                    foreground=white,
                     padding=7,
                     height_percent=seperator_height,
                 ),
 
+                widget.QuickExit(
+                    background=topBar_bg,
+                    foreground=white,
+                    default_text='⏻',
+                    fontsize=universal_fontsize+1,
+                    padding = 5
+                )
             ]
 
 screens = [
     Screen(
         top=bar.Bar(
-            top_bar_config2, 20,
+            top_bar_config1, 23,
             opacity=bar_opacity,
         ),
     ),
@@ -641,6 +671,7 @@ floating_layout = layout.Floating(float_rules=[
     {'wname': 'pinentry'},  # GPG key password entry
     {'wmclass': 'ssh-askpass'},  # ssh-askpass
 ])
+
 auto_fullscreen = True
 focus_on_window_activation = "smart"
 
