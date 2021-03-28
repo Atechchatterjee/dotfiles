@@ -64,10 +64,12 @@ mod = "mod4"
 terminal = guess_terminal()
 myBrowser = "brave-browser"
 guiFileManager = "dolphin"
-default_margin = 10
+default_margin = 0
 default_border_color = white
 default_border_width = 1
 bar_opacity = 1
+bar_thickness = 28
+universal_fontsize = 12
 
 
 keys = [
@@ -200,11 +202,11 @@ keys = [
     Key([mod, "shift"], "h", lazy.layout.flip_left()),
 ]
 
-group_names = [("WEB", {'layout': 'monadtall'}),
-               ("DEV", {'layout': 'monadtall'}),
-               ("CLASS", {'layout': 'monadtall'}),
-               ("CONF", {'layout': 'monadtall'}),
-               ("TEST", {'layout': 'monadtall'}),
+group_names = [(" ", {'layout': 'monadtall'}),
+                (" ", {'layout': 'monadtall'}),
+               (" ", {'layout': 'monadtall'}),
+               (" ", {'layout': 'monadtall'}),
+               (" ", {'layout': 'monadtall'}),
                ]
 
 group_keys = "a,s,d,f,u,i,o,p".split(",")
@@ -216,7 +218,6 @@ for i, (name, kwargs) in enumerate(group_names, 1):
     # Send current window to another group
     keys.append(Key([mod, "shift"], str(
         group_keys[i-1]), lazy.window.togroup(name)))
-
 
 
 layouts = [
@@ -262,16 +263,19 @@ memory_fg = white
 net_fg = white
 time_fg = white
 
-universal_fontsize = 11
+
+def open_rofi(qtile):
+    qtile.cmd_spawn('rofi -show drun -show-icons')
 
 top_bar_config1 = [
                 widget.TextBox(
-                    text=' ',
+                    text=' ',
                     background=nordDBlue,
-                    foreground=draculaYellow,
+                    foreground=white,
                     padding=8,
                     margin_y = 2,
                     fontsize=universal_fontsize + 2,
+                    mouse_callbacks={'Button1': open_rofi},
                 ),
 
                 widget.GroupBox(
@@ -283,7 +287,7 @@ top_bar_config1 = [
                     highlight_method="line",
                     center_aligned=True,
                     # rounded=True,
-                    fontsize=universal_fontsize-2,
+                    fontsize=universal_fontsize+3,
                     this_current_screen_border = groupBoxHighlight
                 ),
 
@@ -299,11 +303,28 @@ top_bar_config1 = [
                     fontsize=0,
                 ),
 
+                widget.Sep(
+                    background=topBar_bg,
+                    foreground=topBar_bg,
+                    padding=2,
+                ),
+                widget.Systray(
+                    background=topBar_bg,
+                    fontsize=universal_fontsize,
+                    margin_y=20,
+                    padding=2,
+                ),
+
+                widget.Sep(
+                    background=topBar_bg,
+                    foreground=topBar_bg,
+                    padding=8
+                ),
                 widget.TextBox(
                     text=' ',
                     background=memory_bg,
                     foreground=onedarkRed,
-                    padding=10,
+                    padding=8,
                     fontsize=universal_fontsize + 3,
                 ),
 
@@ -368,15 +389,7 @@ top_bar_config1 = [
                     name_transform=lambda name: name.upper(),
                     fontsize=universal_fontsize,
                 ),
-                widget.Sep(
-                    background=net_bg,
-                    foreground=net_bg,
-                    padding=0,
-                ),
-                widget.Systray(
-                    background=net_bg,
-                    fontsize=universal_fontsize,
-                ),
+
                 widget.TextBox(
                         text=" ",
                     background=net_bg,
@@ -400,6 +413,7 @@ top_bar_config1 = [
                     padding=0,
                 ),
 
+
                 # widget.TextBox(
                     # text="",
                     # background=net_bg,
@@ -414,11 +428,11 @@ top_bar_config1 = [
                 ),
 
                widget.TextBox(
-                   text = '',
+                   text = ' ',
                    background = time_bg,
                    foreground = white,
                    padding = 10,
-                   fontsize = 15
+                   fontsize = universal_fontsize + 2
                 ),
 
                 widget.Clock(
@@ -441,10 +455,10 @@ top_bar_config1 = [
                     text=" ",
                     background=onedarkRed,
                     foreground = net_fg,
-                    fontsize=universal_fontsize+1,
+                    fontsize=universal_fontsize + 1,
                     padding=8,
                     mouse_callbacks={'Button1': lambda qtile: qtile.cmd_spawn(
-                        terminal + ' -e shutdown')} 
+                        terminal + ' -e shutdown now')} 
                 ),
             ]
 
@@ -637,8 +651,8 @@ top_bar_config2 = [
 
 screens = [
     Screen(
-        top=bar.Bar(
-            top_bar_config1, 23,
+        bottom=bar.Bar(
+            top_bar_config1, bar_thickness,
             opacity=bar_opacity,
         ),
     ),
