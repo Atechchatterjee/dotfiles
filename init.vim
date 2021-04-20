@@ -15,13 +15,11 @@ Plug 'honza/vim-snippets'
 Plug 'https://github.com/vifm/vifm.vim.git'
 Plug 'voldikss/vim-floaterm'
 Plug 'https://github.com/skammer/vim-css-color.git'
-Plug 'https://github.com/Shougo/vimfiler.vim.git'
 Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'https://github.com/ap/vim-css-color.git'
-"Plug 'luochen1990/rainbow'
 Plug 'https://github.com/tpope/vim-surround.git'
 
 " Themes Plugins
@@ -29,29 +27,20 @@ Plug 'chriskempson/base16-vim'
 Plug 'https://github.com/joshdick/onedark.vim.git'
 Plug 'https://github.com/keith/parsec.vim.git'
 Plug 'morhetz/gruvbox'
-"Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
-"Plug 'danilo-augusto/vim-afterglow'
-"Plug 'sainnhe/gruvbox-material'
-"Plug 'mhartington/oceanic-next'
-"Plug 'hzchirs/vim-material'
-"Plug 'tomasiser/vim-code-dark'
-"Plug 'https://github.com/sickill/vim-monokai.git'
 
 " Syntax highlighting plugins
 Plug 'HerringtonDarkholme/yats.vim' "TS
 Plug 'https://github.com/vim-python/python-syntax.git'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
-"Plug 'uiiaoo/java-syntax.vim'
 
 call plug#end()
 
 filetype plugin indent on    " required
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => General Settings
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-let mapleader = " "
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" " => General Settings """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" let mapleader = " "
+syntax enable
+
 set path+=**					" Searches current directory recursively.
 set wildmenu					" Display all matches when tab complete.
 set incsearch                   " Incremental search
@@ -59,37 +48,36 @@ set hidden                      " Needed to keep multiple buffers open
 set nobackup                    " No auto backups
 set noswapfile                  " No swap
 set t_Co=256                    " Set if term supports 256 colors.
-set number      " Display line numbers
+set number
 set clipboard=unnamedplus       " Copy/paste between vim and other programs.
-syntax enable
 set laststatus=2
 set noshowmode
 set expandtab                   " Use spaces instead of tabs.
 set smarttab                    " Be smart using tabs ;)
 set shiftwidth=4                " One tab == four spaces.
 set tabstop=4                   " One tab == four spaces.
+set termguicolors 
+"set cursorline
+
 let g:rehash256 = 1
 
 map <C-n> :NERDTreeToggle<CR>
-let g:NERDTreeDirArrowExpandable = '►'
-let g:NERDTreeDirArrowCollapsible = '▼'
-let NERDTreeShowLineNumbers=1
 let NERDTreeShowHidden=1
-let NERDTreeMinimalUI = 1
-"let g:NERDTreeWinSize=38
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Colors and Theming
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-colo base16-ashes
-highlight Normal           guifg=#dfdfdf ctermfg=15   guibg=#1c2023 ctermbg=none  cterm=none
-highlight LineNr           guifg=#5b6268 ctermfg=8    guibg=#1c2023 ctermbg=none  cterm=none
-highlight Visual           guifg=#dfdfdf ctermfg=1    guibg=#1c1f24 ctermbg=none  cterm=none
+
+colorscheme base16-ashes
+
+highlight Normal           guifg=#dfdfdf ctermfg=none   guibg=#1c2023 ctermbg=none  cterm=none
+highlight LineNr           guifg=#5b6268 ctermfg=none    guibg=#1c2023 ctermbg=none  cterm=none 
+highlight Visual           guifg=#dfdfdf ctermfg=15    guibg=#5b6268 ctermbg=none  cterm=none
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Open terminal inside Vim
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-map <Leader>tt :new term://zsh<CR>
+map <Leader>tt :vnew term://zsh<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " => Mouse Scrolling
@@ -133,10 +121,7 @@ set guioptions-=m  "remove menu bar
 set guioptions-=T  "remove toolbar
 set guioptions-=r  "remove right-hand scroll bar
 set guioptions-=L  "remove left-hand scroll bar
-set guifont=Cascadia\ Code:h18
-"set guifont=Mononoki\ Nerd\ Font:h15
-"set guifont=JetBrains\ Mono:h15
-"let g:neovide_transparency=0.95
+set guifont=Fira\ Code\ NF:h18
 
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx " set filetypes as typescript.tsx
 
@@ -144,9 +129,6 @@ autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx " set filetyp
 let g:typescript_indent_disable = 1
 let g:typescript_compiler_binary = 'tsc'
 let g:tsx_ext_required = 1
-
-"execute "set t_8f=\e[38;2;%lu;%lu;%lum"
-"execute "set t_8b=\e[48;2;%lu;%lu;%lum"
 
  "java autocomplete
 let java_highlight_functions = 1
@@ -157,17 +139,17 @@ nmap <C-b> :NERDTreeToggle<CR>
 nmap <A-S-P> :Prettier <CR>
 
  "toggle spelling mistakes
-nmap <F5> :setlocal spell! <CR>
+noremap <F5> :setlocal spell! <CR>
 
 "fzf remaps
 nmap <C-p> :Files <CR>
 nmap <A-g> :GFiles <CR>
-nmap <A-r> :Rg <CR>
+nmap <A-S-r> :Rg <CR>
 
 nmap ( {
 nmap ) }
 
-"nerdcommenter: <C-/>
+"nerdcommenter: <C-/> (for terminal)
 nmap <C-_>   <Plug>NERDCommenterToggle
 vmap <C-_>   <Plug>NERDCommenterToggle<CR>gv
 
@@ -186,6 +168,7 @@ noremap <A-r> :FloatermNew --name=ranger ranger<CR>
 noremap <A-v> :FloatermNew --name="vifm" vifm<CR>
 noremap <A-t> :FloatermNew --width=0.4 --wintype=normal --position=right <CR>
 noremap <A-d> :FloatermNew --height=0.4 --wintype=normal --position=bottom <CR>
+
 let g:floaterm_keymap_new = '<Leader>f'
 let g:floaterm_keymap_toggle = '<F1>'
 let g:floaterm_keymap_next = '<F3>'
@@ -234,6 +217,7 @@ let g:syntastic_cpp_compiler = "g++"
 let g:syntastic_cpp_compiler_options = "-std=c++17 -Wall -Wextra -Wpedantic"
 let g:syntastic_quiet_messages={'level':'warnings'}
 let g:syntastic_java_javac_classpath = '/usr/lib/jvm/java-6-openjdk/'
+let g:syntastic_mode_map = {"mode": "passive"}
 
 "changes cursor when in insert and normal mode
 "autocmd InsertEnter, InsertLeave * set cul!
