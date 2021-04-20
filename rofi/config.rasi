@@ -1,0 +1,8 @@
+/** Basic config file **/
+
+configuration {
+  show-icons:         true;
+  /*icon-theme:         "Tela";*/
+}
+
+@import "/home/anish/.config/rofi/themes/d-center.rasi"
