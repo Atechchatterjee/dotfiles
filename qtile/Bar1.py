@@ -37,28 +37,38 @@ terminal = guess_terminal()
 
 universal_fontsize = 12
 
-# setting the background colors
 topBar_bg = "#101219"
-currentLayout_bg = topBar_bg
-memory_bg = nordDBlue
-net_bg = gruvboxBrown
-time_bg =  nordDBlue
-shutdown_bg = topBar_bg
 
-groupBoxHighlight = onedarkRed
+# setting the background colors
+groupBox_bg=topBar_bg
+layout_bg=topBar_bg
+volume_bg=nordDBlue
+memory_bg=nordDBlue
+battery_bg=topBar_bg
+time_bg=nordDBlue
+shutdown_bg = gruvboxBlue
+groupBoxHighlight = gruvboxOrange
 
 # setting the foregroung colors
 memory_fg = white
+memoryText_fg=draculaYellow
 net_fg = white
 time_fg = white
+groupBox_fg=white
+layout_fg=white
+volumeIcon_fg=onedarkBlue
+volume_fg=white
+battery_fg=white
+batteryIcon_fg=draculaYellow
+shutdown_fg = white
 
 def open_rofi(qtile):
-    qtile.cmd_spawn('rofi -show drun -show-icons')
+    qtile.cmd_spawn('rofi -show drun -drun-icon-theme Tela')
 
 top_bar_config1 = [
                 widget.TextBox(
-                    text=' ',
-                    background=nordDBlue,
+                    text=' ',
+                    background=topBar_bg,
                     foreground=white,
                     padding=8,
                     margin_y = 2,
@@ -67,10 +77,9 @@ top_bar_config1 = [
                 ),
 
                 widget.GroupBox(
+                    background=groupBox_bg,
                     margin_y = 5,
                     padding = 3,
-                    background=topBar_bg,
-                    foreground=purple,
                     highlight_color=groupBoxHighlight,
                     highlight_method="line",
                     center_aligned=True,
@@ -110,45 +119,30 @@ top_bar_config1 = [
                 ),
                 widget.TextBox(
                     text=' ',
-                    background=memory_bg,
-                    foreground=onedarkRed,
+                    background=volume_bg,
+                    foreground=volumeIcon_fg,
                     padding=8,
                     fontsize=universal_fontsize + 3,
                 ),
 
                 widget.Volume(
-                    background=memory_bg,
+                    background=volume_bg,
                     padding=8,
                     mute_command="amixer -q -D pulse set Master toggle",
                     volume_up_command="amixer -c 0 -q set Master 2dB+",
                     volume_down_command="amixer -c 0 -q set Master 2dB-",
                     fontsize=universal_fontsize,
                 ),
-                # widget.TextBox(
-                    # text="",
-                    # background=topBar_bg,
-                    # foreground=net_bg,
-                    # fontsize=universal_fontsize+47,
-                    # padding=-12,
-                # ),
                 widget.CurrentLayout(
                     foreground="#ffffff",
-                    background=net_bg,
+                    background=layout_bg,
                     fontsize=universal_fontsize,
                     padding=8
                 ),
-                # widget.TextBox(
-                    # text="",
-                    # background=net_bg,
-                    # foreground=memory_bg,
-                    # fontsize=universal_fontsize+47,
-                    # padding=-12,
-                # ),
-
                widget.TextBox(
                    text = 'memory :',
-                   background = time_bg,
-                   foreground = draculaYellow,
+                   background = memory_bg,
+                   foreground = memoryText_fg,
                    padding = 10,
                    fontsize = universal_fontsize
                 ),
@@ -158,57 +152,42 @@ top_bar_config1 = [
                     foreground=memory_fg,
                     padding=8,
                     mouse_callbacks={'Button1': lambda qtile: qtile.cmd_spawn(
-                        terminal + ' -e htop')},
+                        terminal + ' -e bpytop')},
                     fontsize=universal_fontsize,
                 ),
 
-                # widget.TextBox(
-                    # text="",
-                    # background=memory_bg,
-                    # foreground=net_bg,
-                    # fontsize=57,
-                    # padding=-12
-                # ),
                 widget.Chord(
                     chords_colors={
                         'launch': ("#1D96F9", "#ffff00"),
                     },
-                    background=net_bg,
+                    background=memory_bg,
                     name_transform=lambda name: name.upper(),
                     fontsize=universal_fontsize,
                 ),
 
                 widget.TextBox(
                         text=" ",
-                    background=net_bg,
-                    foreground=nordGreen,
+                    background=battery_bg,
+                    foreground=batteryIcon_fg,
                     fontsize=universal_fontsize,
                     padding = 7
                 ),
                 widget.Battery(
                     format=' {percent:2.0%} ',
                     battery=0,
-                    background=net_bg,
+                    background=battery_bg,
                     charge_char='<',
                     discharge_char='*',
                     low_percentage=0.2,
                     low_foreground=onedarkRed,
-                    padding=10
+                    padding=10,
                 ),
+
                 widget.Sep(
-                    background=net_bg,
-                    foreground=net_bg,
+                    background=battery_bg,
+                    foreground=battery_bg,
                     padding=0,
                 ),
-
-
-                # widget.TextBox(
-                    # text="",
-                    # background=net_bg,
-                    # foreground=time_bg,
-                    # fontsize=57,
-                    # padding=-12,
-                # ),
                 widget.Sep(
                     background=time_bg,
                     foreground=time_bg,
@@ -241,8 +220,8 @@ top_bar_config1 = [
 
                 widget.TextBox(
                     text=" ",
-                    background=onedarkRed,
-                    foreground = net_fg,
+                    background=shutdown_bg,
+                    foreground = shutdown_fg,
                     fontsize=universal_fontsize + 1,
                     padding=8,
                     mouse_callbacks={'Button1': lambda qtile: qtile.cmd_spawn(

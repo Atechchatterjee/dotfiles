@@ -22,8 +22,9 @@ def hide_show_bar(qtile):
         qtile.currentGroup.layoutAll()
 
 terminal = guess_terminal()
+
 myBrowser = "brave-browser"
-guiFileManager = "dolphin"
+guiFileManager = "pcmanfm"
 default_margin = 0
 default_border_width = 1
 bar_opacity = 0.9
@@ -31,14 +32,17 @@ bar_thickness = 28
 universal_fontsize = 12
 
 keys = [
-    Key([mod, "shift"], "n", lazy.spawn('rofi -show drun -show-icons')),
+    Key([mod, "shift"], "n", lazy.spawn('rofi -show drun -drun-icon-theme Tela')),
     Key([mod], "Tab", lazy.spawn('rofi -show window')),
+    Key([mod, "control"], "g", lazy.spawn(terminal + " -e start-stop-daemon -SbCv -x ~/.config/neovide")),
     Key([mod], "z", lazy.hide_show_bar("top")),
-    Key([mod], "m", lazy.spawn("dmenu_run")),
+    Key([mod], "m", lazy.spawn("pcmanfm")),
     Key([mod], "c", lazy.spawn("code")),
     Key([mod], "b", lazy.spawn(myBrowser)),
     Key([mod], "n", lazy.spawn("nitrogen")),
     Key([mod], "g", lazy.spawn("google-chrome")),
+    Key([mod, "shift"], "g", lazy.spawn(terminal + " -e tmux new-session -d ~/.config/neovide/target/release/neovide --multiGrid")),
+    Key([mod], "w", lazy.spawn("qalculate")),
     Key([mod], "v", lazy.spawn(terminal+" -e vifm")),
     Key([mod, "control"], "d", lazy.spawn(guiFileManager)),
     Key([mod, "shift"], "q",
@@ -139,8 +143,8 @@ keys = [
     Key([mod, "control"], "f", lazy.window.toggle_floating()),
 
     # Also allow changing volume the old fashioned way.
-    Key([mod], "equal", lazy.spawn("amixer -c 0 -q set Master 2dB+")),
-    Key([mod], "minus", lazy.spawn("aixer -c 0 -q set Master 2dB-")),
+    Key([mod], "equal", lazy.spawn("amixer -c 0 -q set Master 1dB+")),
+    Key([mod], "minus", lazy.spawn("aixer -c 0 -q set Master 1dB-")),
 
     Key([mod, "shift"], "j", lazy.layout.shuffle_down()),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up()),

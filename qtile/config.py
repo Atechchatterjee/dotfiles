@@ -11,7 +11,7 @@ import Bar1
 import Keys
 
 # autostart applications
-os.system("exec compton -b")
+os.system("exec compton --backend glx --paint-on-overlay --vsync opengl-swc -b")
 os.system("nitrogen --restore &")
 os.system("setxkbmap us")  # changes keyboard layout to english us
 os.system("systemctl stop docker mysql mongodb apache2")
@@ -51,7 +51,7 @@ draculaGreen = "#50FA7B"
 
 # default constants 
 mod = "mod4"
-default_margin = 0
+default_margin = 4
 default_border_color = white
 default_border_width = 1
 bar_opacity = 0.9
@@ -59,11 +59,11 @@ bar_thickness = 28
 
 keys = Keys.keys
 
-group_names = [(" ", {'layout': 'monadtall'}),
+group_names = [(" ", {'layout': 'monadtall'}),
                 (" ", {'layout': 'monadtall'}),
                (" ", {'layout': 'monadtall'}),
-               (" ", {'layout': 'monadtall'}),
-               (" ", {'layout': 'monadtall'}),
+               (" ", {'layout': 'monadtall'}),
+               (" ", {'layout': 'monadtall'}),
                ]
 
 group_keys = "a,s,d,f,u,i,o,p".split(",")
@@ -81,7 +81,7 @@ layouts = [
                      border_width=default_border_width, margin=default_margin, fullscreen_border_width=0),
     layout.Max(border_focus=default_border_color,
                      border_width=default_border_width, margin=default_margin),
-    layout.Floating(border_focus=default_border_color),
+    layout.Floating(border_focus="#fff", border_normal="#fff"),
 ]
 
 def init_layout_theme():
@@ -162,11 +162,18 @@ floating_layout = layout.Floating(float_rules=[
     {'wmclass': 'makebranch'},  # gitk
     {'wmclass': 'maketag'},  # gitk
     {'wmclass': 'pcmanfm'}, # file manager 
-    {'wmclass': 'Qalculate!'}, # calculator
+    {'wmclass': 'Qalculate-gtk'}, # calculator
+    {'wmclass': 'Guake'}, # floating terrminal 
+    {'wmclass': 'terminator'}, # floating terrminal 
+    {'wmclass': 'nitrogen'}, # floating terrminal 
+    {'wmclass': 'sublime_text'}, # floating gui text editor
+    {'wmclass': 'lxappearance'}, # floating gui text editor
+    {'wmclass': 'gcr-prompter'},
     {'wname': 'branchdialog'},  # gitk
     {'wname': 'pinentry'},  # GPG key password entry
     {'wmclass': 'ssh-askpass'},  # ssh-askpass
-])
+], border_focus="#ffffff",
+)
 
 auto_fullscreen = True
 focus_on_window_activation = "smart"
