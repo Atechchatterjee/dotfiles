@@ -1,6 +1,6 @@
 call plug#begin('~/.vim/plugged')
 
-"General Plugins
+" General Plugins
 Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree' |
 			\ Plug 'Xuyuanp/nerdtree-git-plugin'
@@ -21,108 +21,137 @@ Plug 'vimwiki/vimwiki'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'https://github.com/ap/vim-css-color.git'
+Plug 'https://github.com/tpope/vim-surround.git'
 
-"Themes Plugins
-Plug 'morhetz/gruvbox'
+" Themes Plugins
 Plug 'chriskempson/base16-vim'
-Plug 'tomasiser/vim-code-dark'
-Plug 'https://github.com/sickill/vim-monokai.git'
 Plug 'https://github.com/joshdick/onedark.vim.git'
-Plug 'https://github.com/octol/vim-cpp-enhanced-highlight.git'
-Plug 'danilo-augusto/vim-afterglow'
-Plug 'sainnhe/gruvbox-material'
-Plug 'mhartington/oceanic-next'
+Plug 'https://github.com/keith/parsec.vim.git'
+Plug 'morhetz/gruvbox'
 
 " Syntax highlighting plugins
 Plug 'HerringtonDarkholme/yats.vim' "TS
 Plug 'https://github.com/vim-python/python-syntax.git'
-"Plug 'uiiaoo/java-syntax.vim'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
 
 call plug#end()
 
-" General settings
-syntax on
-set ai
-set ruler
+filetype plugin indent on    " required
+
+""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" " => General Settings """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" let mapleader = " "
+syntax enable
+
+set path+=**					" Searches current directory recursively.
+set wildmenu					" Display all matches when tab complete.
+set incsearch                   " Incremental search
+set hidden                      " Needed to keep multiple buffers open
+set nobackup                    " No auto backups
+set noswapfile                  " No swap
+set t_Co=256                    " Set if term supports 256 colors.
 set number
-set nowrap
-set hlsearch
+set clipboard=unnamedplus       " Copy/paste between vim and other programs.
+set laststatus=2
 set noshowmode
-set noswapfile
-set smartindent
-set scrolloff=7
-set sidescroll=1
-set shiftwidth=4
-set encoding=UTF-8
-set ttimeoutlen=0
-set tabstop=4 softtabstop=4
-set backspace=indent,eol,start
+set expandtab                   " Use spaces instead of tabs.
+set smarttab                    " Be smart using tabs ;)
+set shiftwidth=4                " One tab == four spaces.
+set tabstop=4                   " One tab == four spaces.
+set termguicolors 
+"set cursorline
 
-highlight Comment ctermfg=green
+let g:rehash256 = 1
 
-let mapleader = " "
-let g:yats_host_keyword = 1
+map <C-n> :NERDTreeToggle<CR>
+let NERDTreeShowHidden=1
 
-"keeps the cursor shape block in insert mode
-set guicursor=n-v-c:block-Cursor
-set guicursor+=i:ver100-iCursor
-set guicursor+=n-v-c:blinkon0
+let &t_SI = "\e[6 q"
+let &t_EI = "\e[2 q"
 
-set guicursor+=i:blinkwait10
+" reset the cursor on start (fixes the cursor glitch in vim)
+augroup myCmds
+au!
+autocmd VimEnter * silent !echo -ne "\e[2 q"
+augroup END
 
-" fixes the alacrity issue with mouse
-if !has('nvim')
-	set ttymouse=sgr
-endif
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Colors and Theming
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+colorscheme gruvbox
+let g:gruvbox_contrast_dark = 'hard'
+set background=dark
 
+"highlight Comment ctermfg=green
+"highlight Normal           guifg=#dfdfdf ctermfg=none   guibg=#1c2023 ctermbg=none  cterm=none
+"highlight LineNr           guifg=#5b6268 ctermfg=none    guibg=#1c2023 ctermbg=none  cterm=none 
+"highlight Visual           guifg=#dfdfdf ctermfg=15    guibg=#5b6268 ctermbg=none  cterm=none
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Open terminal inside Vim
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+map <Leader>tt :vnew term://zsh<CR>
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Mouse Scrolling
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set mouse=nicr
 set mouse=a
 
-" fzf settings
-command! -bang -nargs=? -complete=dir Files call fzf#vim#files(<q-args>, <bang>0)
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Splits and Tabbed Files
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set splitbelow splitright
 
-" -- Themes settings & Syntax highlighting --
-"set termguicolors
-"set background=dark
-set laststatus=2
-"let g:gruvbox_contrast_dark = 'hard'
-"let g:gruvbox_termcolors=16
-"colorscheme OceanicNext 
-"let g:cssColorVimDoNotMessMyUpdatetime = 1 "color highlight
-"let g:python_highlight_all = 1
+" Remap splits navigation to just CTRL + hjkl
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Make adjusing split sizes a bit more friendly
+noremap <silent> <C-Left> :vertical resize +3<CR>
+noremap <silent> <C-Right> :vertical resize -3<CR>
+noremap <silent> <C-Up> :resize +3<CR>
+noremap <silent> <C-Down> :resize -3<CR>
+
+" Change 2 split windows from vert to horiz or horiz to vert
+map <Leader>th <C-w>t<C-w>H
+map <Leader>tk <C-w>t<C-w>K
+
+" Removes pipes | that act as seperators on splits
+set fillchars+=vert:\ 
+
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+" => Other Stuff
+"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+let g:python_highlight_all = 1
+
+au! BufRead,BufWrite,BufWritePost,BufNewFile *.org 
+au BufEnter *.org            call org#SetOrgFileType()
+
+set guioptions-=m  "remove menu bar
+set guioptions-=T  "remove toolbar
+set guioptions-=r  "remove right-hand scroll bar
+set guioptions-=L  "remove left-hand scroll bar
+set guifont=Fira\ Code\ NF:h18
 
 autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx " set filetypes as typescript.tsx
-
-" Prettier on save
-"let g:prettier#quickfix_enabled = 0
-"autocmd TextChanged,InsertLeave *.js,*.jsx,*.mjs,*.ts,*.tsx,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue,*.yaml,*.html PrettierAsync
 
 "typescript indend
 let g:typescript_indent_disable = 1
 let g:typescript_compiler_binary = 'tsc'
 let g:tsx_ext_required = 1
 
-" Enable true color(fixes colors for tmux)
-"if exists('+termguicolors')
-	"let &t_8f = "\<Esc>[38;2;%lu;%lu;%lum"
-	"let &t_8b = "\<Esc>[48;2;%lu;%lu;%lum"
-	"set termguicolors
-"endif
-
-"execute "set t_8f=\e[38;2;%lu;%lu;%lum"
-"execute "set t_8b=\e[48;2;%lu;%lu;%lum"
-
-" java autocomplete
+ "java autocomplete
 let java_highlight_functions = 1
 
-" -- all remaps --
+ "-- all remaps --
 nmap <C-t> gt
 nmap <C-b> :NERDTreeToggle<CR>
 nmap <A-S-P> :Prettier <CR>
 
-" toggle spelling mistakes
-nmap <F5> :setlocal spell! <CR>
+ "toggle spelling mistakes
+noremap <F5> :setlocal spell! <CR>
 
 "fzf remaps
 nmap <C-p> :Files <CR>
@@ -132,32 +161,38 @@ nmap <A-r> :Rg <CR>
 nmap ( {
 nmap ) }
 
-" nerdcommenter: <C-/>
+"nerdcommenter: <C-/> (for terminal)
 nmap <C-_>   <Plug>NERDCommenterToggle
 vmap <C-_>   <Plug>NERDCommenterToggle<CR>gv
+
+"for gui-client
+nmap <C-/>   <Plug>NERDCommenterToggle
+vmap <C-/>   <Plug>NERDCommenterToggle<CR>gv
+
 nmap <C-s> :Prettier :w <CR>
 
 inoremap jj <Esc>
-nnoremap <leader>h :wincmd h <CR>
-nnoremap <leader>l :wincmd l <CR>
-nnoremap <leader>j :wincmd j <CR>
-nnoremap <leader>k :wincmd k <CR>
-"noremap <A-r> :FloatermNew --name=ranger ranger<CR>
+nnoremap <C-h> :wincmd h <CR>
+nnoremap <C-l> :wincmd l <CR>
+nnoremap <C-j> :wincmd j <CR>
+nnoremap <C-k> :wincmd k <CR>
+noremap <A-r> :FloatermNew --name=ranger ranger<CR>
 noremap <A-v> :FloatermNew --name="vifm" vifm<CR>
 noremap <A-t> :FloatermNew --width=0.4 --wintype=normal --position=right <CR>
 noremap <A-d> :FloatermNew --height=0.4 --wintype=normal --position=bottom <CR>
+
 let g:floaterm_keymap_new = '<Leader>f'
 let g:floaterm_keymap_toggle = '<F1>'
 let g:floaterm_keymap_next = '<F3>'
 let g:floaterm_keymap_prev = '<F2>'
 
-" CTRL-X and SHIFT-Del are Cut
-vnoremap <C-X> "+x
+ "CTRL-X and SHIFT-Del are Cut
+vnoremap <C-X> +x
 
-" CTRL-C and CTRL-Insert are Copy
-vnoremap <C-C> "+y
+ "CTRL-C and CTRL-Insert are Copy
+vnoremap <C-C> +y
 
-" switch tabs
+ "switch tabs
 noremap <leader>1 1gt
 noremap <leader>2 2gt
 noremap <leader>3 3gt
@@ -173,7 +208,7 @@ noremap <tab> gt
 
 noremap <C-+> <C-_> <C-n>
 
-" resizing windows
+ "resizing windows
 nnoremap <silent> <Leader>= :exe "resize " . (winheight(0) * 3/2)<CR>
 nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 nnoremap <silent> <Leader>, :exe "vertical resize -10" <CR>
@@ -181,8 +216,8 @@ nnoremap <silent> <Leader>. :exe "vertical resize +10" <CR>
 
 let NERDTreeMapOpenInTab='\r'
 
-"syntastic settings
-"execute pathogen#infect()
+ "syntastic settings
+execute pathogen#infect()
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
 set statusline+=%*
@@ -194,24 +229,24 @@ let g:syntastic_cpp_compiler = "g++"
 let g:syntastic_cpp_compiler_options = "-std=c++17 -Wall -Wextra -Wpedantic"
 let g:syntastic_quiet_messages={'level':'warnings'}
 let g:syntastic_java_javac_classpath = '/usr/lib/jvm/java-6-openjdk/'
+let g:syntastic_mode_map = {"mode": "passive"}
 
-" changes cursor when in insert and normal mode
- autocmd InsertEnter, InsertLeave * set cul!
+"changes cursor when in insert and normal mode
+"autocmd InsertEnter, InsertLeave * set cul!
 
 "buid and run cpp code
-set autowrite
+"set autowrite
 
-hi! Normal ctermbg=NONE guibg=NONE
-hi! NonText ctermbg=NONE guibg=NONE
+"hi! Normal ctermbg=NONE guibg=NONE
+"hi! NonText ctermbg=NONE guibg=NONE
 
-syntax match myTodo /\v<(TODO|FIXME|NOTE).*/ containedin=.*Comment
+"syntax match myTodo /\v<(TODO|FIXME|NOTE).*/ containedin=.*Comment
+"let &t_SI = "\e[6 q"
+"let &t_EI = "\e[2 q"
 
-let &t_SI = "\e[6 q"
-let &t_EI = "\e[2 q"
-
-if !has('gui_running')
-	set t_Co=256
-endif
+"if !has('gui_running')
+    "set t_Co=256
+"endif
 
 " Add your own custom formats or override the defaults
 let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
@@ -231,7 +266,6 @@ let g:coc_global_extensions = [
 			\ 'coc-java',
 			\ 'coc-emmet',
 			\ 'coc-python',
-			"\ 'coc-prettier',
 			\ 'coc-tsserver'
 			\]
 
@@ -263,7 +297,7 @@ nmap <C-n> :NERDTreeToggle<CR>
 nmap <leader>rn <Plug>(coc-rename)
 
 let g:lightline = {
-			\ 'colorscheme': 'wombat',
+			\ 'colorscheme': 'onedark',
 			\ 'active': {
 			\   'left': [ [ 'mode', 'paste'  ],
 			\             [ 'gitbranch', 'readonly', 'filename', 'modified' ], [ 'statuslinetabs' ] ]
@@ -405,3 +439,4 @@ nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
 nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
 " Resume latest coc list.
 nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
+
