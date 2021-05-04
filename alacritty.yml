@@ -1,51 +1,63 @@
 font:
   normal:
-    family: Consolas
-    style: Regular
-  size: 13
+    family: LigaMonacop
+    style: Regualar
+  size: 12.5
 background_opacity: 1
 window:
+  dimensions:
+    columns: 100
+    lines: 35
   padding:
-    x: 5
-    'y': 5
+    x: 3
+    'y': 3
+  position:
+    x: 500
+    'y': 200
+  title: Alacritty
 colors:
   primary:
-    background: '0x1e282d'
-    foreground: '0xc4c7d1'
-    dim_foreground: '0xdbdbdb'
-    bright_foreground: '0xd9d9d9'
-    dim_background: '0x202020'
-    bright_background: '0x3a3a3a'
+    background: '#000000'
+    foreground: '#ffffff'
+    dim_foreground: '#dbdbdb'
+    bright_foreground: '#d9d9d9'
+    dim_background: '#202020'
+    bright_background: '#3a3a3a'
   normal:
-    black: '0x666666'
-    red: '0xeb606b'
-    green: '0xc3e88d'
-    yellow: '0xf7eb95'
-    blue: '0x80cbc4'
-    magenta: '0xff2f90'
-    cyan: '0xaeddff'
-    white: '0xffffff'
+    black: '#1c1c1c'
+    red: '#d770af'
+    green: '#9acc79'
+    yellow: '#d0d26b'
+    blue: '#77b6c5'
+    magenta: '#a488d9'
+    cyan: '#7fcab3'
+    white: '#8d8d8d'
   bright:
-    black: '0xa1a1a1'
-    red: '0xeb606b'
-    green: '0xc3e88d'
-    yellow: '0xf7eb95'
-    blue: '0x7dc6bf'
-    magenta: '0x6c71c4'
-    cyan: '0x35434d'
-    white: '0xffffff'
+    black: '#3d3a3a'
+    red: '#d28abf'
+    green: '#8fb676'
+    yellow: '#c8bc45'
+    blue: '#8fa7b9'
+    magenta: '#bd89de'
+    cyan: '#6ec2a8'
+    white: '#dad3d3'
   dim:
-    black: '0x232323'
-    red: '0x74423f'
-    green: '0x5e6547'
-    yellow: '0x8b7653'
-    blue: '0x556b79'
-    magenta: '0x6e4962'
-    cyan: '0x5c8482'
-    white: '0x828282'
+    black: '#232323'
+    red: '#74423f'
+    green: '#5e6547'
+    yellow: '#8b7653'
+    blue: '#556b79'
+    magenta: '#6e4962'
+    cyan: '#5c8482'
+    white: '#828282'
   cursor:
-    text: '0x000000'
-    cursor: '0xd8d8d8'
-    background: '0xf0f0f0'
+    text: '#000000'
+    cursor: '#ffffff'
+    background: '0x000000'
     foreground: '0x26282a'
   indexed_colors: []
+  name: astromouse
+  author: ''
+  selection:
+    text: '#080808'
+    background: '#b2ceee'
