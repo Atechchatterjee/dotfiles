@@ -23,12 +23,16 @@ Plug 'https://github.com/ap/vim-css-color.git'
 Plug 'https://github.com/tpope/vim-surround.git'
 
 " Themes Plugins
-Plug 'chriskempson/base16-vim'
-Plug 'https://github.com/joshdick/onedark.vim.git'
-Plug 'https://github.com/keith/parsec.vim.git'
 Plug 'morhetz/gruvbox'
+Plug 'chriskempson/base16-vim'
+Plug 'https://github.com/keith/parsec.vim.git'
+Plug 'https://github.com/NLKNguyen/papercolor-theme.git'
+Plug 'https://github.com/sainnhe/sonokai.git'
+Plug 'https://github.com/joshdick/onedark.vim.git'
+Plug 'https://github.com/nanotech/jellybeans.vim.git'
 
 " Syntax highlighting plugins
+"Plug 'leafgarland/typescript-vim'
 Plug 'HerringtonDarkholme/yats.vim' "TS
 Plug 'https://github.com/vim-python/python-syntax.git'
 Plug 'pangloss/vim-javascript'
@@ -36,9 +40,8 @@ Plug 'maxmellon/vim-jsx-pretty'
 
 call plug#end()
 
-filetype plugin indent on    " required
+filetype plugin indent on    
 
-""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" " => General Settings """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""" let mapleader = " "
 syntax enable
 
 set path+=**					" Searches current directory recursively.
@@ -56,38 +59,48 @@ set expandtab                   " Use spaces instead of tabs.
 set smarttab                    " Be smart using tabs ;)
 set shiftwidth=4                " One tab == four spaces.
 set tabstop=4                   " One tab == four spaces.
-set termguicolors 
-"set cursorline
+"set termguicolors 
+set nowrap
 
+let mapleader = " "
 let g:rehash256 = 1
 
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Colors and Theming
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+autocmd FileType typescript :set makeprg=tsc
 
-colorscheme base16-ashes
 
-highlight Normal           guifg=#dfdfdf ctermfg=none   guibg=#1c2023 ctermbg=none  cterm=none
-highlight LineNr           guifg=#5b6268 ctermfg=none    guibg=#1c2023 ctermbg=none  cterm=none 
-highlight Visual           guifg=#dfdfdf ctermfg=15    guibg=#5b6268 ctermbg=none  cterm=none
+colorscheme jellybeans
+highlight Normal           guifg=#dfdfdf ctermfg=none   guibg=#000000 ctermbg=none  cterm=none
+highlight LineNr           guifg=#1E1E1E ctermfg=7    guibg=#011111 ctermbg=none  cterm=none
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Open terminal inside Vim
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+"----- Sonokai -----
+"let g:sonokai_style = 'default'
+"let g:sonokai_enable_italic = 1
+"let g:sonokai_disable_italic_comment = 1
+"colorscheme sonokai
+
+"---- gruvbox -----
+"let g:gruvbox_contrast_dark = 'hard'
+"colorscheme gruvbox
+"highlight LineNr           guifg=#5b6268 ctermfg=none    guibg=#282828 ctermbg=none  cterm=none 
+
+" ---- base16-default-dark ---
+"  colorscheme base16-default-dark
+"highlight LineNr           guifg=#5b6268 ctermfg=none    guibg=#151515 ctermbg=none  cterm=none 
+
+"---- base16-ashes ----
+"colorscheme base16-ashes
+""highlight Normal           guifg=#dfdfdf ctermfg=none   guibg=#1c2023 ctermbg=none  cterm=none
+"highlight LineNr           guifg=#5b6268 ctermfg=none    guibg=#1c2023 ctermbg=none  cterm=none 
+"highlight Visual           guifg=#dfdfdf ctermfg=15    guibg=#5b6268 ctermbg=none  cterm=none
+
 map <Leader>tt :vnew term://zsh<CR>
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Mouse Scrolling
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set mouse=nicr
 set mouse=a
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Splits and Tabbed Files
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 set splitbelow splitright
 
 " Remap splits navigation to just CTRL + hjkl
@@ -109,9 +122,6 @@ map <Leader>tk <C-w>t<C-w>K
 " Removes pipes | that act as seperators on splits
 set fillchars+=vert:\ 
 
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
-" => Other Stuff
-"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 let g:python_highlight_all = 1
 
 au! BufRead,BufWrite,BufWritePost,BufNewFile *.org 
@@ -133,10 +143,13 @@ let g:tsx_ext_required = 1
  "java autocomplete
 let java_highlight_functions = 1
 
- "-- all remaps --
+ " all remaps 
 nmap <C-t> gt
 nmap <C-b> :NERDTreeToggle<CR>
 nmap <A-S-P> :Prettier <CR>
+
+"toggle between terminal and editor
+tnoremap <c-h> <C-\><C-n><C-w>h
 
  "toggle spelling mistakes
 noremap <F5> :setlocal spell! <CR>
@@ -204,7 +217,7 @@ nnoremap <silent> <Leader>. :exe "vertical resize +10" <CR>
 
 let NERDTreeMapOpenInTab='\r'
 
- "syntastic settings
+"syntastic settings
 execute pathogen#infect()
 set statusline+=%#warningmsg#
 set statusline+=%{SyntasticStatuslineFlag()}
@@ -218,23 +231,6 @@ let g:syntastic_cpp_compiler_options = "-std=c++17 -Wall -Wextra -Wpedantic"
 let g:syntastic_quiet_messages={'level':'warnings'}
 let g:syntastic_java_javac_classpath = '/usr/lib/jvm/java-6-openjdk/'
 let g:syntastic_mode_map = {"mode": "passive"}
-
-"changes cursor when in insert and normal mode
-"autocmd InsertEnter, InsertLeave * set cul!
-
-"buid and run cpp code
-"set autowrite
-
-"hi! Normal ctermbg=NONE guibg=NONE
-"hi! NonText ctermbg=NONE guibg=NONE
-
-"syntax match myTodo /\v<(TODO|FIXME|NOTE).*/ containedin=.*Comment
-"let &t_SI = "\e[6 q"
-"let &t_EI = "\e[2 q"
-
-"if !has('gui_running')
-    "set t_Co=256
-"endif
 
 " Add your own custom formats or override the defaults
 let g:NERDCustomDelimiters = { 'c': { 'left': '/**','right': '*/' } }
@@ -337,10 +333,7 @@ endif
 inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
 			\: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
 
-"" Use `[g` and `]g` to navigate diagnostics
-"" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
+"" Use `[g` and `]g` to navigate diagnostics "" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.  nmap <silent> [g <Plug>(coc-diagnostic-prev) nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 "" GoTo code navigation.
 nmap <silent> gd <Plug>(coc-definition)
