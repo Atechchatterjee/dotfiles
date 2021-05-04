@@ -35,31 +35,40 @@ draculaGreen = "#50FA7B"
 
 terminal = guess_terminal()
 
-universal_fontsize = 12
+universal_fontsize = 11
+seperator_width = -2
 
-topBar_bg = "#101219"
+# topBar_bg = "#101219"
+topBar_bg = "#020202"
 
 # setting the background colors
+pt1 = "#1D233A"
+# pt2 = "#21222C"
+pt2 = deepBlue
+
 groupBox_bg=topBar_bg
-layout_bg=topBar_bg
-volume_bg=nordDBlue
-memory_bg=nordDBlue
-battery_bg=topBar_bg
-time_bg=nordDBlue
-shutdown_bg = gruvboxBlue
-groupBoxHighlight = gruvboxOrange
+layout_bg=pt2
+volume_bg=pt1
+memory_bg=pt1
+battery_bg=pt2
+time_bg=pt1
+shutdown_bg = draculaRed
+groupBoxHighlight = onedarkBlue
 
 # setting the foregroung colors
 memory_fg = white
+
 memoryText_fg=draculaYellow
-net_fg = white
 time_fg = white
 groupBox_fg=white
 layout_fg=white
-volumeIcon_fg=onedarkBlue
+
+volumeIcon_fg=draculaYellow
 volume_fg=white
+
 battery_fg=white
 batteryIcon_fg=draculaYellow
+
 shutdown_fg = white
 
 def open_rofi(qtile):
@@ -67,12 +76,12 @@ def open_rofi(qtile):
 
 top_bar_config1 = [
                 widget.TextBox(
-                    text=' ',
+                    text=' ',
                     background=topBar_bg,
                     foreground=white,
                     padding=8,
                     margin_y = 2,
-                    fontsize=universal_fontsize + 2,
+                    fontsize=universal_fontsize + 5,
                     mouse_callbacks={'Button1': open_rofi},
                 ),
 
@@ -133,12 +142,28 @@ top_bar_config1 = [
                     volume_down_command="amixer -c 0 -q set Master 2dB-",
                     fontsize=universal_fontsize,
                 ),
+
+                widget.Sep(
+                    background=topBar_bg,
+                    foreground=topBar_bg,
+                    linewidth=seperator_width,
+                    padding=3
+                ),
+
                 widget.CurrentLayout(
                     foreground="#ffffff",
                     background=layout_bg,
                     fontsize=universal_fontsize,
                     padding=8
                 ),
+
+                widget.Sep(
+                    background=topBar_bg,
+                    foreground=topBar_bg,
+                    linewidth=seperator_width,
+                    padding=3
+                ),
+
                widget.TextBox(
                    text = 'memory :',
                    background = memory_bg,
@@ -165,6 +190,13 @@ top_bar_config1 = [
                     fontsize=universal_fontsize,
                 ),
 
+                widget.Sep(
+                    background=topBar_bg,
+                    foreground=topBar_bg,
+                    linewidth=seperator_width,
+                    padding=3
+                ),
+
                 widget.TextBox(
                         text=" ",
                     background=battery_bg,
@@ -184,15 +216,22 @@ top_bar_config1 = [
                 ),
 
                 widget.Sep(
+                    background=topBar_bg,
+                    foreground=topBar_bg,
+                    linewidth=seperator_width,
+                    padding=3
+                ),
+
+                widget.Sep(
                     background=battery_bg,
                     foreground=battery_bg,
                     padding=0,
                 ),
-                widget.Sep(
-                    background=time_bg,
-                    foreground=time_bg,
-                    padding=3,
-                ),
+                # widget.Sep(
+                    # background=time_bg,
+                    # foreground=time_bg,
+                    # padding=3,
+                # ),
 
                widget.TextBox(
                    text = ' ',
@@ -203,7 +242,7 @@ top_bar_config1 = [
                 ),
 
                 widget.Clock(
-                    format='%d / %m  [ %a ]  %I:%M:%S %p',
+                    format='%d / %m  |  %a  |  %I:%M:%S %p',
                     background=time_bg,
                     foreground=time_fg,
                     padding=5,
@@ -211,6 +250,7 @@ top_bar_config1 = [
                         terminal + ' -e tty-clock -c -C 1 -b -s')},
                     fontsize=universal_fontsize,
                 ),
+
                 widget.Sep(
                     background=time_bg,
                     foreground=time_bg,

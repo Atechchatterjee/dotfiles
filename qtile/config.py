@@ -51,18 +51,18 @@ draculaGreen = "#50FA7B"
 
 # default constants 
 mod = "mod4"
-default_margin = 4
+default_margin = 0
 default_border_color = white
 default_border_width = 1
-bar_opacity = 0.9
-bar_thickness = 28
+bar_opacity = 1
+bar_thickness = 25
 
 keys = Keys.keys
 
 group_names = [(" ", {'layout': 'monadtall'}),
                 (" ", {'layout': 'monadtall'}),
-               (" ", {'layout': 'monadtall'}),
-               (" ", {'layout': 'monadtall'}),
+               (" ", {'layout': 'monadtall'}),
+               (" ", {'layout': 'monadtall'}),
                (" ", {'layout': 'monadtall'}),
                ]
 
@@ -126,7 +126,7 @@ seperator_height = 50
 
 screens = [
     Screen(
-        bottom=bar.Bar(
+        top=bar.Bar(
             Bar1.top_bar_config1, bar_thickness,
             opacity=bar_opacity,
         ),
@@ -161,7 +161,6 @@ floating_layout = layout.Floating(float_rules=[
     {'wmclass': 'confirmreset'},  # gitk
     {'wmclass': 'makebranch'},  # gitk
     {'wmclass': 'maketag'},  # gitk
-    {'wmclass': 'pcmanfm'}, # file manager 
     {'wmclass': 'Qalculate-gtk'}, # calculator
     {'wmclass': 'Guake'}, # floating terrminal 
     {'wmclass': 'terminator'}, # floating terrminal 
@@ -169,6 +168,7 @@ floating_layout = layout.Floating(float_rules=[
     {'wmclass': 'sublime_text'}, # floating gui text editor
     {'wmclass': 'lxappearance'}, # floating gui text editor
     {'wmclass': 'gcr-prompter'},
+    {'wmclass': 'zoom'},
     {'wname': 'branchdialog'},  # gitk
     {'wname': 'pinentry'},  # GPG key password entry
     {'wmclass': 'ssh-askpass'},  # ssh-askpass
