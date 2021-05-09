@@ -36,7 +36,7 @@ draculaGreen = "#50FA7B"
 terminal = guess_terminal()
 
 universal_fontsize = 11
-seperator_width = -3
+seperator_width = -2
 
 # topBar_bg = "#101219"
 topBar_bg = "#020202"
@@ -53,7 +53,7 @@ memory_bg=pt1
 battery_bg=pt2
 time_bg=pt1
 shutdown_bg = draculaRed
-groupBoxHighlight = nordRed
+groupBoxHighlight = draculaGreen
 
 # setting the foregroung colors
 memory_fg = white
