@@ -25,11 +25,10 @@ Plug 'https://github.com/tpope/vim-surround.git'
 " Themes Plugins
 Plug 'morhetz/gruvbox'
 Plug 'chriskempson/base16-vim'
-Plug 'https://github.com/keith/parsec.vim.git'
-Plug 'https://github.com/NLKNguyen/papercolor-theme.git'
 Plug 'https://github.com/sainnhe/sonokai.git'
 Plug 'https://github.com/joshdick/onedark.vim.git'
 Plug 'https://github.com/nanotech/jellybeans.vim.git'
+Plug 'wojciechkepka/vim-github-dark'
 
 " Syntax highlighting plugins
 "Plug 'leafgarland/typescript-vim'
@@ -37,9 +36,11 @@ Plug 'HerringtonDarkholme/yats.vim' "TS
 Plug 'https://github.com/vim-python/python-syntax.git'
 Plug 'pangloss/vim-javascript'
 Plug 'maxmellon/vim-jsx-pretty'
+Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
 
 call plug#end()
 
+set rtp+=$GOROOT/misc/vim
 filetype plugin indent on    
 
 syntax enable
@@ -67,32 +68,21 @@ let g:rehash256 = 1
 
 map <C-n> :NERDTreeToggle<CR>
 let NERDTreeShowHidden=1
+autocmd FileType typescript :set makeprg=tsc 
 
-autocmd FileType typescript :set makeprg=tsc
-
-
-colorscheme jellybeans
-highlight Normal           guifg=#dfdfdf ctermfg=none   guibg=#000000 ctermbg=none  cterm=none
-highlight LineNr           guifg=#1E1E1E ctermfg=7    guibg=#011111 ctermbg=none  cterm=none
-
-"----- Sonokai -----
 "let g:sonokai_style = 'default'
 "let g:sonokai_enable_italic = 1
 "let g:sonokai_disable_italic_comment = 1
-"colorscheme sonokai
+"color sonokai
 
-"---- gruvbox -----
-"let g:gruvbox_contrast_dark = 'hard'
-"colorscheme gruvbox
-"highlight LineNr           guifg=#5b6268 ctermfg=none    guibg=#282828 ctermbg=none  cterm=none 
-
-" ---- base16-default-dark ---
-"  colorscheme base16-default-dark
-"highlight LineNr           guifg=#5b6268 ctermfg=none    guibg=#151515 ctermbg=none  cterm=none 
+colo jellybeans
+hi! NonText ctermbg=NONE guibg=NONE
+hi! Normal guibg=NONE ctermbg=NONE
+hi! LineNr guibg=NONE ctermbg=NONE
 
 "---- base16-ashes ----
 "colorscheme base16-ashes
-""highlight Normal           guifg=#dfdfdf ctermfg=none   guibg=#1c2023 ctermbg=none  cterm=none
+"highlight Normal           guifg=#dfdfdf ctermfg=none   guibg=#1c2023 ctermbg=none  cterm=none
 "highlight LineNr           guifg=#5b6268 ctermfg=none    guibg=#1c2023 ctermbg=none  cterm=none 
 "highlight Visual           guifg=#dfdfdf ctermfg=15    guibg=#5b6268 ctermbg=none  cterm=none
 
