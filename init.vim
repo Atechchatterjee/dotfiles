@@ -21,6 +21,7 @@ Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
 Plug 'https://github.com/ap/vim-css-color.git'
 Plug 'https://github.com/tpope/vim-surround.git'
+Plug 'josa42/vim-lightline-coc'
 
 " Themes Plugins
 Plug 'morhetz/gruvbox'
@@ -29,6 +30,7 @@ Plug 'https://github.com/sainnhe/sonokai.git'
 Plug 'https://github.com/joshdick/onedark.vim.git'
 Plug 'https://github.com/nanotech/jellybeans.vim.git'
 Plug 'wojciechkepka/vim-github-dark'
+Plug 'kaicataldo/material.vim', { 'branch': 'main' }
 
 " Syntax highlighting plugins
 "Plug 'leafgarland/typescript-vim'
@@ -60,31 +62,28 @@ set expandtab                   " Use spaces instead of tabs.
 set smarttab                    " Be smart using tabs ;)
 set shiftwidth=4                " One tab == four spaces.
 set tabstop=4                   " One tab == four spaces.
-"set termguicolors 
+set termguicolors 
 set nowrap
 
 let mapleader = " "
 let g:rehash256 = 1
 
 map <C-n> :NERDTreeToggle<CR>
+set encoding=UTF-8
+
 let NERDTreeShowHidden=1
+let NERDTreeMinimalUI = 1
+let NERDTreeDirArrows = 1
 autocmd FileType typescript :set makeprg=tsc 
 
-"let g:sonokai_style = 'default'
-"let g:sonokai_enable_italic = 1
-"let g:sonokai_disable_italic_comment = 1
-"color sonokai
+" starts nerdtree unless a file is specified
+autocmd StdinReadPre * let s:std_in=1
+autocmd VimEnter * if argc() == 0 && !exists('s:std_in') && v:this_session == '' | NERDTree | endif
 
 colo jellybeans
 hi! NonText ctermbg=NONE guibg=NONE
 hi! Normal guibg=NONE ctermbg=NONE
-hi! LineNr guibg=NONE ctermbg=NONE
-
-"---- base16-ashes ----
-"colorscheme base16-ashes
-"highlight Normal           guifg=#dfdfdf ctermfg=none   guibg=#1c2023 ctermbg=none  cterm=none
-"highlight LineNr           guifg=#5b6268 ctermfg=none    guibg=#1c2023 ctermbg=none  cterm=none 
-"highlight Visual           guifg=#dfdfdf ctermfg=15    guibg=#5b6268 ctermbg=none  cterm=none
+hi! LineNr guibg=NONE guifg=grey ctermbg=NONE
 
 map <Leader>tt :vnew term://zsh<CR>
 
@@ -274,7 +273,7 @@ let g:lightline = {
 			\ 'colorscheme': 'onedark',
 			\ 'active': {
 			\   'left': [ [ 'mode', 'paste'  ],
-			\             [ 'gitbranch', 'readonly', 'filename', 'modified' ], [ 'statuslinetabs' ] ]
+			\             [ 'gitbranch', 'readonly', 'filename', 'modified' ], [ 'statuslinetabs' ], [  'coc_info', 'coc_hints', 'coc_errors', 'coc_warnings', 'coc_ok' ], [ 'coc_status'  ] ]
 			\
 			\},
 			\ 'component_function': {
@@ -283,6 +282,8 @@ let g:lightline = {
 			\   'cocstatus': 'coc#status'
 			\},
 			\}
+
+call lightline#coc#register()
 
 function! LightlineStatuslineTabs() abort
 	return join(map(range(1, tabpagenr('$')),
