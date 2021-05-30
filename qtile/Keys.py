@@ -6,7 +6,7 @@ from libqtile import bar, hook, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Screen, ScratchPad, DropDown, Key, Match
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
-from typing import List  # noqa: F401
+from typing import List
 
 mod = "mod4"
 

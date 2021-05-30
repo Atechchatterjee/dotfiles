@@ -51,19 +51,26 @@ draculaGreen = "#50FA7B"
 
 # default constants 
 mod = "mod4"
-default_margin = 0
+default_margin = 7
 default_border_color = white
 default_border_width = 1
 bar_opacity = 1
-bar_thickness = 25
+bar_thickness = 27
 
 keys = Keys.keys
 
-group_names = [(" ", {'layout': 'monadtall'}),
-                (" ", {'layout': 'monadtall'}),
-               (" ", {'layout': 'monadtall'}),
-               (" ", {'layout': 'monadtall'}),
-               (" ", {'layout': 'monadtall'}),
+# group_names = [(" ", {'layout': 'monadtall'}),
+                # (" ", {'layout': 'monadtall'}),
+               # (" ", {'layout': 'monadtall'}),
+               # (" ", {'layout': 'monadtall'}),
+               # (" ", {'layout': 'monadtall'}),
+               # ]
+
+group_names = [("web ", {'layout': 'monadtall'}),
+                ("dev", {'layout': 'monadtall'}),
+               ("term", {'layout': 'monadtall'}),
+               ("conf", {'layout': 'monadtall'}),
+               ("oth", {'layout': 'monadtall'}),
                ]
 
 group_keys = "a,s,d,f,u,i,o,p".split(",")
@@ -80,7 +87,7 @@ layouts = [
     layout.MonadTall(border_focus=default_border_color,
                      border_width=default_border_width, margin=default_margin, fullscreen_border_width=0),
     layout.Max(border_focus=default_border_color,
-                     border_width=default_border_width, margin=default_margin),
+                     border_width=0, margin=default_margin),
     layout.Floating(border_focus="#fff", border_normal="#fff"),
 ]
 
@@ -126,7 +133,7 @@ seperator_height = 50
 
 screens = [
     Screen(
-        top=bar.Bar(
+        bottom=bar.Bar(
             Bar1.top_bar_config1, bar_thickness,
             opacity=bar_opacity,
         ),
@@ -168,6 +175,7 @@ floating_layout = layout.Floating(float_rules=[
     {'wmclass': 'sublime_text'}, # floating gui text editor
     {'wmclass': 'lxappearance'}, # floating gui text editor
     {'wmclass': 'gcr-prompter'},
+    {'wname': 'http://localhost:3000 is sharing your screen.'},
     {'wmclass': 'zoom'},
     {'wname': 'branchdialog'},  # gitk
     {'wname': 'pinentry'},  # GPG key password entry

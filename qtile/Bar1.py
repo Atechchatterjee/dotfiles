@@ -36,15 +36,17 @@ draculaGreen = "#50FA7B"
 terminal = guess_terminal()
 
 universal_fontsize = 11
-seperator_width = -3
+seperator_width = 0
 
-# topBar_bg = "#101219"
-topBar_bg = "#020202"
+topBar_bg = "#101219"
+# topBar_bg = "#020202"
+# topBar_bg = gruvboxBrown
 
 # setting the background colors
 pt1 = "#1D233A"
 # pt2 = "#21222C"
-pt2 = deepBlue
+# pt2 = deepBlue
+pt2 = pt1
 
 groupBox_bg=topBar_bg
 layout_bg=pt2
@@ -52,8 +54,10 @@ volume_bg=pt1
 memory_bg=pt1
 battery_bg=pt2
 time_bg=pt1
-shutdown_bg = draculaRed
-groupBoxHighlight = nordRed
+shutdown_bg = nordRed
+groupBoxHighlight = gruvboxBrown
+seperator_bg = pt1
+seperator_fg = white
 
 # setting the foregroung colors
 memory_fg = white
@@ -76,25 +80,23 @@ def open_rofi(qtile):
 
 top_bar_config1 = [
                 widget.TextBox(
-                    text=' ',
+                    text=' ',
                     background=pt2,
-                    foreground=white,
+                    foreground=draculaYellow,
                     padding=8,
                     margin_y = 2,
-                    fontsize=universal_fontsize + 5,
+                    fontsize=universal_fontsize + 3,
                     mouse_callbacks={'Button1': open_rofi},
                 ),
-
                 widget.GroupBox(
                     background=groupBox_bg,
-                    margin_y = 5,
                     padding = 3,
                     highlight_color=groupBoxHighlight,
                     highlight_method="line",
                     center_aligned=True,
-                    # rounded=True,
-                    fontsize=universal_fontsize+4,
-                    this_current_screen_border = groupBoxHighlight
+                    rounded=True,
+                    fontsize=universal_fontsize+1,
+                    this_current_screen_border = draculaYellow
                 ),
 
                 widget.Sep(
@@ -120,11 +122,16 @@ top_bar_config1 = [
                     margin_y=20,
                     padding=2,
                 ),
-
                 widget.Sep(
                     background=topBar_bg,
                     foreground=topBar_bg,
                     padding=8
+                ),
+                widget.Sep(
+                    background=seperator_bg,
+                    foreground=seperator_fg,
+                    linewidth=seperator_width,
+                    padding=3
                 ),
                 widget.TextBox(
                     text=' ',
@@ -144,8 +151,8 @@ top_bar_config1 = [
                 ),
 
                 widget.Sep(
-                    background=topBar_bg,
-                    foreground=topBar_bg,
+                    background=seperator_bg,
+                    foreground=seperator_fg,
                     linewidth=seperator_width,
                     padding=3
                 ),
@@ -158,8 +165,8 @@ top_bar_config1 = [
                 ),
 
                 widget.Sep(
-                    background=topBar_bg,
-                    foreground=topBar_bg,
+                    background=seperator_bg,
+                    foreground=seperator_fg,
                     linewidth=seperator_width,
                     padding=3
                 ),
@@ -191,8 +198,8 @@ top_bar_config1 = [
                 ),
 
                 widget.Sep(
-                    background=topBar_bg,
-                    foreground=topBar_bg,
+                    background=seperator_bg,
+                    foreground=seperator_fg,
                     linewidth=seperator_width,
                     padding=3
                 ),
@@ -216,8 +223,8 @@ top_bar_config1 = [
                 ),
 
                 widget.Sep(
-                    background=topBar_bg,
-                    foreground=topBar_bg,
+                    background=seperator_bg,
+                    foreground=seperator_fg,
                     linewidth=seperator_width,
                     padding=3
                 ),
@@ -232,7 +239,6 @@ top_bar_config1 = [
                     # foreground=time_bg,
                     # padding=3,
                 # ),
-
                widget.TextBox(
                    text = ' ',
                    background = time_bg,
@@ -265,7 +271,7 @@ top_bar_config1 = [
                     fontsize=universal_fontsize + 1,
                     padding=8,
                     mouse_callbacks={'Button1': lambda qtile: qtile.cmd_spawn(
-                        terminal + ' -e shutdown now')} 
+                        terminal + ' -e shutdown now')}
                 ),
             ]
 
