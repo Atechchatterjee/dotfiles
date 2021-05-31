@@ -5,47 +5,18 @@ import psutil
 from libqtile import bar, hook, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Screen, ScratchPad, DropDown, Key, Match
 from libqtile.lazy import lazy
+from Colors import colors
 from libqtile.utils import guess_terminal
-
-# color palete
-purple = "#783C96"
-blue_bg = "#2bbac5"
-white = "#ffffff"
-black = "#0A0A0A"
-
-onedarkBlue = "#3C909B"
-onedarkRed = "#BE5046"
-
-gruvboxRed = "#F94B3F"
-gruvboxAqua = "#689D6A"
-gruvboxBrown = "#1D2021"
-gruvboxOrange = "#D65F34"
-gruvboxBlue = "#458587"
-
-nordRed = "#BF616A"
-nordGreen = "#A3BE8C"
-nordBlue = "#81A1C1"
-nordDBlue = "#2D333E"
-nordPurple = "#B48EAD"
-deepBlue = "#292d3e"
-
-draculaYellow = "#F1FA8C"
-draculaRed = "#FF5555"
-draculaGreen = "#50FA7B"
-
 terminal = guess_terminal()
 
 universal_fontsize = 11
 seperator_width = 0
 
 topBar_bg = "#101219"
-# topBar_bg = "#020202"
-# topBar_bg = gruvboxBrown
 
 # setting the background colors
 pt1 = "#1D233A"
 # pt2 = "#21222C"
-# pt2 = deepBlue
 pt2 = pt1
 
 groupBox_bg=topBar_bg
@@ -54,35 +25,31 @@ volume_bg=pt1
 memory_bg=pt1
 battery_bg=pt2
 time_bg=pt1
-shutdown_bg = nordRed
-groupBoxHighlight = gruvboxBrown
+shutdown_bg = colors["nordRed"]
+groupBoxHighlight = colors["gruvboxBrown"]
 seperator_bg = pt1
-seperator_fg = white
+seperator_fg = colors["white"]
 
 # setting the foregroung colors
-memory_fg = white
-
-memoryText_fg=draculaYellow
-time_fg = white
-groupBox_fg=white
-layout_fg=white
-
-volumeIcon_fg=draculaYellow
-volume_fg=white
-
-battery_fg=white
-batteryIcon_fg=draculaYellow
-
-shutdown_fg = white
+memory_fg = colors["white"]
+memoryText_fg=colors["draculaYellow"]
+time_fg = colors["white"]
+groupBox_fg=colors["white"]
+layout_fg=colors["white"]
+volumeIcon_fg=colors["draculaYellow"]
+volume_fg=colors["white"]
+battery_fg=colors["white"]
+batteryIcon_fg=colors["draculaYellow"]
+shutdown_fg = colors["white"]
 
 def open_rofi(qtile):
-    qtile.cmd_spawn('rofi -show drun -drun-icon-theme Tela')
+    qtile.cmd_spawn('tmux new-session -d ~/.config/rofi/launchers/ribbon/launcher.sh')
 
 top_bar_config1 = [
                 widget.TextBox(
                     text=' ',
                     background=pt2,
-                    foreground=draculaYellow,
+                    foreground=colors["draculaYellow"],
                     padding=8,
                     margin_y = 2,
                     fontsize=universal_fontsize + 3,
@@ -96,7 +63,7 @@ top_bar_config1 = [
                     center_aligned=True,
                     rounded=True,
                     fontsize=universal_fontsize+1,
-                    this_current_screen_border = draculaYellow
+                    this_current_screen_border = colors["draculaYellow"]
                 ),
 
                 widget.Sep(
@@ -107,7 +74,7 @@ top_bar_config1 = [
 
                 widget.WindowName(
                     background=topBar_bg,
-                    foreground=white,
+                    foreground=colors["white"],
                     fontsize=11,
                 ),
 
@@ -218,7 +185,7 @@ top_bar_config1 = [
                     charge_char='<',
                     discharge_char='*',
                     low_percentage=0.2,
-                    low_foreground=onedarkRed,
+                    low_foreground=colors["onedarkRed"],
                     padding=10,
                 ),
 
@@ -242,7 +209,7 @@ top_bar_config1 = [
                widget.TextBox(
                    text = ' ',
                    background = time_bg,
-                   foreground = white,
+                   foreground = colors["white"],
                    padding = 10,
                    fontsize = universal_fontsize + 2
                 ),

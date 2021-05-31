@@ -10,9 +10,10 @@ from typing import List
 
 mod = "mod4"
 
+
 # hide the topbar
 def hide_show_bar(qtile):
-    bar = qtile.currentScreen.top
+    bar = qtile.currentScreen.bottom
     if bar.size == 0:
         bar.size = 30
         bar.window.unhide()
@@ -20,6 +21,7 @@ def hide_show_bar(qtile):
         bar.size = 0
         bar.window.hide()
         qtile.currentGroup.layoutAll()
+
 
 terminal = guess_terminal()
 
@@ -32,16 +34,19 @@ bar_thickness = 28
 universal_fontsize = 12
 
 keys = [
-    Key([mod, "shift"], "n", lazy.spawn('rofi -show drun -drun-icon-theme Tela')),
+    # Key([mod, "shift"], "n", lazy.spawn('rofi -show drun -drun-icon-theme Tela')),
+    Key([mod, "shift"], "n", lazy.spawn('rofi -no-lazy-grab -show drun -modi drun -theme ~/.config/rofi/launchers/ribbon/full_left.rasi')),
     Key([mod], "Tab", lazy.spawn('rofi -show window')),
-    Key([mod, "control"], "g", lazy.spawn(terminal + " -e start-stop-daemon -SbCv -x ~/.config/neovide")),
-    Key([mod], "z", lazy.hide_show_bar("top")),
+    Key([mod, "control"], "g", lazy.spawn(terminal + \
+                                          " -e start-stop-daemon -SbCv -x ~/.config/neovide")),
+    Key([mod], "z", lazy.hide_show_bar("bottom")),
     Key([mod], "m", lazy.spawn("pcmanfm")),
     Key([mod], "c", lazy.spawn("code")),
     Key([mod], "b", lazy.spawn(myBrowser)),
     Key([mod], "n", lazy.spawn("nitrogen")),
     Key([mod], "g", lazy.spawn("google-chrome")),
-    Key([mod, "shift"], "g", lazy.spawn(terminal + " -e tmux new-session -d ~/.config/neovide/target/release/neovide --multiGrid")),
+    Key([mod, "shift"], "g", lazy.spawn(terminal + \
+                                        " -e tmux new-session -d ~/.config/neovide/target/release/neovide --multiGrid")),
     Key([mod], "w", lazy.spawn("qalculate")),
     Key([mod], "v", lazy.spawn(terminal+" -e vifm")),
     Key([mod, "control"], "d", lazy.spawn(guiFileManager)),
