@@ -23,4 +23,9 @@ colors = {
     "draculaYellow" : "#F1FA8C",
     "draculaRed" : "#FF5555",
     "draculaGreen": "#50FA7B",
+
+    "pt1": "#21243D",
+    "pt2": "#21243D",
+
+    "icon": "#F9A828"
 }

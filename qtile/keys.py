@@ -34,8 +34,10 @@ bar_thickness = 28
 universal_fontsize = 12
 
 keys = [
-    # Key([mod, "shift"], "n", lazy.spawn('rofi -show drun -drun-icon-theme Tela')),
-    Key([mod, "shift"], "n", lazy.spawn('rofi -no-lazy-grab -show drun -modi drun -theme ~/.config/rofi/launchers/ribbon/full_left.rasi')),
+    Key([mod, "shift"], "n", lazy.spawn('rofi -show drun')),
+    # Key([mod, "shift"], "n", lazy.spawn("dmenu_run -fn 'Roboto Mono-12'")),
+    # Key([mod, "shift"], "n", lazy.spawn(
+        # 'rofi -no-lazy-grab -show drun -modi drun -theme ~/.config/rofi/launchers/ribbon/full_left.rasi')),
     Key([mod], "Tab", lazy.spawn('rofi -show window')),
     Key([mod, "control"], "g", lazy.spawn(terminal + \
                                           " -e start-stop-daemon -SbCv -x ~/.config/neovide")),
@@ -51,10 +53,10 @@ keys = [
     Key([mod], "v", lazy.spawn(terminal+" -e vifm")),
     Key([mod, "control"], "d", lazy.spawn(guiFileManager)),
     Key([mod, "shift"], "q",
-        lazy.spawn(terminal+" -e shutdown now"),
+        lazy.spawn("shutdown now"),
         desc='Shutdown Qtile'
         ),
-    Key([mod, "control"], "s", lazy.spawn(terminal+" -e systemctl suspend")),
+    Key([mod, "control"], "s", lazy.spawn("systemctl suspend")),
 
     # Switch between windows in current stack pane
     Key([mod], "k", lazy.layout.down(),

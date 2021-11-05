@@ -7,14 +7,15 @@ from libqtile.config import Click, Drag, Group, Key, Screen, ScratchPad, DropDow
 from libqtile.lazy import lazy
 from libqtile.utils import guess_terminal
 from typing import List  # noqa: F401
-from Colors import colors
-import Bar1
-import Keys
+from color import colors
+import bar1
+import keys
 
 # autostart applications
+os.system('setxkbmap us -option caps:escape')
+os.system('xmodmap -e "keycode 9=grave"')
 os.system("exec compton --backend glx --paint-on-overlay --vsync opengl-swc -b")
 os.system("nitrogen --restore &")
-os.system("setxkbmap us")  # changes keyboard layout to english us
 os.system("systemctl stop docker mysql mongodb apache2")
 os.system("xset r rate 250 100")
 
@@ -25,28 +26,29 @@ os.system("xrandr -s 1920x1080")
 
 # default constants 
 mod = "mod4"
-default_margin = 7
+default_margin = 0
 default_border_color = colors["white"]
-default_border_width = 1
+default_border_width = 2
 bar_opacity = 1
 bar_thickness = 27
 
-keys = Keys.keys
+keys = keys.keys
 
-# group_names = [(" ", {'layout': 'monadtall'}),
-                # (" ", {'layout': 'monadtall'}),
-               # (" ", {'layout': 'monadtall'}),
-               # (" ", {'layout': 'monadtall'}),
-               # (" ", {'layout': 'monadtall'}),
-               # ]
+group_names_font = [("web ", {'layout': 'monadtall'}),
+                    ("dev", {'layout': 'monadtall'}),
+                    ("term", {'layout': 'monadtall'}),
+                    ("conf", {'layout': 'monadtall'}),
+                    ("oth", {'layout': 'monadtall'}),
+                   ]
+group_names_icon = [(" ", {'layout': 'monadtall'}),
+                    (" ", {'layout': 'monadtall'}),
+                    (" ", {'layout': 'monadtall'}),
+                    (" ", {'layout': 'monadtall'}),
+                    (" ", {'layout': 'monadtall'}),
+                   ]
 
-group_names = [("web ", {'layout': 'monadtall'}),
-                ("dev", {'layout': 'monadtall'}),
-               ("term", {'layout': 'monadtall'}),
-               ("conf", {'layout': 'monadtall'}),
-               ("oth", {'layout': 'monadtall'}),
-               ]
 
+group_names = group_names_icon
 group_keys = "a,s,d,f,u,i,o,p".split(",")
 groups = [Group(name, **kwargs) for name, kwargs in group_names]
 
@@ -108,7 +110,7 @@ seperator_height = 50
 screens = [
     Screen(
         bottom=bar.Bar(
-            Bar1.top_bar_config1, bar_thickness,
+            bar1.top_bar_config1, bar_thickness,
             opacity=bar_opacity,
         ),
     ),
@@ -147,13 +149,17 @@ floating_layout = layout.Floating(float_rules=[
     {'wmclass': 'terminator'}, # floating terrminal 
     {'wmclass': 'nitrogen'}, # floating terrminal 
     {'wmclass': 'sublime_text'}, # floating gui text editor
+    {'wmclass': 'kazam'}, # floating gui text editor
     {'wmclass': 'lxappearance'}, # floating gui text editor
     {'wmclass': 'gcr-prompter'},
     {'wname': 'http://localhost:3000 is sharing your screen.'},
     {'wmclass': 'zoom'},
+    {'wmclass': 'Sign in - Google Accounts - Brave'},
+    {'wmclass': 'droidcam'},
     {'wname': 'branchdialog'},  # gitk
     {'wname': 'pinentry'},  # GPG key password entry
     {'wmclass': 'ssh-askpass'},  # ssh-askpass
+    {'wmclass': 'gnome-mpv'},  # ssh-askpass
 ], border_focus="#ffffff",
 )
 

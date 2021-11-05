@@ -5,8 +5,9 @@ import psutil
 from libqtile import bar, hook, layout, widget
 from libqtile.config import Click, Drag, Group, Key, Screen, ScratchPad, DropDown, Key, Match
 from libqtile.lazy import lazy
-from Colors import colors
+from color import colors
 from libqtile.utils import guess_terminal
+
 terminal = guess_terminal()
 
 universal_fontsize = 11
@@ -16,8 +17,9 @@ topBar_bg = "#101219"
 
 # setting the background colors
 pt1 = "#1D233A"
+pt1=colors["pt1"]
 # pt2 = "#21222C"
-pt2 = pt1
+pt2 = colors["pt2"]
 
 groupBox_bg=topBar_bg
 layout_bg=pt2
@@ -26,30 +28,31 @@ memory_bg=pt1
 battery_bg=pt2
 time_bg=pt1
 shutdown_bg = colors["nordRed"]
-groupBoxHighlight = colors["gruvboxBrown"]
+groupBoxHighlight = "#393E46"
 seperator_bg = pt1
 seperator_fg = colors["white"]
 
 # setting the foregroung colors
 memory_fg = colors["white"]
-memoryText_fg=colors["draculaYellow"]
+memoryText_fg=colors["icon"]
 time_fg = colors["white"]
 groupBox_fg=colors["white"]
 layout_fg=colors["white"]
-volumeIcon_fg=colors["draculaYellow"]
+volumeIcon_fg=colors["icon"]
 volume_fg=colors["white"]
 battery_fg=colors["white"]
-batteryIcon_fg=colors["draculaYellow"]
+batteryIcon_fg=colors["icon"]
 shutdown_fg = colors["white"]
 
 def open_rofi(qtile):
-    qtile.cmd_spawn('tmux new-session -d ~/.config/rofi/launchers/ribbon/launcher.sh')
+    # qtile.cmd_spawn('tmux new-session -d ~/.config/rofi/launchers/ribbon/launcher.sh')
+    qtile.cmd_spawn('rofi -show drun')
 
 top_bar_config1 = [
                 widget.TextBox(
                     text=' ',
                     background=pt2,
-                    foreground=colors["draculaYellow"],
+                    foreground=colors["icon"],
                     padding=8,
                     margin_y = 2,
                     fontsize=universal_fontsize + 3,
@@ -62,8 +65,8 @@ top_bar_config1 = [
                     highlight_method="line",
                     center_aligned=True,
                     rounded=True,
-                    fontsize=universal_fontsize+1,
-                    this_current_screen_border = colors["draculaYellow"]
+                    fontsize=universal_fontsize+4,
+                    this_current_screen_border = groupBoxHighlight
                 ),
 
                 widget.Sep(
@@ -139,11 +142,11 @@ top_bar_config1 = [
                 ),
 
                widget.TextBox(
-                   text = 'memory :',
+                   text = '',
                    background = memory_bg,
                    foreground = memoryText_fg,
                    padding = 10,
-                   fontsize = universal_fontsize
+                   fontsize = universal_fontsize + 3
                 ),
 
                 widget.Memory(
@@ -185,7 +188,7 @@ top_bar_config1 = [
                     charge_char='<',
                     discharge_char='*',
                     low_percentage=0.2,
-                    low_foreground=colors["onedarkRed"],
+                    low_foreground=colors["nordRed"],
                     padding=10,
                 ),
 
