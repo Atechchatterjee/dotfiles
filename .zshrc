@@ -113,6 +113,7 @@ alias docker-run="sudo docker-compose up --build"
 alias docker-deploy="sudo docker-compose -f ./docker-compose-deploy.yml up --build"
 
 alias set-keys="setxkbmap us -option caps:escape && xmodmap -e 'keycode 9=grave asciitilde'"
+alias github-access-token="cat ~/Documents/github/accesstoken.txt"
 
 jrun() { javac $1.java && java $1 ; }
 cpTemp() { cp ~/coding/Cpp/template.cpp ./$1.cpp; }
