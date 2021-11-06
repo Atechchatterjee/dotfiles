@@ -13,13 +13,14 @@ terminal = guess_terminal()
 universal_fontsize = 11
 seperator_width = 0
 
-topBar_bg = "#101219"
+# topBar_bg = "#101219"
+topBar_bg = colors["gruvboxBrown"]
 
 # setting the background colors
 pt1 = "#1D233A"
-pt1=colors["pt1"]
+pt1=colors["gruvboxBrown"]
 # pt2 = "#21222C"
-pt2 = colors["pt2"]
+pt2 = colors["gruvboxBrown"]
 
 groupBox_bg=topBar_bg
 layout_bg=pt2
@@ -42,6 +43,7 @@ volumeIcon_fg=colors["icon"]
 volume_fg=colors["white"]
 battery_fg=colors["white"]
 batteryIcon_fg=colors["icon"]
+time_icon_fg=colors["icon"]
 shutdown_fg = colors["white"]
 
 def open_rofi(qtile):
@@ -114,9 +116,9 @@ top_bar_config1 = [
                 widget.Volume(
                     background=volume_bg,
                     padding=8,
-                    mute_command="amixer -q -D pulse set Master toggle",
-                    volume_up_command="amixer -c 0 -q set Master 2dB+",
-                    volume_down_command="amixer -c 0 -q set Master 2dB-",
+                    mute_command="amixer set Master toggle",
+                    volume_up_command="amixer set Master 2%+",
+                    volume_down_command="amixer set Master 2%-",
                     fontsize=universal_fontsize,
                 ),
 
@@ -192,12 +194,12 @@ top_bar_config1 = [
                     padding=10,
                 ),
 
-                widget.Sep(
-                    background=seperator_bg,
-                    foreground=seperator_fg,
-                    linewidth=seperator_width,
-                    padding=3
-                ),
+                # widget.Sep(
+                    # background=seperator_bg,
+                    # foreground=seperator_fg,
+                    # linewidth=seperator_width,
+                    # padding=3
+                # ),
 
                 widget.Sep(
                     background=battery_bg,
@@ -212,7 +214,7 @@ top_bar_config1 = [
                widget.TextBox(
                    text = ' ',
                    background = time_bg,
-                   foreground = colors["white"],
+                   foreground = time_icon_fg,
                    padding = 10,
                    fontsize = universal_fontsize + 2
                 ),

@@ -150,8 +150,8 @@ keys = [
     Key([mod, "control"], "f", lazy.window.toggle_floating()),
 
     # Also allow changing volume the old fashioned way.
-    Key([mod], "equal", lazy.spawn("amixer -c 0 -q set Master 1dB+")),
-    Key([mod], "minus", lazy.spawn("aixer -c 0 -q set Master 1dB-")),
+    Key([mod], "equal", lazy.spawn("amixer set Master 2%+")),
+    Key([mod], "minus", lazy.spawn("amixer set Master 2%-")),
 
     Key([mod, "shift"], "j", lazy.layout.shuffle_down()),
     Key([mod, "shift"], "k", lazy.layout.shuffle_up()),

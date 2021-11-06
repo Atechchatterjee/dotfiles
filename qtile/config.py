@@ -11,7 +11,7 @@ from color import colors
 import bar1
 import keys
 
-# autostart applications
+# autostart applications/configurations
 os.system('setxkbmap us -option caps:escape')
 os.system('xmodmap -e "keycode 9=grave asciitilde"')
 os.system("exec compton --backend glx --paint-on-overlay --vsync opengl-swc -b")
@@ -26,9 +26,9 @@ os.system("xrandr -s 1920x1080")
 
 # default constants 
 mod = "mod4"
-default_margin = 0
+default_margin = 8
 default_border_color = colors["white"]
-default_border_width = 2
+default_border_width = 1
 bar_opacity = 1
 bar_thickness = 27
 
