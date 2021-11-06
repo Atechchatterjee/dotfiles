@@ -13,7 +13,7 @@ import keys
 
 # autostart applications
 os.system('setxkbmap us -option caps:escape')
-os.system('xmodmap -e "keycode 9=grave"')
+os.system('xmodmap -e "keycode 9=grave asciitilde"')
 os.system("exec compton --backend glx --paint-on-overlay --vsync opengl-swc -b")
 os.system("nitrogen --restore &")
 os.system("systemctl stop docker mysql mongodb apache2")
