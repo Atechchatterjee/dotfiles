@@ -26,9 +26,9 @@ os.system("xrandr -s 1920x1080")
 
 # default constants 
 mod = "mod4"
-default_margin = 7
+default_margin = 8
 default_border_color = colors["white"]
-default_border_width = 1
+default_border_width = 2
 bar_opacity = 1
 bar_thickness = 27
 
@@ -40,11 +40,11 @@ group_names_font = [("web ", {'layout': 'monadtall'}),
                     ("conf", {'layout': 'monadtall'}),
                     ("oth", {'layout': 'monadtall'}),
                    ]
-group_names_icon = [(" ", {'layout': 'monadtall'}),
+group_names_icon = [(" ", {'layout': 'monadtall'}),
                     (" ", {'layout': 'monadtall'}),
                     (" ", {'layout': 'monadtall'}),
                     (" ", {'layout': 'monadtall'}),
-                    (" ", {'layout': 'monadtall'}),
+                    (" ", {'layout': 'monadtall'}),
                    ]
 
 

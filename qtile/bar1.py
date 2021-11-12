@@ -25,8 +25,8 @@ volume_bg=pt1
 memory_bg=pt1
 battery_bg=pt2
 time_bg=pt1
-shutdown_bg = colors["nordRed"]
-groupBoxHighlight = "#B97A95"
+shutdown_bg = colors["nordDBlue"]
+groupBoxHighlight = colors["nordDBlue"]
 seperator_bg = pt1
 seperator_fg = colors["white"]
 
@@ -108,11 +108,11 @@ top_bar_config1 = [
                     padding=3
                 ),
                 widget.TextBox(
-                    text=' ',
+                    text=' ',
                     background=volume_bg,
                     foreground=volumeIcon_fg,
                     padding=8,
-                    fontsize=universal_fontsize + 3,
+                    fontsize=universal_fontsize + 4,
                 ),
 
                 widget.Volume(
