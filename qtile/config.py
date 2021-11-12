@@ -26,7 +26,7 @@ os.system("xrandr -s 1920x1080")
 
 # default constants 
 mod = "mod4"
-default_margin = 8
+default_margin = 7
 default_border_color = colors["white"]
 default_border_width = 1
 bar_opacity = 1
@@ -87,7 +87,8 @@ widget_defaults = dict(
 extension_defaults = widget_defaults.copy()
 
 # setting the background colors
-topBar_bg = "#101219"
+# topBar_bg = "#101219"
+topBar_bg = colors["nordBlue"]
 currentLayout_bg = topBar_bg
 memory_bg = colors["nordDBlue"]
 net_bg = colors["gruvboxBrown"]
@@ -109,7 +110,7 @@ seperator_height = 50
 
 screens = [
     Screen(
-        bottom=bar.Bar(
+        top=bar.Bar(
             bar1.top_bar_config1, bar_thickness,
             opacity=bar_opacity,
         ),

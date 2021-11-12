@@ -13,14 +13,11 @@ terminal = guess_terminal()
 universal_fontsize = 11
 seperator_width = 0
 
-# topBar_bg = "#101219"
-topBar_bg = colors["gruvboxBrown"]
+topBar_bg = "#101219"
 
 # setting the background colors
-pt1 = "#1D233A"
-pt1=colors["gruvboxBrown"]
-# pt2 = "#21222C"
-pt2 = colors["gruvboxBrown"]
+pt1=topBar_bg
+pt2 = topBar_bg
 
 groupBox_bg=topBar_bg
 layout_bg=pt2
@@ -29,25 +26,31 @@ memory_bg=pt1
 battery_bg=pt2
 time_bg=pt1
 shutdown_bg = colors["nordRed"]
-groupBoxHighlight = "#393E46"
+groupBoxHighlight = "#B97A95"
 seperator_bg = pt1
 seperator_fg = colors["white"]
 
 # setting the foregroung colors
 memory_fg = colors["white"]
 memoryText_fg=colors["icon"]
+
 time_fg = colors["white"]
+
+time_icon_fg=colors["icon"]
+
 groupBox_fg=colors["white"]
-layout_fg=colors["white"]
+
+layout_fg=colors["icon"]
+
 volumeIcon_fg=colors["icon"]
 volume_fg=colors["white"]
+
 battery_fg=colors["white"]
 batteryIcon_fg=colors["icon"]
-time_icon_fg=colors["icon"]
+
 shutdown_fg = colors["white"]
 
 def open_rofi(qtile):
-    # qtile.cmd_spawn('tmux new-session -d ~/.config/rofi/launchers/ribbon/launcher.sh')
     qtile.cmd_spawn('rofi -show drun')
 
 top_bar_config1 = [
@@ -80,9 +83,8 @@ top_bar_config1 = [
                 widget.WindowName(
                     background=topBar_bg,
                     foreground=colors["white"],
-                    fontsize=11,
+                    fontsize=0,
                 ),
-
                 widget.Sep(
                     background=topBar_bg,
                     foreground=topBar_bg,
@@ -91,8 +93,8 @@ top_bar_config1 = [
                 widget.Systray(
                     background=topBar_bg,
                     fontsize=universal_fontsize,
-                    margin_y=20,
-                    padding=2,
+                    margin_y=25,
+                    padding=5,
                 ),
                 widget.Sep(
                     background=topBar_bg,
@@ -116,7 +118,7 @@ top_bar_config1 = [
                 widget.Volume(
                     background=volume_bg,
                     padding=8,
-                    mute_command="amixer set Master toggle",
+                    mute_command="pactl set-sink-mute 0 toggle",
                     volume_up_command="amixer set Master 2%+",
                     volume_down_command="amixer set Master 2%-",
                     fontsize=universal_fontsize,
@@ -127,6 +129,14 @@ top_bar_config1 = [
                     foreground=seperator_fg,
                     linewidth=seperator_width,
                     padding=3
+                ),
+
+               widget.TextBox(
+                   text = '',
+                   background = layout_bg,
+                   foreground = layout_fg,
+                   padding = 10,
+                   fontsize = universal_fontsize + 4
                 ),
 
                 widget.CurrentLayout(

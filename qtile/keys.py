@@ -13,7 +13,7 @@ mod = "mod4"
 
 # hide the topbar
 def hide_show_bar(qtile):
-    bar = qtile.currentScreen.bottom
+    bar = qtile.currentScreen.top
     if bar.size == 0:
         bar.size = 30
         bar.window.unhide()
@@ -41,7 +41,7 @@ keys = [
     Key([mod], "Tab", lazy.spawn('rofi -show window')),
     Key([mod, "control"], "g", lazy.spawn(terminal + \
                                           " -e start-stop-daemon -SbCv -x ~/.config/neovide")),
-    Key([mod], "z", lazy.hide_show_bar("bottom")),
+    Key([mod], "z", lazy.hide_show_bar("top")),
     Key([mod], "m", lazy.spawn("pcmanfm")),
     Key([mod], "c", lazy.spawn("code")),
     Key([mod], "b", lazy.spawn(myBrowser)),
