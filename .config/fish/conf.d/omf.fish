@@ -6,10 +6,14 @@ set -q XDG_DATA_HOME
 
 fish_vi_key_bindings
 
-fish_vi_cursor
+# fish_vi_cursor
+
+set -U budspencer_nobell
 
 # removes the fish greeting prompt
 set fish_greeting
+
+set theme_color_scheme "nord"
 
 xset r rate 250 100
 
