@@ -186,7 +186,8 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ "1", "2", "3", "4", "5", "6", "7", "8", "9" }, s, awful.layout.layouts[1])
+    --awful.tag({ " 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 "}, s, awful.layout.layouts[1])
+    awful.tag({ "   ", "   ", "   ", "   ", "   "}, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -198,6 +199,7 @@ awful.screen.connect_for_each_screen(function(s)
                            awful.button({ }, 3, function () awful.layout.inc(-1) end),
                            awful.button({ }, 4, function () awful.layout.inc( 1) end),
                            awful.button({ }, 5, function () awful.layout.inc(-1) end)))
+
     -- Create a taglist widget
     s.mytaglist = awful.widget.taglist {
         screen  = s,
@@ -205,17 +207,77 @@ awful.screen.connect_for_each_screen(function(s)
         buttons = taglist_buttons,
     }
 
-    beautiful.taglist_spacing = 0
+    beautiful.taglist_spacing = 5
+    beautiful.taglist_bg_focus = "#826BC3"
+    beautiful.taglist_font="10"
+    --beautiful.taglist_bg_occupied="#81A1C1"
 
     -- Create a tasklist widget
+    --s.mytasklist = awful.widget.tasklist {
+        --screen  = s,
+        --filter  = awful.widget.tasklist.filter.currenttags,
+        --buttons = tasklist_buttons
+    --}
+    --
+    -- Custom task-list(from official docs)
     s.mytasklist = awful.widget.tasklist {
-        screen  = s,
-        filter  = awful.widget.tasklist.filter.currenttags,
-        buttons = tasklist_buttons
+        screen   = s,
+        filter   = awful.widget.tasklist.filter.currenttags,
+        buttons  = tasklist_buttons,
+        style    = {
+            shape_border_width = 1,
+            shape_border_color = '#777777',
+            --shape  = gears.shape.rounded_bar,
+        },
+        layout   = {
+            spacing = 0,
+            spacing_widget = {
+                --{
+                    --forced_width = 0,
+                    --shape        = gears.shape.circle,
+                    --widget       = wibox.widget.separator
+                --},
+                valign = 'center',
+                halign = 'center',
+                widget = wibox.container.place,
+            },
+            layout  = wibox.layout.flex.horizontal
+        },
+        -- Notice that there is *NO* wibox.wibox prefix, it is a template,
+        -- not a widget instance.
+        widget_template = {
+            {
+                {
+                    {
+                        {
+                            id     = 'icon_role',
+                            widget = wibox.widget.imagebox,
+                        },
+                        margins = 5,
+                        widget  = wibox.container.margin,
+                    },
+                    {
+                        id     = 'text_role',
+                        widget = wibox.widget.textbox,
+                    },
+                    layout = wibox.layout.fixed.horizontal,
+                },
+                left  = 10,
+                right = 10,
+                widget = wibox.container.margin
+            },
+            id     = 'background_role',
+            widget = wibox.container.background,
+        },
     }
+    beautiful.tasklist_bg_focus = "#21243D"
+    beautiful.tasklist_align = "left"
+    beautiful.tasklist_spacing = 5
+    beautiful.tasklist_shape_border_width = 5
+    
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = 25 })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = 30 })
     beautiful.wibar_bg = "#1D2021",
 
     -- Add widgets to the wibox
@@ -224,15 +286,20 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             mylauncher,
+            wibox.widget.textbox('  '),
             s.mytaglist,
+            wibox.widget.textbox('  '),
             s.mypromptbox,
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
+            wibox.widget.textbox('  '),
             mykeyboardlayout,
             wibox.widget.systray(),
+            wibox.widget.textbox(' | '),
             mytextclock,
+            wibox.widget.textbox('  '),
             s.mylayoutbox,
         },
     }
