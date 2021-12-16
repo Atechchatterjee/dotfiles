@@ -93,7 +93,7 @@ awful.layout.layouts = {
 -- }}}
 
 -- Window Gaps
-beautiful.useless_gap = 5
+beautiful.useless_gap = 2
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
@@ -211,7 +211,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Each screen has its own tag table.
     --awful.tag({ " 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 "}, s, awful.layout.layouts[1])
-    awful.tag({ "   ", "   ", "   ", "   ", "   "}, s, awful.layout.layouts[1])
+    awful.tag({ "     ", "     ", "     ", "     ", "     "}, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -330,6 +330,7 @@ awful.screen.connect_for_each_screen(function(s)
                 warning_msg_text="Battery is running low, Plug into power",
                 warning_msg_position="top_right"
             },
+            wibox.widget.textbox('  |   '),
             cpu_widget({
                 --width = 70,
                 step_width = 2,
@@ -341,7 +342,7 @@ awful.screen.connect_for_each_screen(function(s)
                 widget_type = 'arc',
                 device = 'pulse'
             },
-            wibox.widget.textbox('  '),
+            wibox.widget.textbox('  |  '),
             mytextclock,
             wibox.widget.textbox('  '),
             s.mylayoutbox,
@@ -363,9 +364,9 @@ globalkeys = gears.table.join(
     -- Volume Control Keybindings
     awful.key({ modkey }, "=", function() awful.util.spawn_with_shell("amixer -D pulse sset Master 5%+") end, {description = "increase volume"}),
     awful.key({ modkey }, "-", function() awful.util.spawn_with_shell("amixer -D pulse sset Master 5%-") end, {description = "decrease volume"}),
-    awful.key({ modkey }, "]", function() volume_widget:inc(5) end, {description = "increase volume by widget"}),
-    awful.key({ modkey }, "[", function() volume_widget:dec(5) end, {description = "decrease volume by widget"}),
-    awful.key({ modkey }, "\\", function() volume_widget:toggle() end),
+    --awful.key({ modkey }, "]", function() volume_widget:inc(5) end, {description = "increase volume by widget"}),
+    --awful.key({ modkey }, "[", function() volume_widget:dec(5) end, {description = "decrease volume by widget"}),
+    --awful.key({ modkey }, "\\", function() volume_widget:toggle() end),
 
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
@@ -414,6 +415,8 @@ globalkeys = gears.table.join(
     -- Standard program
     awful.key({ modkey,           }, "Return", function () awful.spawn(terminal) end,
               {description = "open a terminal", group = "launcher"}),
+    awful.key({ modkey, "Shift"          }, "Return", function () awful.spawn("alacritty") end,
+              {description = "open a alacritty", group = "launcher"}),
     awful.key({ modkey, "Control" }, "r", awesome.restart,
               {description = "reload awesome", group = "awesome"}),
     awful.key({ modkey, "Shift"   }, "q", awesome.quit,
@@ -637,6 +640,44 @@ awful.rules.rules = {
 }
 -- }}}
 
+--- [ Title bar for floating windows
+-- Toggle titlebar on or off depending on s. Creates titlebar if it doesn't exist
+local function setTitlebar(client, s)
+    if s then
+        if client.titlebar == nil then
+            client:emit_signal("request::titlebars", "rules", {})
+        end
+        awful.titlebar.show(client)
+    else 
+        awful.titlebar.hide(client)
+    end
+end
+
+--Toggle titlebar on floating status change
+client.connect_signal("property::floating", function(c)
+    setTitlebar(c, c.floating)
+end)
+
+-- Hook called when a client spawns
+client.connect_signal("manage", function(c) 
+    setTitlebar(c, c.floating or c.first_tag.layout == awful.layout.suit.floating)
+end)
+
+-- Show titlebars on tags with the floating layout
+tag.connect_signal("property::layout", function(t)
+    -- New to Lua ? 
+    -- pairs iterates on the table and return a key value pair
+    -- I don't need the key here, so I put _ to ignore it
+    for _, c in pairs(t:clients()) do
+        if t.layout == awful.layout.suit.floating then
+            setTitlebar(c, true)
+        else
+            setTitlebar(c, false)
+        end
+    end
+end)
+--- ]
+
 -- {{{ Signals
 -- Signal function to execute when a new client appears.
 client.connect_signal("manage", function (c)
@@ -702,7 +743,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 --
 -- Startup Applications
+awful.spawn.with_shell("nitrogen --restore")
 awful.spawn.with_shell("picom --experimental-backends --backend glx -b")
 awful.spawn.with_shell("xrandr --output HDMI-A-0 --primary")
 awful.spawn.with_shell("xrandr --output eDP --off")
-awful.spawn.with_shell("nitrogen --restore")
