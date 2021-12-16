@@ -22,6 +22,14 @@ require("awful.hotkeys_popup.keys")
 local debian = require("debian.menu")
 local has_fdo, freedesktop = pcall(require, "freedesktop")
 
+-- widgets
+local volume_widget = require('awesome-wm-widgets.volume-widget.volume')
+local ram_widget = require("awesome-wm-widgets.ram-widget.ram-widget")
+local net_speed_widget = require("awesome-wm-widgets.net-speed-widget.net-speed")
+local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
+local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
+local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -49,7 +57,7 @@ end
 
 -- {{{ Variable definitions
 -- Themes define colours, icons, font and wallpapers.
-beautiful.init(gears.filesystem.get_themes_dir() .. "default/theme.lua")
+beautiful.init(gears.filesystem.get_configuration_dir() .. "mytheme.lua")
 
 -- This is used later as the default terminal and editor to run.
 terminal = "kitty"
@@ -125,6 +133,22 @@ mykeyboardlayout = awful.widget.keyboardlayout()
 -- {{{ Wibar
 -- Create a textclock widget
 mytextclock = wibox.widget.textclock()
+-- default
+local cw = calendar_widget()
+-- or customized
+local cw = calendar_widget({
+    theme = 'nord',
+    placement = 'top_right',
+    start_sunday = true,
+    radius = 0,
+-- with customized next/previous (see table above)
+    previous_month_button = 1,
+    next_month_button = 3,
+})
+mytextclock:connect_signal("button::press",
+    function(_, _, _, button)
+        if button == 1 then cw.toggle() end
+    end)
 
 -- Create a wibox for each screen and add it
 local taglist_buttons = gears.table.join(
@@ -297,7 +321,27 @@ awful.screen.connect_for_each_screen(function(s)
             wibox.widget.textbox('  '),
             mykeyboardlayout,
             wibox.widget.systray(),
-            wibox.widget.textbox(' | '),
+            wibox.widget.textbox('  | '),
+            ram_widget(),
+            wibox.widget.textbox('  |   '),
+            -- /usr/share/icons/Arc icon-theme is required
+            battery_widget {
+                warning_msg_title="Battery Problem",
+                warning_msg_text="Battery is running low, Plug into power",
+                warning_msg_position="top_right"
+            },
+            cpu_widget({
+                --width = 70,
+                step_width = 2,
+                step_spacing = 0,
+                color = '#434c5e'
+            }),
+            wibox.widget.textbox('  |   '),
+            volume_widget{
+                widget_type = 'arc',
+                device = 'pulse'
+            },
+            wibox.widget.textbox('  '),
             mytextclock,
             wibox.widget.textbox('  '),
             s.mylayoutbox,
@@ -316,6 +360,13 @@ root.buttons(gears.table.join(
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(
+    -- Volume Control Keybindings
+    awful.key({ modkey }, "=", function() awful.util.spawn_with_shell("amixer -D pulse sset Master 5%+") end, {description = "increase volume"}),
+    awful.key({ modkey }, "-", function() awful.util.spawn_with_shell("amixer -D pulse sset Master 5%-") end, {description = "decrease volume"}),
+    awful.key({ modkey }, "]", function() volume_widget:inc(5) end, {description = "increase volume by widget"}),
+    awful.key({ modkey }, "[", function() volume_widget:dec(5) end, {description = "decrease volume by widget"}),
+    awful.key({ modkey }, "\\", function() volume_widget:toggle() end),
+
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
     awful.key({ modkey,           }, "Left",   awful.tag.viewprev,
@@ -652,4 +703,6 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 --
 -- Startup Applications
 awful.spawn.with_shell("picom --experimental-backends --backend glx -b")
+awful.spawn.with_shell("xrandr --output HDMI-A-0 --primary")
+awful.spawn.with_shell("xrandr --output eDP --off")
 awful.spawn.with_shell("nitrogen --restore")
