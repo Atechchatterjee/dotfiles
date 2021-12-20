@@ -18,6 +18,9 @@ Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'vimwiki/vimwiki'
 Plug 'https://github.com/ap/vim-css-color.git'
 Plug 'https://github.com/tpope/vim-surround.git'
+Plug 'airblade/vim-gitgutter'
+Plug 'jiangmiao/auto-pairs'
+Plug 'junegunn/goyo.vim'
 
 " Lsp Related Plugins
 Plug 'neovim/nvim-lspconfig'
@@ -28,6 +31,11 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'glepnir/lspsaga.nvim'
+
+" to work with python virtualenv
+Plug 'nvim-lua/completion-nvim'
+Plug 'HallerPatrick/py_lsp.nvim'
+
 " Telescope
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
@@ -43,6 +51,8 @@ Plug 'wojciechkepka/vim-github-dark'
 Plug 'kaicataldo/material.vim', { 'branch': 'main' }
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'NLKNguyen/papercolor-theme'
+Plug 'chase/focuspoint-vim'
+Plug 'tiagovla/tokyodark.nvim'
 
 " Syntax highlighting plugins
 "Plug 'HerringtonDarkholme/yats.vim' "TS
@@ -60,6 +70,7 @@ syntax enable
 
 set path+=**					" Searches current directory recursively.
 set wildmenu					" Display all matches when tab complete.
+set hlsearch
 set incsearch                   " Incremental search
 set hidden                      " Needed to keep multiple buffers open
 set nobackup                    " No auto backups
@@ -78,25 +89,42 @@ set nowrap
 
 let mapleader = " "
 let g:rehash256 = 1
+let g:webdevicons_enable = 1
+let g:gitgutter_realtime = 1
+set updatetime=100
 
 map <A-N> :NERDTreeToggle<CR>
 set encoding=UTF-8
 
+let g:neovide_window_floating_blur=1
 let NERDTreeShowHidden=1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 
 autocmd FileType typescript :set makeprg=tsc 
 
-colorscheme jellybeans
+"let g:tokyonight_style = "night"
+"let g:tokyonight_italic_comments=0
+"let g:tokyonight_italic_keywords=0
+"let g:tokyonight_dark_sidebar=1
+"let g:tokyonight_colors = {
+  "\ 'hint': 'orange',
+  "\ 'error': '#ff0000'
+"\ }
+"let g:tokyonight_dark_float=1
+"let g:tokyonight_transparent=1
+
+"let g:tokyodark_transparent_background = 0
+let g:tokyodark_color_gamma = "1"
+colorscheme tokyodark
 
 "hi! NonText ctermbg=NONE guibg=NONE
 "hi! Normal guibg=NONE ctermbg=NONE
-"hi! LineNr guibg=NONE guifg=grey ctermbg=NONE
+"hi! LineNr guibg=NONE guifg=grey ctermbg=white
 
 map <Leader>tt :vnew term://zsh<CR>
-map <leader>x :terminal gcc % -o %< && ./%<<CR>
-
+map <Leader>x :terminal gcc % -o %< && ./%<<CR>
+ 
 set mouse=nicr
 set mouse=a
 
@@ -109,10 +137,11 @@ nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
 " Find files using Telescope command-line sugar.
-nnoremap <leader>ff <cmd>Telescope find_files<CR>
-nnoremap <leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <leader>fb <cmd>Telescope buffers<cr>
-nnoremap <leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <Leader>ff <cmd>Telescope find_files<CR>
+nnoremap <Leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <Leader>fb <cmd>Telescope buffers<cr>
+nnoremap <Leader>fh <cmd>Telescope help_tags<cr>
+nnoremap <Leader>fu :lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ winblend = 10 }))<cr>
 
 " Make adjusing split sizes a bit more friendly
 noremap <silent> <C-Left> :vertical resize +3<CR>
@@ -149,6 +178,7 @@ let java_highlight_functions = 1
 nmap <C-t> gt
 nmap <C-b> :NERDTreeToggle<CR>
 nmap <A-S-P> :Prettier <CR>
+map <Enter> :Goyo <CR>
 
 "toggle between terminal and editor
 tnoremap <c-h> <C-\><C-n><C-w>h
@@ -191,17 +221,17 @@ vnoremap <C-X> +x
 vnoremap <C-C> +y
 
 "switch tabs
-noremap <leader>1 1gt
-noremap <leader>2 2gt
-noremap <leader>3 3gt
-noremap <leader>4 4gt
-noremap <leader>5 5gt
-noremap <leader>6 6gt
-noremap <leader>7 7gt
-noremap <leader>8 8gt
-noremap <leader>9 9gt
-noremap <leader>0 :tablast<cr>
-noremap <leader>p :Autoformat<CR>
+noremap <Leader>1 1gt
+noremap <Leader>2 2gt
+noremap <Leader>3 3gt
+noremap <Leader>4 4gt
+noremap <Leader>5 5gt
+noremap <Leader>6 6gt
+noremap <Leader>7 7gt
+noremap <Leader>8 8gt
+noremap <Leader>9 9gt
+noremap <Leader>0 :tablast<cr>
+noremap <Leader>p :Autoformat<CR>
 noremap <tab> gt
 
 noremap <C-+> <C-_> <C-n>
@@ -215,7 +245,7 @@ nnoremap <silent> <Leader>. :exe "vertical resize +10" <CR>
 let NERDTreeMapOpenInTab='\r'
 
 let g:lightline = {
-			\ 'colorscheme': 'onedark',
+			\ 'colorscheme': 'tokyonight',
 			\ 'active': {
 			\   'left': [ [ 'mode', 'paste'  ],
 			\             [ 'gitbranch', 'readonly', 'filename', 'modified' ], [ 'statuslinetabs' ] ]
@@ -225,9 +255,40 @@ let g:lightline = {
 
 "------------------------------------------------------------------- Lsp config ---------------------------------------------------------------------------
 
+"Telescope config
 lua << EOF
+    require('telescope').setup {
+        defaults={
+            color_devicons=true
+        }
+    }
+EOF
+
+lua << EOF
+      local nvim_lsp = require('lspconfig')
+      local on_attach = function(client, bufnr) end
+      local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+      local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
     require'lspconfig'.tsserver.setup{}
     require'lspconfig'.clangd.setup{}
+    require'lspconfig'.pyright.setup{}
+    require'lspconfig'.jdtls.setup{}
+    require'py_lsp'.setup {
+        host_python = "/usr/bin/python3"
+    }
+
+    local servers = { 'pyright', 'clangd', 'tsserver', 'jdtls' }
+
+    for _, lsp in ipairs(servers) do
+      nvim_lsp[lsp].setup {
+        on_attach = on_attach,
+        flags = {
+          debounce_text_changes = 150,
+        }
+      }
+    end
+
     local lsp_installer = require("nvim-lsp-installer")
 
     -- Register a handler that will be called for all installed servers.
@@ -253,7 +314,6 @@ lua << EOF
             }
         }
     })
-
 EOF
 
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
@@ -314,11 +374,4 @@ lua <<EOF
       { name = 'buffer' }
     }
   })
-
-  -- Setup lspconfig.
-  --local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
-  -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
-  --require('lspconfig')['<YOUR_LSP_SERVER>'].setup {
-  --  capabilities = capabilities
-  --}
 EOF
