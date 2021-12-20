@@ -2,12 +2,10 @@ font_family JetBrains Mono
 font_size 12
 bold_font JetBrains Mono
 cursor_shape block
-background_opacity 0.9
+background_opacity 1
 window_padding_width 5
 
 # BEGIN_KITTY_THEME
-# Ayu
+# Argonaut
 include current-theme.conf
 # END_KITTY_THEME
-background #11121D
-cursor #fefefe
