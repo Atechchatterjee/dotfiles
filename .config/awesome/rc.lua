@@ -1,5 +1,3 @@
--- If LuaRocks is installed, make sure that packages installed through it are
--- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
 
 -- Standard awesome library
@@ -91,9 +89,6 @@ awful.layout.layouts = {
     -- awful.layout.suit.corner.se,
 }
 -- }}}
-
--- Window Gaps
-beautiful.useless_gap = 2
 
 -- {{{ Menu
 -- Create a launcher widget and a main menu
@@ -210,8 +205,8 @@ awful.screen.connect_for_each_screen(function(s)
     set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    --awful.tag({ " 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 "}, s, awful.layout.layouts[1])
-    awful.tag({ "     ", "     ", "     ", "     ", "     "}, s, awful.layout.layouts[1])
+    awful.tag({ " 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 "}, s, awful.layout.layouts[1])
+    --awful.tag({ "     ", "     ", "     ", "     ", "     "}, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -232,7 +227,7 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     beautiful.taglist_spacing = 5
-    beautiful.taglist_bg_focus = "#826BC3"
+    beautiful.taglist_bg_focus = "#8C5472"
     beautiful.taglist_font="10"
     --beautiful.taglist_bg_occupied="#81A1C1"
 
@@ -295,14 +290,14 @@ awful.screen.connect_for_each_screen(function(s)
         },
     }
     beautiful.tasklist_bg_focus = "#21243D"
-    beautiful.tasklist_align = "left"
+    beautiful.tasklist_align = "center"
     beautiful.tasklist_spacing = 5
     beautiful.tasklist_shape_border_width = 5
     
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = 30 })
-    beautiful.wibar_bg = "#1D2021",
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = 24 })
+    beautiful.wibar_bg = "#313449",
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -362,11 +357,16 @@ root.buttons(gears.table.join(
 -- {{{ Key bindings
 globalkeys = gears.table.join(
     -- Volume Control Keybindings
-    awful.key({ modkey }, "=", function() awful.util.spawn_with_shell("amixer -D pulse sset Master 5%+") end, {description = "increase volume"}),
-    awful.key({ modkey }, "-", function() awful.util.spawn_with_shell("amixer -D pulse sset Master 5%-") end, {description = "decrease volume"}),
+    awful.key({ modkey }, "=", function() awful.util.spawn_with_shell("amixer -D pulse sset Master 5%+") end, {description = "increase volume", group="volume"}),
+    awful.key({ modkey }, "-", function() awful.util.spawn_with_shell("amixer -D pulse sset Master 5%-") end, {description = "decrease volume", group="volume"}),
     --awful.key({ modkey }, "]", function() volume_widget:inc(5) end, {description = "increase volume by widget"}),
     --awful.key({ modkey }, "[", function() volume_widget:dec(5) end, {description = "decrease volume by widget"}),
-    --awful.key({ modkey }, "\\", function() volume_widget:toggle() end),
+    awful.key({ modkey }, "\\", function() volume_widget:toggle() end),
+
+    -- Launching applications 
+    awful.key({ modkey }, "b", function() awful.util.spawn("brave-browser") end, {description = "open brave-browser", group="applications"}),
+    awful.key({ modkey, "Shift" }, "n", function() awful.util.spawn("nitrogen") end, {description = "open nitrogen", group="applications"}),
+    awful.key({ modkey }, "c", function() awful.util.spawn("code") end, {description = "open vs code", group="applications"}),
 
     awful.key({ modkey,           }, "s",      hotkeys_popup.show_help,
               {description="show help", group="awesome"}),
@@ -452,8 +452,8 @@ globalkeys = gears.table.join(
               {description = "restore minimized", group = "client"}),
 
     -- Prompt
-    awful.key({ modkey },            "r",     function () awful.spawn("dmenu_run") end,
-              {description = "launch dmenu", group = "launcher"}),
+    awful.key({ modkey },            "r",     function () awful.spawn("sh /home/anish/.config/rofi/launchers/colorful/launcher.sh") end,
+              {description = "launch rofi", group = "launcher"}),
 
     awful.key({ modkey }, "x",
               function ()
@@ -743,7 +743,7 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- }}}
 --
 -- Startup Applications
-awful.spawn.with_shell("nitrogen --restore")
 awful.spawn.with_shell("picom --experimental-backends --backend glx -b")
 awful.spawn.with_shell("xrandr --output HDMI-A-0 --primary")
 awful.spawn.with_shell("xrandr --output eDP --off")
+awful.spawn.with_shell("nitrogen --restore")
