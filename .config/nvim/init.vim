@@ -20,7 +20,7 @@ Plug 'https://github.com/ap/vim-css-color.git'
 Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'airblade/vim-gitgutter'
 Plug 'jiangmiao/auto-pairs'
-Plug 'junegunn/goyo.vim'
+"Plug 'junegunn/goyo.vim'
 
 " Lsp Related Plugins
 Plug 'neovim/nvim-lspconfig'
@@ -53,13 +53,7 @@ Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'NLKNguyen/papercolor-theme'
 Plug 'chase/focuspoint-vim'
 Plug 'tiagovla/tokyodark.nvim'
-
-" Syntax highlighting plugins
-"Plug 'HerringtonDarkholme/yats.vim' "TS
-"Plug 'https://github.com/vim-python/python-syntax.git'
-"Plug 'pangloss/vim-javascript'
-"Plug 'maxmellon/vim-jsx-pretty'
-"Plug 'fatih/vim-go', { 'do': ':GoUpdateBinaries' }
+Plug 'EdenEast/nightfox.nvim'
 
 call plug#end()
 
@@ -76,7 +70,7 @@ set hidden                      " Needed to keep multiple buffers open
 set nobackup                    " No auto backups
 set noswapfile                  " No swap
 set t_Co=256                    " Set if term supports 256 colors.
-set number relativenumber
+set number
 set clipboard=unnamedplus       " Copy/paste between vim and other programs.
 set laststatus=2
 set noshowmode
@@ -115,6 +109,8 @@ autocmd FileType typescript :set makeprg=tsc
 "let g:tokyonight_transparent=1
 
 "let g:tokyodark_transparent_background = 0
+let g:tokyodark_enable_italic_comment = 0
+let g:tokyodark_enable_italic = 0
 let g:tokyodark_color_gamma = "1"
 colorscheme tokyodark
 
@@ -178,7 +174,7 @@ let java_highlight_functions = 1
 nmap <C-t> gt
 nmap <C-b> :NERDTreeToggle<CR>
 nmap <A-S-P> :Prettier <CR>
-map <Enter> :Goyo <CR>
+"map <Enter> :Goyo <CR>
 
 "toggle between terminal and editor
 tnoremap <c-h> <C-\><C-n><C-w>h
@@ -374,4 +370,18 @@ lua <<EOF
       { name = 'buffer' }
     }
   })
+EOF
+
+" Tree-sitter configuration for syntax highlighting
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  highlight = {
+    enable = true,
+    custom_captures = {
+      -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
+      ["foo.bar"] = "Identifier",
+    },
+    additional_vim_regex_highlighting = false,
+  }
+}
 EOF
