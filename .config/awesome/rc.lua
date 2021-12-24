@@ -27,6 +27,7 @@ local net_speed_widget = require("awesome-wm-widgets.net-speed-widget.net-speed"
 local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
 local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
+local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -281,7 +282,7 @@ awful.screen.connect_for_each_screen(function(s)
                     },
                     layout = wibox.layout.fixed.horizontal,
                 },
-                left  = 10,
+                left  = 15,
                 right = 10,
                 widget = wibox.container.margin
             },
@@ -316,31 +317,38 @@ awful.screen.connect_for_each_screen(function(s)
             wibox.widget.textbox('  '),
             mykeyboardlayout,
             wibox.widget.systray(),
-            wibox.widget.textbox('  | '),
-            ram_widget(),
-            wibox.widget.textbox('  |   '),
+            wibox.widget.textbox('   '),
+            ram_widget{
+                color_used='#EDEDED',
+                color_free='#826BC3'
+            },
+            wibox.widget.textbox('    '),
             -- /usr/share/icons/Arc icon-theme is required
             battery_widget {
                 warning_msg_title="Battery Problem",
                 warning_msg_text="Battery is running low, Plug into power",
                 warning_msg_position="top_right"
             },
-            wibox.widget.textbox('  |   '),
+            wibox.widget.textbox('    '),
             cpu_widget({
                 --width = 70,
-                step_width = 2,
-                step_spacing = 0,
+                step_width = 5,
+                step_spacing = 2,
                 color = '#434c5e'
             }),
-            wibox.widget.textbox('  |   '),
+            wibox.widget.textbox('     '),
             volume_widget{
-                widget_type = 'arc',
+                widget_type = 'icon_and_text',
                 device = 'pulse'
             },
-            wibox.widget.textbox('  |  '),
+            wibox.widget.textbox('    '),
             mytextclock,
             wibox.widget.textbox('  '),
-            s.mylayoutbox,
+            --s.mylayoutbox,
+            --wibox.widget.textbox('    '),
+            logout_menu_widget{
+                font = 'Noto Sans 9'
+            },
         },
     }
 end)
