@@ -203,10 +203,11 @@ screen.connect_signal("property::geometry", set_wallpaper)
 
 awful.screen.connect_for_each_screen(function(s)
     -- Wallpaper
-    set_wallpaper(s)
+    --set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    awful.tag({ " 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 "}, s, awful.layout.layouts[1])
+    --awful.tag({ " 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 "}, s, awful.layout.layouts[1])
+    awful.tag({ " web ", " dev ", " term ", " conf ", " file ", " oth ", " ext "}, s, awful.layout.layouts[1])
     --awful.tag({ "     ", "     ", "     ", "     ", "     "}, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
@@ -228,17 +229,9 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     beautiful.taglist_spacing = 5
-    beautiful.taglist_bg_focus = "#8C5472"
-    beautiful.taglist_font="10"
-    --beautiful.taglist_bg_occupied="#81A1C1"
+    beautiful.taglist_bg_focus = "#4C566A"
+    beautiful.taglist_font="sans 9"
 
-    -- Create a tasklist widget
-    --s.mytasklist = awful.widget.tasklist {
-        --screen  = s,
-        --filter  = awful.widget.tasklist.filter.currenttags,
-        --buttons = tasklist_buttons
-    --}
-    --
     -- Custom task-list(from official docs)
     s.mytasklist = awful.widget.tasklist {
         screen   = s,
@@ -253,7 +246,7 @@ awful.screen.connect_for_each_screen(function(s)
             spacing = 0,
             spacing_widget = {
                 --{
-                    --forced_width = 0,
+                    --forced_width = 2,
                     --shape        = gears.shape.circle,
                     --widget       = wibox.widget.separator
                 --},
@@ -290,14 +283,14 @@ awful.screen.connect_for_each_screen(function(s)
             widget = wibox.container.background,
         },
     }
-    beautiful.tasklist_bg_focus = "#21243D"
+    beautiful.tasklist_bg_focus = "#191D23"
     beautiful.tasklist_align = "center"
     beautiful.tasklist_spacing = 5
     beautiful.tasklist_shape_border_width = 5
     
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = 24 })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = 28 })
     beautiful.wibar_bg = "#313449",
 
     -- Add widgets to the wibox
@@ -315,12 +308,12 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
             wibox.widget.textbox('  '),
-            mykeyboardlayout,
+            --mykeyboardlayout,
             wibox.widget.systray(),
             wibox.widget.textbox('   '),
             ram_widget{
                 color_used='#EDEDED',
-                color_free='#826BC3'
+                color_free='#A3BE8C'
             },
             wibox.widget.textbox('    '),
             -- /usr/share/icons/Arc icon-theme is required
@@ -356,7 +349,7 @@ end)
 
 -- {{{ Mouse bindings
 root.buttons(gears.table.join(
-    awful.button({ }, 3, function () mymainmenu:toggle() end),
+    --awful.button({ }, 3, function () mymainmenu:toggle() end),
     awful.button({ }, 4, awful.tag.viewnext),
     awful.button({ }, 5, awful.tag.viewprev)
 ))
@@ -397,8 +390,6 @@ globalkeys = gears.table.join(
         end,
         {description = "focus previous by index", group = "client"}
     ),
-    awful.key({ modkey,           }, "w", function () mymainmenu:show() end,
-              {description = "show main menu", group = "awesome"}),
 
     -- Layout manipulation
     awful.key({ modkey, "Shift"   }, "j", function () awful.client.swap.byidx(  1)    end,
@@ -649,7 +640,7 @@ awful.rules.rules = {
 -- }}}
 
 --- [ Title bar for floating windows
--- Toggle titlebar on or off depending on s. Creates titlebar if it doesn't exist
+ --Toggle titlebar on or off depending on s. Creates titlebar if it doesn't exist
 local function setTitlebar(client, s)
     if s then
         if client.titlebar == nil then
@@ -754,4 +745,5 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 awful.spawn.with_shell("picom --experimental-backends -b")
 awful.spawn.with_shell("xrandr --output HDMI-A-0 --primary")
 awful.spawn.with_shell("xrandr --output eDP --off")
-awful.spawn.with_shell("nitrogen --restore")
+awful.spawn.with_shell("~/.fehbg")
+awful.spawn("nm-applet")

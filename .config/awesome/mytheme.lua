@@ -9,7 +9,7 @@ local theme = {}
 
 theme.font          = "sans 8"
 
-theme.bg_normal     = "#11121D"
+theme.bg_normal     = "#21252D"
 theme.bg_focus      = "#535d6c"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
@@ -20,10 +20,10 @@ theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
-theme.useless_gap   = dpi(3)
+theme.useless_gap   = dpi(0.5)
 theme.border_width  = dpi(2)
 theme.border_normal = "#000000"
-theme.border_focus  = "#EDEDED"
+theme.border_focus  = "#C4CEED"
 theme.border_marked = "#91231c"
 
 -- There are other variable sets
@@ -39,8 +39,10 @@ theme.border_marked = "#91231c"
 -- Example:
 --theme.taglist_bg_focus = "#ff0000"
 
+theme.taglist_bg_occupied = "#2E333F"
+
 -- Generate taglist squares:
-local taglist_square_size = dpi(4)
+local taglist_square_size = dpi(0)
 theme.taglist_squares_sel = theme_assets.taglist_squares_sel(
     taglist_square_size, theme.fg_normal
 )
