@@ -1,7 +1,6 @@
 call plug#begin('~/.vim/plugged')
 
 " General Plugins
-Plug 'itchyny/lightline.vim'
 Plug 'preservim/nerdtree' |
 			\ Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
@@ -20,7 +19,11 @@ Plug 'https://github.com/ap/vim-css-color.git'
 Plug 'https://github.com/tpope/vim-surround.git'
 Plug 'airblade/vim-gitgutter'
 Plug 'jiangmiao/auto-pairs'
-"Plug 'junegunn/goyo.vim'
+Plug 'mhartington/formatter.nvim'
+Plug 'nvim-lualine/lualine.nvim'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'mattn/emmet-vim'
+Plug 'windwp/nvim-ts-autotag' "auto-close tag configured with treesitter
 
 " Lsp Related Plugins
 Plug 'neovim/nvim-lspconfig'
@@ -31,10 +34,6 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'glepnir/lspsaga.nvim'
-
-" to work with python virtualenv
-Plug 'nvim-lua/completion-nvim'
-Plug 'HallerPatrick/py_lsp.nvim'
 
 " Telescope
 Plug 'nvim-lua/plenary.nvim'
@@ -54,11 +53,13 @@ Plug 'NLKNguyen/papercolor-theme'
 Plug 'chase/focuspoint-vim'
 Plug 'tiagovla/tokyodark.nvim'
 Plug 'EdenEast/nightfox.nvim'
+Plug 'tjdevries/colorbuddy.vim'
+Plug 'tjdevries/gruvbuddy.nvim'
 
 call plug#end()
 
 set rtp+=$GOROOT/misc/vim
-filetype plugin indent on    
+filetype plugin indent on
 
 syntax enable
 
@@ -76,56 +77,51 @@ set laststatus=2
 set noshowmode
 set expandtab                   " Use spaces instead of tabs.
 set smarttab                    " Be smart using tabs ;)
-set shiftwidth=4                " One tab == four spaces.
-set tabstop=4                   " One tab == four spaces.
+set shiftwidth=2                " One tab == four spaces.
+set tabstop=2                   " One tab == four spaces.
 set termguicolors 
 set nowrap
 
 let mapleader = " "
 let g:rehash256 = 1
 let g:webdevicons_enable = 1
-let g:gitgutter_realtime = 1
-set updatetime=100
+"let g:gitgutter_realtime = 1
+let g:gitgutter_enabled = 0 
 
-map <A-N> :NERDTreeToggle<CR>
-set encoding=UTF-8
-
-let g:neovide_window_floating_blur=1
 let NERDTreeShowHidden=1
 let NERDTreeMinimalUI = 1
 let NERDTreeDirArrows = 1
 
-autocmd FileType typescript :set makeprg=tsc 
+"set updatetime=600
 
-"let g:tokyonight_style = "night"
-"let g:tokyonight_italic_comments=0
-"let g:tokyonight_italic_keywords=0
-"let g:tokyonight_dark_sidebar=1
-"let g:tokyonight_colors = {
-  "\ 'hint': 'orange',
-  "\ 'error': '#ff0000'
-"\ }
-"let g:tokyonight_dark_float=1
-"let g:tokyonight_transparent=1
+let g:user_emmet_install_global = 0
+autocmd FileType html,css,typescriptreact,javascriptreact, EmmetInstall
 
-"let g:tokyodark_transparent_background = 0
-let g:tokyodark_enable_italic_comment = 0
-let g:tokyodark_enable_italic = 0
-let g:tokyodark_color_gamma = "1"
-colorscheme tokyodark
-
-"hi! NonText ctermbg=NONE guibg=NONE
-"hi! Normal guibg=NONE ctermbg=NONE
-"hi! LineNr guibg=NONE guifg=grey ctermbg=white
-
-map <Leader>tt :vnew term://zsh<CR>
-map <Leader>x :terminal gcc % -o %< && ./%<<CR>
- 
+" enable mouse functionality
 set mouse=nicr
 set mouse=a
 
-set splitbelow splitright
+" set colorscheme
+lua require('colorbuddy').colorscheme('gruvbuddy')
 
+hi! NonText ctermbg=NONE guibg=NONE
+hi! Normal guibg=NONE ctermbg=NONE
+hi! LineNr guibg=NONE guifg=#B2B2B2 ctermbg=white
+hi! TabLineFill guifg=#2E3440 guibg=#2E3440 ctermfg=LightGreen ctermbg=DarkGreen
+hi VertSplit guifg=#2E3440
+
+" formats file on save
+augroup FormatAutogroup
+  autocmd!
+  autocmd BufWritePost *.js,*.rs,*ts,*tsx FormatWrite
+augroup END
+
+map <A-N> :NERDTreeToggle<CR>
+map <Leader>tt :vnew term://zsh<CR>
+" compile and run a c file
+map <Leader>x :terminal gcc % -o %< && ./%<<CR>
+
+"set splitbelow splitright
 " Remap splits navigation to just CTRL + hjkl
 nnoremap <C-h> <C-w>h
 nnoremap <C-j> <C-w>j
@@ -137,9 +133,9 @@ nnoremap <Leader>ff <cmd>Telescope find_files<CR>
 nnoremap <Leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <Leader>fb <cmd>Telescope buffers<cr>
 nnoremap <Leader>fh <cmd>Telescope help_tags<cr>
-nnoremap <Leader>fu :lua require'telescope.builtin'.find_files(require('telescope.themes').get_dropdown({ winblend = 10 }))<cr>
+nnoremap <Leader>fc <cmd>Telescope colorscheme theme=dropdown<cr>
 
-" Make adjusing split sizes a bit more friendly
+" Making adjusing split sizes a bit more friendly
 noremap <silent> <C-Left> :vertical resize +3<CR>
 noremap <silent> <C-Right> :vertical resize -3<CR>
 noremap <silent> <C-Up> :resize +3<CR>
@@ -149,10 +145,13 @@ noremap <silent> <C-Down> :resize -3<CR>
 map <Leader>th <C-w>t<C-w>H
 map <Leader>tk <C-w>t<C-w>K
 
+" toggle git-gutter
+map <Leader>g :GitGutterToggle <CR>
+
 " Removes pipes | that act as seperators on splits
 set fillchars+=vert:\ 
 
-let g:python_highlight_all = 1
+"let g:python_highlight_all = 1
 
 set guioptions-=m  "remove menu bar
 set guioptions-=T  "remove toolbar
@@ -160,17 +159,15 @@ set guioptions-=r  "remove right-hand scroll bar
 set guioptions-=L  "remove left-hand scroll bar
 set guifont=Fira\ Code\ NF:h18
 
-"autocmd BufNewFile,BufRead *.tsx,*.jsx set filetype=typescript.tsx " set filetypes as typescript.tsx
-
-"typescript indend
+" typescript indend
 let g:typescript_indent_disable = 1
 let g:typescript_compiler_binary = 'tsc'
 let g:tsx_ext_required = 1
 
-"java autocomplete
+" java autocomplete
 let java_highlight_functions = 1
 
-" all remaps 
+" general-remaps
 nmap <C-t> gt
 nmap <C-b> :NERDTreeToggle<CR>
 nmap <A-S-P> :Prettier <CR>
@@ -240,40 +237,44 @@ nnoremap <silent> <Leader>. :exe "vertical resize +10" <CR>
 
 let NERDTreeMapOpenInTab='\r'
 
-let g:lightline = {
-			\ 'colorscheme': 'tokyonight',
-			\ 'active': {
-			\   'left': [ [ 'mode', 'paste'  ],
-			\             [ 'gitbranch', 'readonly', 'filename', 'modified' ], [ 'statuslinetabs' ] ]
-			\
-			\},
-			\}
+"let g:lightline = {
+            "\ 'colorscheme': 'material',
+            "\ 'active': {
+            "\   'left': [ [ 'mode', 'paste'  ],
+            "\             [ 'gitbranch', 'readonly', 'filename', 'modified' ], [ 'statuslinetabs' ] ]
+            "\
+            "\},
+            "\}
 
 "------------------------------------------------------------------- Lsp config ---------------------------------------------------------------------------
 
-"Telescope config
 lua << EOF
-    require('telescope').setup {
-        defaults={
-            color_devicons=true
-        }
-    }
 EOF
 
 lua << EOF
-      local nvim_lsp = require('lspconfig')
-      local on_attach = function(client, bufnr) end
-      local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-      local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
-
-    require'lspconfig'.tsserver.setup{}
-    require'lspconfig'.clangd.setup{}
-    require'lspconfig'.pyright.setup{}
-    require'lspconfig'.jdtls.setup{}
-    require'py_lsp'.setup {
-        host_python = "/usr/bin/python3"
+    -- Telescope Configuration
+    require('telescope').setup {
+        defaults={
+            color_devicons=true,
+            layout_config = {
+                vertical = {width = 0.5}
+            },
+        },
+        pickers = {
+          find_files = {
+            theme = "dropdown",
+            previewer = false,
+          },
+       },
     }
 
+    -- Configuring LSP
+    local nvim_lsp = require('lspconfig')
+    local on_attach = function(client, bufnr) end
+    local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+    local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+
+    -- attaching the different language installed servers
     local servers = { 'pyright', 'clangd', 'tsserver', 'jdtls' }
 
     for _, lsp in ipairs(servers) do
@@ -285,20 +286,13 @@ lua << EOF
       }
     end
 
+    -- configuring lsp installer
     local lsp_installer = require("nvim-lsp-installer")
 
     -- Register a handler that will be called for all installed servers.
     -- Alternatively, you may also register handlers on specific server instances instead (see example below).
     lsp_installer.on_server_ready(function(server)
         local opts = {}
-
-        -- (optional) Customize the options passed to the server
-        -- if server.name == "tsserver" then
-        --     opts.root_dir = function() ... end
-        -- end
-
-        -- This setup() function is exactly the same as lspconfig's setup function.
-        -- Refer to https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md
         server:setup(opts)
     end)
     lsp_installer.settings({
@@ -318,8 +312,6 @@ nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
-"nnoremap <silent> K <cmd>Lspsaga hover_doc<CR>
-"nnoremap <silent><leader>ac <cmd>lua require'lspsaga.codeaction'.code_action()<CR>
 nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
@@ -335,9 +327,6 @@ lua <<EOF
       -- REQUIRED - you must specify a snippet engine
       expand = function(args)
         vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-        -- require('luasnip').lsp_expand(args.body) -- For `luasnip` users.
-        -- vim.fn["UltiSnips#Anon"](args.body) -- For `ultisnips` users.
-        -- require'snippy'.expand_snippet(args.body) -- For `snippy` users.
       end,
     },
     mapping = {
@@ -352,13 +341,9 @@ lua <<EOF
       ['<CR>'] = cmp.mapping.confirm({ select = true }),
       ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' })
     },
-
     sources = cmp.config.sources({
       { name = 'nvim_lsp' },
       { name = 'vsnip' }, -- For vsnip users.
-      -- { name = 'luasnip' }, -- For luasnip users.
-      -- { name = 'ultisnips' }, -- For ultisnips users.
-      -- { name = 'snippy' }, -- For snippy users.
     }, {
       { name = 'buffer' },
     })
@@ -370,18 +355,63 @@ lua <<EOF
       { name = 'buffer' }
     }
   })
-EOF
 
-" Tree-sitter configuration for syntax highlighting
-lua <<EOF
-require'nvim-treesitter.configs'.setup {
-  highlight = {
-    enable = true,
-    custom_captures = {
-      -- Highlight the @foo.bar capture group with the "Identifier" highlight group.
-      ["foo.bar"] = "Identifier",
+  -- Treesitter configurations - for efficient & proper syntax highlighting, commenting ... etc
+  require'nvim-treesitter.configs'.setup {
+    highlight = {
+      enable = true,
+      additional_vim_regex_highlighting = true,
     },
-    additional_vim_regex_highlighting = false,
+    autotag = {
+        enable = true,
+        filetypes = { "html" , "xml", "typescriptreact", "javascriptreact" },
+    }
   }
-}
+
+  function prettier_formatter() -- formatter for typescript, javascript, typescript-react, javascript-react
+    return {
+      exe = "prettier",
+      args = {"--stdin-filepath", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'},
+      stdin = true
+    }
+  end
+
+  -- setting up formatter
+  require('formatter').setup({
+      filetype = {
+          javascript = {prettier_formatter},
+          javascriptreact = {prettier_formatter},
+          typescript = {prettier_formatter},
+          typescriptreact = {prettier_formatter},
+      }
+  })
+
+  require'lualine'.setup {
+      options = {
+        icons_enabled = true,
+        theme = 'nord',
+        component_separators = { left = '', right = ''},
+        section_separators = { left = '', right = ''},
+        disabled_filetypes = {},
+        always_divide_middle = true,
+      },
+      sections = {
+        lualine_a = {'mode'},
+        lualine_b = {'branch', 'diff', 'diagnostics'},
+        lualine_c = {'filename'},
+        lualine_x = {'encoding', 'fileformat', 'filetype'},
+        lualine_y = {'progress'},
+        lualine_z = {'location'}
+      },
+      inactive_sections = {
+        lualine_a = {},
+        lualine_b = {},
+        lualine_c = {'filename'},
+        lualine_x = {'location'},
+        lualine_y = {},
+        lualine_z = {}
+      },
+      tabline = {},
+      extensions = {}
+ }
 EOF
