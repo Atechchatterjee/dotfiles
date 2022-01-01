@@ -1,11 +1,18 @@
 font_family JetBrains Mono
 font_size 12
-bold_font JetBrains Mono
+bold_font JetBrains Mono Bold
+italic_font 
+bold_italic_font 
 cursor_shape block
-background_opacity 1
-window_padding_width 5
+background_opacity 0.9
+window_padding_width 7
+cursor_blink_interval 0
+pointer_shape_when_grabbed arrow
+adjust_line_height  1
 
 # BEGIN_KITTY_THEME
-# Argonaut
+# Hybrid
 include current-theme.conf
 # END_KITTY_THEME
+#background #21252D
+# cursor #fefefe
