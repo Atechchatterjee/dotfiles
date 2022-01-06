@@ -1,9 +1,6 @@
 call plug#begin('~/.vim/plugged')
 
 " General Plugins
-Plug 'preservim/nerdtree' |
-			\ Plug 'Xuyuanp/nerdtree-git-plugin'
-Plug 'tiagofumo/vim-nerdtree-syntax-highlight'
 Plug 'ryanoasis/vim-devicons'
 Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/nerdcommenter'
@@ -24,6 +21,7 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'mattn/emmet-vim'
 Plug 'windwp/nvim-ts-autotag' "auto-close tag configured with treesitter
+Plug 'kyazdani42/nvim-tree.lua'
 
 " Lsp Related Plugins
 Plug 'neovim/nvim-lspconfig'
@@ -46,7 +44,6 @@ Plug 'chriskempson/base16-vim'
 Plug 'https://github.com/sainnhe/sonokai.git'
 Plug 'https://github.com/joshdick/onedark.vim.git'
 Plug 'https://github.com/nanotech/jellybeans.vim.git'
-Plug 'wojciechkepka/vim-github-dark'
 Plug 'kaicataldo/material.vim', { 'branch': 'main' }
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'NLKNguyen/papercolor-theme'
@@ -55,6 +52,8 @@ Plug 'tiagovla/tokyodark.nvim'
 Plug 'EdenEast/nightfox.nvim'
 Plug 'tjdevries/colorbuddy.vim'
 Plug 'tjdevries/gruvbuddy.nvim'
+Plug 'Yagua/nebulous.nvim'
+Plug 'projekt0n/github-nvim-theme'
 
 call plug#end()
 
@@ -88,9 +87,9 @@ let g:webdevicons_enable = 1
 "let g:gitgutter_realtime = 1
 let g:gitgutter_enabled = 0 
 
-let NERDTreeShowHidden=1
-let NERDTreeMinimalUI = 1
-let NERDTreeDirArrows = 1
+"let NERDTreeShowHidden=1
+"let NERDTreeMinimalUI = 1
+"let NERDTreeDirArrows = 1
 
 "set updatetime=600
 
@@ -102,11 +101,16 @@ set mouse=nicr
 set mouse=a
 
 " set colorscheme
-lua require('colorbuddy').colorscheme('gruvbuddy')
+"lua require('colorbuddy').colorscheme('gruvbuddy')
 
-hi! NonText ctermbg=NONE guibg=NONE
-hi! Normal guibg=NONE ctermbg=NONE
-hi! LineNr guibg=NONE guifg=#B2B2B2 ctermbg=white
+let g:tokyonight_style = "night"
+let g:tokyonight_dark_sidebar = 1
+let g:tokyonight_dark_float = 1
+colorscheme tokyonight
+
+"hi! NonText ctermbg=NONE guibg=NONE
+"hi! Normal guibg=NONE ctermbg=NONE
+"hi! LineNr guibg=NONE guifg=#B2B2B2 ctermbg=white
 hi! TabLineFill guifg=#2E3440 guibg=#2E3440 ctermfg=LightGreen ctermbg=DarkGreen
 hi VertSplit guifg=#2E3440
 
@@ -116,7 +120,7 @@ augroup FormatAutogroup
   autocmd BufWritePost *.js,*.rs,*ts,*tsx FormatWrite
 augroup END
 
-map <A-N> :NERDTreeToggle<CR>
+"map <A-N> :NERDTreeToggle<CR>
 map <Leader>tt :vnew term://zsh<CR>
 " compile and run a c file
 map <Leader>x :terminal gcc % -o %< && ./%<<CR>
@@ -169,9 +173,10 @@ let java_highlight_functions = 1
 
 " general-remaps
 nmap <C-t> gt
-nmap <C-b> :NERDTreeToggle<CR>
+"nmap <C-b> :NERDTreeToggle<CR>
 nmap <A-S-P> :Prettier <CR>
 "map <Enter> :Goyo <CR>
+nnoremap <A-N> :NvimTreeToggle<CR>
 
 "toggle between terminal and editor
 tnoremap <c-h> <C-\><C-n><C-w>h
@@ -235,7 +240,7 @@ nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 nnoremap <silent> <Leader>, :exe "vertical resize -10" <CR>
 nnoremap <silent> <Leader>. :exe "vertical resize +10" <CR>
 
-let NERDTreeMapOpenInTab='\r'
+"let NERDTreeMapOpenInTab='\r'
 
 "let g:lightline = {
             "\ 'colorscheme': 'material',
@@ -256,16 +261,15 @@ lua << EOF
     require('telescope').setup {
         defaults={
             color_devicons=true,
-            layout_config = {
-                vertical = {width = 0.5}
-            },
+            --layout_config = {
+            --    vertical = {width = 0.5}
+            --},
         },
-        pickers = {
-          find_files = {
-            theme = "dropdown",
-            previewer = false,
-          },
-       },
+       -- pickers = {
+       --   find_files = {
+       --     previewer = false,
+       --   },
+       --},
     }
 
     -- Configuring LSP
@@ -319,6 +323,22 @@ nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 set completeopt=menu,menuone,noselect
 
 lua <<EOF
+  -- setting colorscheme
+  --require("nebulous").setup {
+  --  variant = "midnight",
+  --  disable = {
+  --    background = true,
+  --    endOfBuffer = false,
+  --    terminal_colors = false,
+  --  },
+  --  italic = {
+  --    comments   = false,
+  --    keywords   = false,
+  --    functions  = false,
+  --    variables  = false,
+  --  },
+  --}
+
   -- Setup nvim-cmp.
   local cmp = require'cmp'
 
@@ -389,7 +409,7 @@ lua <<EOF
   require'lualine'.setup {
       options = {
         icons_enabled = true,
-        theme = 'nord',
+        theme = 'auto',
         component_separators = { left = '', right = ''},
         section_separators = { left = '', right = ''},
         disabled_filetypes = {},
@@ -413,5 +433,66 @@ lua <<EOF
       },
       tabline = {},
       extensions = {}
- }
+  }
+
+-- nvim-tree config
+require'nvim-tree'.setup {
+  disable_netrw       = true,
+  hijack_netrw        = true,
+  open_on_setup       = false,
+  ignore_ft_on_setup  = {},
+  auto_close          = false,
+  open_on_tab         = false,
+  hijack_cursor       = false,
+  update_cwd          = false,
+  update_to_buf_dir   = {
+    enable = true,
+    auto_open = true,
+  },
+  diagnostics = {
+    enable = true,
+    icons = {
+      hint = "",
+      info = "",
+      warning = "",
+      error = "",
+    }
+  },
+  update_focused_file = {
+    enable      = false,
+    update_cwd  = false,
+    ignore_list = {}
+  },
+  system_open = {
+    cmd  = nil,
+    args = {}
+  },
+  filters = {
+    dotfiles = false,
+    custom = {}
+  },
+  git = {
+    enable = true,
+    ignore = true,
+    timeout = 500,
+  },
+  view = {
+    width = 30,
+    height = 30,
+    hide_root_folder = false,
+    side = 'left',
+    auto_resize = false,
+    mappings = {
+      custom_only = false,
+      list = {}
+    },
+    number = false,
+    relativenumber = false,
+    signcolumn = "yes"
+  },
+  trash = {
+    cmd = "trash",
+    require_confirm = true
+  }
+}
 EOF
