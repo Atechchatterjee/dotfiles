@@ -8,8 +8,7 @@ local themes_path = gfs.get_themes_dir()
 local theme = {}
 
 theme.font          = "sans 8"
-
-theme.bg_normal     = "#21252D"
+theme.bg_normal     = "#161A28"
 theme.bg_focus      = "#535d6c"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
@@ -39,7 +38,7 @@ theme.border_marked = "#91231c"
 -- Example:
 --theme.taglist_bg_focus = "#ff0000"
 
-theme.taglist_bg_occupied = "#2E333F"
+theme.taglist_bg_occupied = "#24283B"
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(0)

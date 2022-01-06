@@ -229,7 +229,7 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     beautiful.taglist_spacing = 5
-    beautiful.taglist_bg_focus = "#4C566A"
+    beautiful.taglist_bg_focus = "#3D4460"
     beautiful.taglist_font="sans 9"
 
     -- Custom task-list(from official docs)
@@ -291,7 +291,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Create the wibox
     s.mywibox = awful.wibar({ position = "top", screen = s, height = 28 })
-    beautiful.wibar_bg = "#313449",
+    beautiful.wibar_bg = "#24283B",
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -746,4 +746,8 @@ awful.spawn.with_shell("picom --experimental-backends -b")
 awful.spawn.with_shell("xrandr --output HDMI-A-0 --primary")
 awful.spawn.with_shell("xrandr --output eDP --off")
 awful.spawn.with_shell("~/.fehbg")
-awful.spawn("nm-applet")
+awful.spawn.with_shell("nm-applet")
+-- prevents display from sleeping
+awful.spawn.with_shell("xset s off")
+awful.spawn.with_shell("xset -dpms")
+awful.spawn.with_shell("xset s noblank")
