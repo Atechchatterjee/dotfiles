@@ -283,7 +283,6 @@ awful.screen.connect_for_each_screen(function(s)
             widget = wibox.container.background,
         },
     }
-    beautiful.tasklist_bg_focus = "#191D23"
     beautiful.tasklist_align = "center"
     beautiful.tasklist_spacing = 5
     beautiful.tasklist_shape_border_width = 5
@@ -340,7 +339,7 @@ awful.screen.connect_for_each_screen(function(s)
             --s.mylayoutbox,
             --wibox.widget.textbox('    '),
             logout_menu_widget{
-                font = 'Noto Sans 9'
+                font = 'Noto Sans 8'
             },
         },
     }
@@ -747,7 +746,8 @@ awful.spawn.with_shell("xrandr --output HDMI-A-0 --primary")
 awful.spawn.with_shell("xrandr --output eDP --off")
 awful.spawn.with_shell("~/.fehbg")
 awful.spawn.with_shell("nm-applet")
--- prevents display from sleeping
+
+-- [next 3 lines] - prevents display from sleeping
 awful.spawn.with_shell("xset s off")
 awful.spawn.with_shell("xset -dpms")
 awful.spawn.with_shell("xset s noblank")

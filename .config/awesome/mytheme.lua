@@ -19,10 +19,10 @@ theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
-theme.useless_gap   = dpi(0.5)
-theme.border_width  = dpi(2)
+theme.useless_gap   = dpi(0)
+theme.border_width  = dpi(1)
 theme.border_normal = "#000000"
-theme.border_focus  = "#C4CEED"
+theme.border_focus  = "#ffffff"
 theme.border_marked = "#91231c"
 
 -- There are other variable sets
@@ -39,6 +39,8 @@ theme.border_marked = "#91231c"
 --theme.taglist_bg_focus = "#ff0000"
 
 theme.taglist_bg_occupied = "#24283B"
+
+theme.tasklist_bg_focus = "#2D3044"
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(0)
