@@ -22,6 +22,9 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'mattn/emmet-vim'
 Plug 'windwp/nvim-ts-autotag' "auto-close tag configured with treesitter
 Plug 'kyazdani42/nvim-tree.lua'
+Plug 'Yggdroot/indentLine'
+"Plug 'p00f/nvim-ts-rainbow'
+Plug 'xiyaowong/nvim-transparent' " makes nvim-completely transparent
 
 " Lsp Related Plugins
 Plug 'neovim/nvim-lspconfig'
@@ -32,6 +35,7 @@ Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'glepnir/lspsaga.nvim'
+Plug 'folke/trouble.nvim'
 
 " Telescope
 Plug 'nvim-lua/plenary.nvim'
@@ -54,6 +58,12 @@ Plug 'tjdevries/colorbuddy.vim'
 Plug 'tjdevries/gruvbuddy.nvim'
 Plug 'Yagua/nebulous.nvim'
 Plug 'projekt0n/github-nvim-theme'
+Plug 'tomasiser/vim-code-dark'
+"Plug 'haishanh/night-owl.vim'
+Plug 'charliesbot/night-owl.vim'
+Plug 'overcache/NeoSolarized'
+Plug 'aswathkk/DarkScene.vim'
+Plug 'jacoborus/tender.vim'
 
 call plug#end()
 
@@ -80,39 +90,40 @@ set shiftwidth=2                " One tab == four spaces.
 set tabstop=2                   " One tab == four spaces.
 set termguicolors 
 set nowrap
+set background=dark
+set cursorline
 
 let mapleader = " "
 let g:rehash256 = 1
 let g:webdevicons_enable = 1
-"let g:gitgutter_realtime = 1
 let g:gitgutter_enabled = 0 
 
-"let NERDTreeShowHidden=1
-"let NERDTreeMinimalUI = 1
-"let NERDTreeDirArrows = 1
-
-"set updatetime=600
-
+let g:transparent_enabled = v:true
+let g:nvim_tree_indent_markers = 1
+let g:nvim_tree_quit_on_open = 1
 let g:user_emmet_install_global = 0
+
+let $NVIM_TUI_ENABLE_TRUE_COLOR=1
+
 autocmd FileType html,css,typescriptreact,javascriptreact, EmmetInstall
+
+" indent guides configuration
+let g:indentLine_concealcursor = 'inc'
+let g:indentLine_conceallevel = 1
+let g:indentLine_char_list = ['.']
 
 " enable mouse functionality
 set mouse=nicr
 set mouse=a
 
-" set colorscheme
+colorscheme codedark
 "lua require('colorbuddy').colorscheme('gruvbuddy')
-
-let g:tokyonight_style = "night"
-let g:tokyonight_dark_sidebar = 1
-let g:tokyonight_dark_float = 1
-colorscheme tokyonight
 
 "hi! NonText ctermbg=NONE guibg=NONE
 "hi! Normal guibg=NONE ctermbg=NONE
 "hi! LineNr guibg=NONE guifg=#B2B2B2 ctermbg=white
-hi! TabLineFill guifg=#2E3440 guibg=#2E3440 ctermfg=LightGreen ctermbg=DarkGreen
-hi VertSplit guifg=#2E3440
+"hi! TabLineFill guifg=#2E3440 guibg=#2E3440 ctermfg=LightGreen ctermbg=DarkGreen
+"hi VertSplit guifg=#2E3440
 
 " formats file on save
 augroup FormatAutogroup
@@ -140,17 +151,17 @@ nnoremap <Leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <Leader>fc <cmd>Telescope colorscheme theme=dropdown<cr>
 
 " Making adjusing split sizes a bit more friendly
-noremap <silent> <C-Left> :vertical resize +3<CR>
-noremap <silent> <C-Right> :vertical resize -3<CR>
-noremap <silent> <C-Up> :resize +3<CR>
-noremap <silent> <C-Down> :resize -3<CR>
+noremap <silent> <C-Left> :vertical resize +2<CR>
+noremap <silent> <C-Right> :vertical resize -2<CR>
+noremap <silent> <C-Up> :resize +2<CR>
+noremap <silent> <C-Down> :resize -2<CR>
 
 " Change 2 split windows from vert to horiz or horiz to vert
 map <Leader>th <C-w>t<C-w>H
 map <Leader>tk <C-w>t<C-w>K
 
 " toggle git-gutter
-map <Leader>g :GitGutterToggle <CR>
+"map <Leader>g :GitGutterToggle <CR>
 
 " Removes pipes | that act as seperators on splits
 set fillchars+=vert:\ 
@@ -173,9 +184,7 @@ let java_highlight_functions = 1
 
 " general-remaps
 nmap <C-t> gt
-"nmap <C-b> :NERDTreeToggle<CR>
 nmap <A-S-P> :Prettier <CR>
-"map <Enter> :Goyo <CR>
 nnoremap <A-N> :NvimTreeToggle<CR>
 
 "toggle between terminal and editor
@@ -240,36 +249,28 @@ nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 nnoremap <silent> <Leader>, :exe "vertical resize -10" <CR>
 nnoremap <silent> <Leader>. :exe "vertical resize +10" <CR>
 
-"let NERDTreeMapOpenInTab='\r'
-
-"let g:lightline = {
-            "\ 'colorscheme': 'material',
-            "\ 'active': {
-            "\   'left': [ [ 'mode', 'paste'  ],
-            "\             [ 'gitbranch', 'readonly', 'filename', 'modified' ], [ 'statuslinetabs' ] ]
-            "\
-            "\},
-            "\}
-
 "------------------------------------------------------------------- Lsp config ---------------------------------------------------------------------------
 
-lua << EOF
-EOF
+nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
+nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
+nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
+nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
+nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
+nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
+nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
+nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
+nnoremap <silent> <C-w> <cmd> lua vim.lsp.diagnostic.show_line_diagnostics() <CR>
+noremap <Leader>rn :Lspsaga rename<CR>
+
+set completeopt=menu,menuone,noselect
 
 lua << EOF
     -- Telescope Configuration
     require('telescope').setup {
         defaults={
             color_devicons=true,
-            --layout_config = {
-            --    vertical = {width = 0.5}
-            --},
         },
-       -- pickers = {
-       --   find_files = {
-       --     previewer = false,
-       --   },
-       --},
     }
 
     -- Configuring LSP
@@ -308,36 +309,6 @@ lua << EOF
             }
         }
     })
-EOF
-
-nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
-nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
-nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
-nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
-nnoremap <silent> <C-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
-nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
-nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
-
-set completeopt=menu,menuone,noselect
-
-lua <<EOF
-  -- setting colorscheme
-  --require("nebulous").setup {
-  --  variant = "midnight",
-  --  disable = {
-  --    background = true,
-  --    endOfBuffer = false,
-  --    terminal_colors = false,
-  --  },
-  --  italic = {
-  --    comments   = false,
-  --    keywords   = false,
-  --    functions  = false,
-  --    variables  = false,
-  --  },
-  --}
 
   -- Setup nvim-cmp.
   local cmp = require'cmp'
@@ -385,7 +356,7 @@ lua <<EOF
     autotag = {
         enable = true,
         filetypes = { "html" , "xml", "typescriptreact", "javascriptreact" },
-    }
+    },
   }
 
   function prettier_formatter() -- formatter for typescript, javascript, typescript-react, javascript-react
@@ -410,8 +381,10 @@ lua <<EOF
       options = {
         icons_enabled = true,
         theme = 'auto',
-        component_separators = { left = '', right = ''},
-        section_separators = { left = '', right = ''},
+        --component_separators = { left = '', right = ''},
+        --section_separators = { left = '', right = ''},
+        section_separators = { left = '', right = '' },
+        component_separators = { left = '', right = '' },
         disabled_filetypes = {},
         always_divide_middle = true,
       },
@@ -495,4 +468,51 @@ require'nvim-tree'.setup {
     require_confirm = true
   }
 }
+  require("trouble").setup {
+    position = "bottom", -- position of the list can be: bottom, top, left, right
+    height = 10, -- height of the trouble list when position is top or bottom
+    width = 50, -- width of the list when position is left or right
+    icons = true, -- use devicons for filenames
+    mode = "workspace_diagnostics", -- "workspace_diagnostics", "document_diagnostics", "quickfix", "lsp_references", "loclist"
+    fold_open = "", -- icon used for open folds
+    fold_closed = "", -- icon used for closed folds
+    group = true, -- group results by file
+    padding = true, -- add an extra new line on top of the list
+    action_keys = { -- key mappings for actions in the trouble list
+        -- map to {} to remove a mapping, for example:
+        -- close = {},
+        close = "q", -- close the list
+        cancel = "<esc>", -- cancel the preview and get back to your last window / buffer / cursor
+        refresh = "r", -- manually refresh
+        jump = {"<cr>", "<tab>"}, -- jump to the diagnostic or open / close folds
+        open_split = { "<c-x>" }, -- open buffer in new split
+        open_vsplit = { "<c-v>" }, -- open buffer in new vsplit
+        open_tab = { "<c-t>" }, -- open buffer in new tab
+        jump_close = {"o"}, -- jump to the diagnostic and close the list
+        toggle_mode = "m", -- toggle between "workspace" and "document" diagnostics mode
+        toggle_preview = "P", -- toggle auto_preview
+        hover = "K", -- opens a small popup with the full multiline message
+        preview = "p", -- preview the diagnostic location
+        close_folds = {"zM", "zm"}, -- close all folds
+        open_folds = {"zR", "zr"}, -- open all folds
+        toggle_fold = {"zA", "za"}, -- toggle fold of current file
+        previous = "k", -- preview item
+        next = "j" -- next item
+    },
+    indent_lines = true, -- add an indent guide below the fold icons
+    auto_open = false, -- automatically open the list when you have diagnostics
+    auto_close = false, -- automatically close the list when you have no diagnostics
+    auto_preview = true, -- automatically preview the location of the diagnostic. <esc> to close preview and go back to last window
+    auto_fold = false, -- automatically fold a file trouble list at creation
+    auto_jump = {"lsp_definitions"}, -- for the given modes, automatically jump if there is only a single result
+    signs = {
+        -- icons / text used for a diagnostic
+        error = "",
+        warning = "",
+        hint = "",
+        information = "",
+        other = "﫠"
+    },
+    use_diagnostic_signs = false
+  }
 EOF
