@@ -208,7 +208,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
     --awful.tag({ " 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 "}, s, awful.layout.layouts[1])
     awful.tag({ " web ", " dev ", " term ", " conf ", " file ", " oth ", " ext "}, s, awful.layout.layouts[1])
-    --awful.tag({ "     ", "     ", "     ", "     ", "     "}, s, awful.layout.layouts[1])
+    --awful.tag({ "  ", "  ", "  ", "  ", "  "}, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -229,7 +229,7 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     beautiful.taglist_spacing = 5
-    beautiful.taglist_bg_focus = "#3D4460"
+    beautiful.taglist_bg_focus = "#6B6AA3"
     beautiful.taglist_font="sans 9"
 
     -- Custom task-list(from official docs)
@@ -289,7 +289,7 @@ awful.screen.connect_for_each_screen(function(s)
     
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = 28 })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = 30 })
     beautiful.wibar_bg = "#24283B",
 
     -- Add widgets to the wibox
@@ -339,7 +339,7 @@ awful.screen.connect_for_each_screen(function(s)
             --s.mylayoutbox,
             --wibox.widget.textbox('    '),
             logout_menu_widget{
-                font = 'Noto Sans 8'
+                font = 'Noto Sans 9'
             },
         },
     }
@@ -376,6 +376,17 @@ globalkeys = gears.table.join(
               {description = "view next", group = "tag"}),
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
+
+   -- Show/Hide Wibox
+   awful.key({ modkey }, "l", function ()
+           for s in screen do
+               s.mywibox.visible = not s.mywibox.visible
+               if s.mybottomwibox then
+                   s.mybottomwibox.visible = not s.mybottomwibox.visible
+               end
+          end
+       end,
+       {description = "toggle wibox", group = "awesome"}),
 
     awful.key({ modkey,           }, "j",
         function ()
