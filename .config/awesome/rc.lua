@@ -28,6 +28,7 @@ local calendar_widget = require("awesome-wm-widgets.calendar-widget.calendar")
 local battery_widget = require("awesome-wm-widgets.battery-widget.battery")
 local cpu_widget = require("awesome-wm-widgets.cpu-widget.cpu-widget")
 local logout_menu_widget = require("awesome-wm-widgets.logout-menu-widget.logout-menu")
+local logout_popup = require("awesome-wm-widgets.logout-popup-widget.logout-popup")
 
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
@@ -73,18 +74,18 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
     awful.layout.suit.tile,
-    awful.layout.suit.floating,
-    awful.layout.suit.tile.left,
-    awful.layout.suit.tile.bottom,
-    awful.layout.suit.tile.top,
-    awful.layout.suit.fair,
-    awful.layout.suit.fair.horizontal,
-    awful.layout.suit.spiral,
-    awful.layout.suit.spiral.dwindle,
-    awful.layout.suit.max,
-    awful.layout.suit.max.fullscreen,
-    awful.layout.suit.magnifier,
-    awful.layout.suit.corner.nw,
+    --awful.layout.suit.floating,
+    --awful.layout.suit.tile.left,
+    --awful.layout.suit.tile.bottom,
+    --awful.layout.suit.tile.top,
+    --awful.layout.suit.fair,
+    --awful.layout.suit.fair.horizontal,
+    --awful.layout.suit.spiral,
+    --awful.layout.suit.spiral.dwindle,
+    --awful.layout.suit.max,
+    --awful.layout.suit.max.fullscreen,
+    --awful.layout.suit.magnifier,
+    --awful.layout.suit.corner.nw,
     -- awful.layout.suit.corner.ne,
     -- awful.layout.suit.corner.sw,
     -- awful.layout.suit.corner.se,
@@ -206,9 +207,9 @@ awful.screen.connect_for_each_screen(function(s)
     --set_wallpaper(s)
 
     -- Each screen has its own tag table.
-    --awful.tag({ " 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 "}, s, awful.layout.layouts[1])
-    awful.tag({ " web ", " dev ", " term ", " conf ", " file ", " oth ", " ext "}, s, awful.layout.layouts[1])
-    --awful.tag({ "  ", "  ", "  ", "  ", "  "}, s, awful.layout.layouts[1])
+    awful.tag({ " 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 "}, s, awful.layout.layouts[1])
+    --awful.tag({ " web ", " dev ", " term ", " conf ", " file ", " oth ", " ext "}, s, awful.layout.layouts[1])
+    --awful.tag({ "   ", "   ", "   ", "   ", "   ", "  ", "   "}, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -229,8 +230,8 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     beautiful.taglist_spacing = 5
-    beautiful.taglist_bg_focus = "#6B6AA3"
-    beautiful.taglist_font="sans 9"
+    beautiful.taglist_bg_focus = "#3a415e"
+    beautiful.taglist_font="Isoveka 10"
 
     -- Custom task-list(from official docs)
     s.mytasklist = awful.widget.tasklist {
@@ -238,18 +239,18 @@ awful.screen.connect_for_each_screen(function(s)
         filter   = awful.widget.tasklist.filter.currenttags,
         buttons  = tasklist_buttons,
         style    = {
-            shape_border_width = 1,
+            shape_border_width = 0,
             shape_border_color = '#777777',
-            --shape  = gears.shape.rounded_bar,
+            shape  = gears.shape.rect
         },
         layout   = {
-            spacing = 0,
+            spacing = 1,
             spacing_widget = {
-                --{
-                    --forced_width = 2,
-                    --shape        = gears.shape.circle,
-                    --widget       = wibox.widget.separator
-                --},
+                {
+                    forced_width = 2,
+                    shape        = gears.shape.circle,
+                    widget       = wibox.widget.separator
+                },
                 valign = 'center',
                 halign = 'center',
                 widget = wibox.container.place,
@@ -284,13 +285,13 @@ awful.screen.connect_for_each_screen(function(s)
         },
     }
     beautiful.tasklist_align = "center"
-    beautiful.tasklist_spacing = 5
-    beautiful.tasklist_shape_border_width = 5
+    beautiful.tasklist_spacing = 10
+    beautiful.tasklist_shape_border_width = 0
     
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = 30 })
-    beautiful.wibar_bg = "#24283B",
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = 31 })
+
 
     -- Add widgets to the wibox
     s.mywibox:setup {
@@ -298,18 +299,17 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Left widgets
             layout = wibox.layout.fixed.horizontal,
             mylauncher,
-            wibox.widget.textbox('  '),
             s.mytaglist,
-            wibox.widget.textbox('  '),
+            wibox.widget.textbox('   '),
             s.mypromptbox,
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            wibox.widget.textbox('  '),
+            wibox.widget.textbox('    '),
             --mykeyboardlayout,
             wibox.widget.systray(),
-            wibox.widget.textbox('   '),
+            wibox.widget.textbox('  '),
             ram_widget{
                 color_used='#EDEDED',
                 color_free='#A3BE8C'
@@ -317,9 +317,10 @@ awful.screen.connect_for_each_screen(function(s)
             wibox.widget.textbox('    '),
             -- /usr/share/icons/Arc icon-theme is required
             battery_widget {
+                font="Play 10",
                 warning_msg_title="Battery Problem",
                 warning_msg_text="Battery is running low, Plug into power",
-                warning_msg_position="top_right"
+                warning_msg_position="bottom-right"
             },
             wibox.widget.textbox('    '),
             cpu_widget({
@@ -328,9 +329,9 @@ awful.screen.connect_for_each_screen(function(s)
                 step_spacing = 2,
                 color = '#434c5e'
             }),
-            wibox.widget.textbox('     '),
+            wibox.widget.textbox('    '),
             volume_widget{
-                widget_type = 'icon_and_text',
+                widget_type = 'icon',
                 device = 'pulse'
             },
             wibox.widget.textbox('    '),
@@ -338,9 +339,9 @@ awful.screen.connect_for_each_screen(function(s)
             wibox.widget.textbox('  '),
             --s.mylayoutbox,
             --wibox.widget.textbox('    '),
-            logout_menu_widget{
-                font = 'Noto Sans 9'
-            },
+            --logout_menu_widget{
+                --font = 'SF Mono 11'
+            --},
         },
     }
 end)
@@ -359,8 +360,6 @@ globalkeys = gears.table.join(
     -- Volume Control Keybindings
     awful.key({ modkey }, "=", function() awful.util.spawn_with_shell("amixer -D pulse sset Master 5%+") end, {description = "increase volume", group="volume"}),
     awful.key({ modkey }, "-", function() awful.util.spawn_with_shell("amixer -D pulse sset Master 5%-") end, {description = "decrease volume", group="volume"}),
-    --awful.key({ modkey }, "]", function() volume_widget:inc(5) end, {description = "increase volume by widget"}),
-    --awful.key({ modkey }, "[", function() volume_widget:dec(5) end, {description = "decrease volume by widget"}),
     awful.key({ modkey }, "\\", function() volume_widget:toggle() end),
 
     -- Launching applications 
@@ -377,8 +376,8 @@ globalkeys = gears.table.join(
     awful.key({ modkey,           }, "Escape", awful.tag.history.restore,
               {description = "go back", group = "tag"}),
 
-   -- Show/Hide Wibox
-   awful.key({ modkey }, "l", function ()
+   -- Show/Hide Wibar
+   awful.key({ modkey }, "z", function ()
            for s in screen do
                s.mywibox.visible = not s.mywibox.visible
                if s.mybottomwibox then
@@ -387,6 +386,7 @@ globalkeys = gears.table.join(
           end
        end,
        {description = "toggle wibox", group = "awesome"}),
+  awful.key({ modkey, "Control", "Shift" }, "l", function() logout_popup.launch() end, {description = "Show logout screen", group = "custom"}),
 
     awful.key({ modkey,           }, "j",
         function ()
@@ -604,7 +604,11 @@ awful.rules.rules = {
                      buttons = clientbuttons,
                      screen = awful.screen.preferred,
                      placement = awful.placement.no_overlap+awful.placement.no_offscreen
-     }
+     },
+    {           
+        rule_any = { type = { "dialog", "normal" } },       
+        properties = { titlebars_enabled = false }    
+    },
     },
 
     -- Floating clients.
@@ -624,6 +628,7 @@ awful.rules.rules = {
           "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
           "Wpa_gui",
           "veromix",
+          "Alacritty",
           "xtightvncviewer"},
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
@@ -643,9 +648,6 @@ awful.rules.rules = {
       }, properties = { titlebars_enabled = false }
     },
 
-    -- Set Firefox to always map on the tag named "2" on screen 1.
-    -- { rule = { class = "Firefox" },
-    --   properties = { screen = 1, tag = "2" } },
 }
 -- }}}
 

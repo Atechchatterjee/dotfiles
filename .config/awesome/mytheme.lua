@@ -7,7 +7,7 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font          = "Sans 8"
+theme.font          = "Isoveka 9"
 theme.bg_normal     = "#161A28"
 theme.bg_focus      = "#535d6c"
 theme.bg_urgent     = "#ff0000"
@@ -22,8 +22,9 @@ theme.fg_minimize   = "#ffffff"
 theme.useless_gap   = dpi(2)
 theme.border_width  = dpi(2)
 theme.border_normal = "#000000"
-theme.border_focus  = "#ffffff"
+theme.border_focus  = "#746BD3"
 theme.border_marked = "#3B3E79"
+theme.wibar = "#24283B"
 
 -- There are other variable sets
 -- overriding the default one when
@@ -38,8 +39,9 @@ theme.border_marked = "#3B3E79"
 -- Example:
 --theme.taglist_bg_focus = "#ff0000"
 
-theme.taglist_bg_occupied = "#1F2943"
-theme.tasklist_bg_focus = "#1F2943"
+theme.taglist_bg_occupied = "#1F294390"
+theme.tasklist_bg_focus = "#242E49"
+theme.tasklist_bg_urgent = "#3a415e00"
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(0)
