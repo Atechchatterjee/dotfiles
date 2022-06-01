@@ -6,8 +6,6 @@ set -q XDG_DATA_HOME
 
 fish_vi_key_bindings
 
-# fish_vi_cursor
-
 set -U budspencer_nobell
 
 # removes the fish greeting prompt
@@ -15,12 +13,16 @@ set fish_greeting
 
 set theme_color_scheme "nord"
 
+# setting cursors
+set fish_cursor_default "block"
+set fish_cursor_insert "block"
+set fish_cursor_visual "block"
+
 xset r rate 250 100
 
 set EDITOR "nvim"
 set VISUAL "nvim"
 setxkbmap -option "caps:escape"
-# nvm use 16.13.1
 
 abbr h "cd ~"
 abbr sz "source ~/.zshrc"
@@ -35,6 +37,7 @@ abbr muteToggle "amixer -q -D pulse set Master toggle"
 abbr show_wifi "nmcli d wifi list"
 abbr clock "tty-clock -c -C 1 -b -s -S"
 abbr at "alacritty-theme-switch"
+abbr kt "kitty +kitten themes"
 abbr alc "nvim ~/.config/alacritty/alacritty.yml"
 abbr qt "nvim ~/.config/qtile/config.py"
 abbr ra "ranger"
@@ -51,9 +54,14 @@ abbr kitty.conf "nvim ~/.config/kitty/kitty.conf"
 abbr reload "source ~/.config/fish/conf.d/omf.fish"
 abbr nvimconf "nvim ~/.config/nvim/init.vim"
 abbr rc "nvim ~/.config/awesome"
+abbr ac "xclip -sel c < ~/Documents/github/accesstoken.txt"
+abbr bg "feh --bg-scale"
+abbr r "ranger"
+abbr dc "sudo docker-compose up --build"
+abbr start-docker "sudo systemctl start docker"
 
-alias ls 'exa -al --color=always --group-directories-first' 
-alias la 'exa -a --color=always --group-directories-first' 
+alias la 'exa -al --color=always --group-directories-first' 
+alias ls 'exa -a --color=always --group-directories-first' 
 alias ll 'exa -l --color=always --group-directories-first'  
 alias lt 'exa -aT --color=always --group-directories-first' 
 alias cp "cp -i"
@@ -62,6 +70,7 @@ alias yarn "yarnpkg"
 alias ... "cd ../../"
 alias .... "cd ../../../"
 alias config '/usr/bin/git --git-dir=$HOME/dotfiles.git/ --work-tree=$HOME'
+alias set-keys "setxkbmap us -option caps:escape && xmodmap -e 'keycode 9=grave asciitilde'"
 
 function grun
 	g++ -std=c++17 $argv.cpp -o $argv && ./$argv 
