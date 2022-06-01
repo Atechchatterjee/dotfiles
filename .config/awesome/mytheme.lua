@@ -7,8 +7,14 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-theme.font          = "Isoveka 9"
-theme.bg_normal     = "#161A28"
+local primary_color = {}
+local secondary_color = "#EBBCBA"
+
+primary_color["900"] = "#191724"
+primary_color["500"] = "#27263A"
+
+theme.font          = "Ubuntu Mono Ligaturized 11"
+theme.bg_normal     = primary_color["900"]
 theme.bg_focus      = "#535d6c"
 theme.bg_urgent     = "#ff0000"
 theme.bg_minimize   = "#444444"
@@ -39,9 +45,13 @@ theme.wibar = "#24283B"
 -- Example:
 --theme.taglist_bg_focus = "#ff0000"
 
-theme.taglist_bg_occupied = "#1F294390"
-theme.tasklist_bg_focus = "#242E49"
+theme.taglist_bg_occupied = primary_color["500"]
+theme.taglist_bg_focus = secondary_color
+theme.taglist_fg_focus = "#000000"
+
+theme.tasklist_bg_focus = primary_color["500"]
 theme.tasklist_bg_urgent = "#3a415e00"
+theme.tasklist_font="Ubuntu Mono Ligaturized 11"
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(0)

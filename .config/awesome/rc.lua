@@ -74,21 +74,6 @@ modkey = "Mod4"
 -- Table of layouts to cover with awful.layout.inc, order matters.
 awful.layout.layouts = {
     awful.layout.suit.tile,
-    --awful.layout.suit.floating,
-    --awful.layout.suit.tile.left,
-    --awful.layout.suit.tile.bottom,
-    --awful.layout.suit.tile.top,
-    --awful.layout.suit.fair,
-    --awful.layout.suit.fair.horizontal,
-    --awful.layout.suit.spiral,
-    --awful.layout.suit.spiral.dwindle,
-    --awful.layout.suit.max,
-    --awful.layout.suit.max.fullscreen,
-    --awful.layout.suit.magnifier,
-    --awful.layout.suit.corner.nw,
-    -- awful.layout.suit.corner.ne,
-    -- awful.layout.suit.corner.sw,
-    -- awful.layout.suit.corner.se,
 }
 -- }}}
 
@@ -230,8 +215,9 @@ awful.screen.connect_for_each_screen(function(s)
     }
 
     beautiful.taglist_spacing = 5
-    beautiful.taglist_bg_focus = "#3a415e"
-    beautiful.taglist_font="Isoveka 10"
+    beautiful.taglist_bg_focus = "#EBBCBA"
+    beautiful.taglist_fg_focus = "#000000"
+    beautiful.taglist_font="Isoveka 9"
 
     -- Custom task-list(from official docs)
     s.mytasklist = awful.widget.tasklist {
@@ -290,7 +276,7 @@ awful.screen.connect_for_each_screen(function(s)
     
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = 31 })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = 30 })
 
 
     -- Add widgets to the wibox
@@ -300,13 +286,13 @@ awful.screen.connect_for_each_screen(function(s)
             layout = wibox.layout.fixed.horizontal,
             mylauncher,
             s.mytaglist,
-            wibox.widget.textbox('   '),
+            wibox.widget.textbox(' '),
             s.mypromptbox,
         },
         s.mytasklist, -- Middle widget
         { -- Right widgets
             layout = wibox.layout.fixed.horizontal,
-            wibox.widget.textbox('    '),
+            wibox.widget.textbox('  '),
             --mykeyboardlayout,
             wibox.widget.systray(),
             wibox.widget.textbox('  '),
@@ -314,27 +300,27 @@ awful.screen.connect_for_each_screen(function(s)
                 color_used='#EDEDED',
                 color_free='#A3BE8C'
             },
-            wibox.widget.textbox('    '),
-            -- /usr/share/icons/Arc icon-theme is required
+            wibox.widget.textbox('  '),
             battery_widget {
                 font="Play 10",
                 warning_msg_title="Battery Problem",
                 warning_msg_text="Battery is running low, Plug into power",
                 warning_msg_position="bottom-right"
             },
-            wibox.widget.textbox('    '),
+            wibox.widget.textbox('  '),
+            volume_widget{
+                widget_type = 'icon',
+                device = 'pulse'
+            },
+            wibox.widget.textbox('  '),
+            -- /usr/share/icons/Arc icon-theme is required
             cpu_widget({
                 --width = 70,
                 step_width = 5,
                 step_spacing = 2,
                 color = '#434c5e'
             }),
-            wibox.widget.textbox('    '),
-            volume_widget{
-                widget_type = 'icon',
-                device = 'pulse'
-            },
-            wibox.widget.textbox('    '),
+            wibox.widget.textbox('  '),
             mytextclock,
             wibox.widget.textbox('  '),
             --s.mylayoutbox,
