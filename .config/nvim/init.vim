@@ -1,11 +1,7 @@
 call plug#begin('~/.vim/plugged')
 
 " General Plugins
-Plug 'ryanoasis/vim-devicons'
-Plug 'Xuyuanp/nerdtree-git-plugin'
 Plug 'scrooloose/nerdcommenter'
-Plug 'https://github.com/xavierd/clang_complete.git'
-Plug 'justmao945/vim-clang'
 Plug 'honza/vim-snippets'
 Plug 'https://github.com/vifm/vifm.vim.git'
 Plug 'voldikss/vim-floaterm'
@@ -14,12 +10,14 @@ Plug 'prettier/vim-prettier', { 'do': 'yarn install' }
 Plug 'vimwiki/vimwiki'
 Plug 'https://github.com/ap/vim-css-color.git'
 Plug 'https://github.com/tpope/vim-surround.git'
-Plug 'airblade/vim-gitgutter'
 Plug 'jiangmiao/auto-pairs'
 Plug 'mhartington/formatter.nvim'
 Plug 'nvim-lualine/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'mattn/emmet-vim'
+Plug 'lewis6991/gitsigns.nvim'
+
+Plug 'akinsho/bufferline.nvim'
 
 "auto-close tag configured with treesitter
 Plug 'windwp/nvim-ts-autotag'
@@ -28,6 +26,7 @@ Plug 'Yggdroot/indentLine'
 
 " makes nvim-completely transparent
 Plug 'xiyaowong/nvim-transparent' 
+
 Plug 'iamcco/markdown-preview.nvim'
 Plug 'iamcco/markdown-preview.nvim'
 Plug 'https://github.com/tpope/vim-fugitive.git'
@@ -47,26 +46,18 @@ Plug 'folke/trouble.nvim'
 " Telescope
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-telescope/telescope.nvim'
+
+" Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Theme Plugins
-Plug 'morhetz/gruvbox'
-Plug 'chriskempson/base16-vim'
-Plug 'https://github.com/sainnhe/sonokai.git'
-Plug 'https://github.com/joshdick/onedark.vim.git'
 Plug 'kaicataldo/material.vim', { 'branch': 'main' }
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'chase/focuspoint-vim'
-Plug 'tiagovla/tokyodark.nvim'
-Plug 'EdenEast/nightfox.nvim'
-Plug 'tjdevries/colorbuddy.vim'
-Plug 'tjdevries/gruvbuddy.nvim'
 Plug 'projekt0n/github-nvim-theme'
 Plug 'tomasiser/vim-code-dark'
 Plug 'charliesbot/night-owl.vim'
-Plug 'aswathkk/DarkScene.vim'
 Plug 'ayu-theme/ayu-vim'
-Plug 'AhmedAbdulrahman/vim-aylin'
 Plug 'https://github.com/rose-pine/neovim.git'
 
 call plug#end()
@@ -80,7 +71,7 @@ lua << EOF
   package.path = package.path .. ";" .. os.getenv("HOME") .. "/.config/nvim/config/?.lua"
 
   local function import(file_names)
-    for i, name in ipairs(file_names) do
+    for _, name in ipairs(file_names) do
       require(name)
     end
   end
@@ -92,7 +83,8 @@ lua << EOF
     "formatter_config",
     "lualine_config",
     "nvimtree_config",
-    "trouble_config"
+    "trouble_config",
+    "gitsigns_config",
+    "bufferline_config",
   }
 EOF
-

@@ -27,7 +27,6 @@ set cursorline
 let mapleader = " "
 let g:rehash256 = 1
 let g:webdevicons_enable = 1
-let g:gitgutter_enabled = 0 
 
 let g:transparent_enabled = v:false
 let g:nvim_tree_indent_markers = 1
@@ -38,10 +37,18 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 autocmd FileType html,css,typescriptreact,javascriptreact, EmmetInstall
 
+" Split bar config
+set fillchars+=vert:\||
+hi VertSplit guibg=#222133 
+
 " indent guides configuration
 let g:indentLine_concealcursor = 'inc'
 let g:indentLine_conceallevel = 1
 let g:indentLine_char_list = ['.']
+
+hi LineNr guibg=bg
+set foldcolumn=2
+hi foldcolumn guibg=bg
 
 " enable mouse functionality
 set mouse=nicr
@@ -54,9 +61,6 @@ augroup FormatAutogroup
   autocmd!
   autocmd BufWritePost *.js,*.rs,*ts,*tsx FormatWrite
 augroup END
-
-" Removes pipes | that act as seperators on splits
-set fillchars+=vert:\ 
 
 set guioptions-=m  "remove menu bar
 set guioptions-=T  "remove toolbar

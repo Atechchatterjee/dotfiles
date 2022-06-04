@@ -1,5 +1,4 @@
 " general-remaps
-nmap <C-t> gt
 nmap <A-S-P> :Prettier <CR>
 nnoremap <A-N> :NvimTreeToggle<CR>
 
@@ -19,6 +18,11 @@ vmap <C-_>   <Plug>NERDCommenterToggle<CR>gv
 "for gui-client
 nmap <C-/>   <Plug>NERDCommenterToggle
 vmap <C-/>   <Plug>NERDCommenterToggle<CR>gv
+
+" BufferLine mappings
+map <C-t> :BufferLinePick <CR>
+noremap <C-tab> :echo "c-tab working!!" <CR>
+map <C-q> :bd <CR>
 
 nmap <C-s> :Prettier :w <CR>
 
@@ -55,7 +59,8 @@ noremap <Leader>8 8gt
 noremap <Leader>9 9gt
 noremap <Leader>0 :tablast<cr>
 noremap <Leader>p :Autoformat<CR>
-noremap <tab> gt
+noremap <tab> :BufferLineCycleNext<CR>
+noremap <S-tab> :BufferLineCyclePrev<CR>
 
 noremap <C-+> <C-_> <C-n>
 
@@ -65,8 +70,7 @@ nnoremap <silent> <Leader>- :exe "resize " . (winheight(0) * 2/3)<CR>
 nnoremap <silent> <Leader>, :exe "vertical resize -10" <CR>
 nnoremap <silent> <Leader>. :exe "vertical resize +10" <CR>
 
-"------------------------------------------------------------------- Lsp config ---------------------------------------------------------------------------
-
+" Keybindings for LSP related actions
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
