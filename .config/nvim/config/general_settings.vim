@@ -22,7 +22,7 @@ set tabstop=2                   " One tab == four spaces.
 set termguicolors 
 set nowrap
 set background=dark
-set cursorline
+set nocursorline
 
 let mapleader = " "
 let g:rehash256 = 1
@@ -53,8 +53,6 @@ hi foldcolumn guibg=bg
 " enable mouse functionality
 set mouse=nicr
 set mouse=a
-
-colorscheme rose-pine
 
 " formats file on save
 augroup FormatAutogroup

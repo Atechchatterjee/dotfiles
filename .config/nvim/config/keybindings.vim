@@ -11,10 +11,9 @@ noremap <F5> :setlocal spell! <CR>
 nmap ( {
 nmap ) }
 
-"nerdcommenter: <C-/> (for terminal)
-nmap <C-_>   <Plug>NERDCommenterToggle
-vmap <C-_>   <Plug>NERDCommenterToggle<CR>gv
-
+nmap <C-_> :CommentToggle <CR>
+vmap <C-_> :'<,'>CommentToggle<CR>
+ 
 "for gui-client
 nmap <C-/>   <Plug>NERDCommenterToggle
 vmap <C-/>   <Plug>NERDCommenterToggle<CR>gv
@@ -95,7 +94,6 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-" Find files using Telescope command-line sugar.
 nnoremap <Leader>ff <cmd>Telescope find_files<CR>
 nnoremap <Leader>fg <cmd>Telescope live_grep<cr>
 nnoremap <Leader>fb <cmd>Telescope buffers<cr>

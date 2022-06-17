@@ -1,7 +1,6 @@
 call plug#begin('~/.vim/plugged')
 
 " General Plugins
-Plug 'scrooloose/nerdcommenter'
 Plug 'honza/vim-snippets'
 Plug 'https://github.com/vifm/vifm.vim.git'
 Plug 'voldikss/vim-floaterm'
@@ -16,7 +15,8 @@ Plug 'nvim-lualine/lualine.nvim'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'mattn/emmet-vim'
 Plug 'lewis6991/gitsigns.nvim'
-
+Plug 'https://github.com/terrortylor/nvim-comment'
+Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'akinsho/bufferline.nvim'
 
 "auto-close tag configured with treesitter
@@ -26,7 +26,6 @@ Plug 'Yggdroot/indentLine'
 
 " makes nvim-completely transparent
 Plug 'xiyaowong/nvim-transparent' 
-
 Plug 'iamcco/markdown-preview.nvim'
 Plug 'iamcco/markdown-preview.nvim'
 Plug 'https://github.com/tpope/vim-fugitive.git'
@@ -59,6 +58,7 @@ Plug 'tomasiser/vim-code-dark'
 Plug 'charliesbot/night-owl.vim'
 Plug 'ayu-theme/ayu-vim'
 Plug 'https://github.com/rose-pine/neovim.git'
+Plug 'catppuccin/nvim', {'as': 'catppuccin'}
 
 call plug#end()
 
@@ -86,5 +86,20 @@ lua << EOF
     "trouble_config",
     "gitsigns_config",
     "bufferline_config",
+    "cmp_config"
   }
+
+  local catppuccin = require("catppuccin")
+
+  -- configure it
+  catppuccin.setup({transparent_background="false"})
+
+  require("nvim_comment").setup({
+    hook = function()
+      require("ts_context_commentstring.internal").update_commentstring()
+    end,
+  })
 EOF
+
+let g:catppuccin_flavour = "mocha"
+colorscheme catppuccin
