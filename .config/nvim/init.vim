@@ -19,10 +19,11 @@ Plug 'https://github.com/terrortylor/nvim-comment'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'akinsho/bufferline.nvim'
 
+Plug 'lukas-reineke/indent-blankline.nvim'
+
 "auto-close tag configured with treesitter
 Plug 'windwp/nvim-ts-autotag'
 Plug 'kyazdani42/nvim-tree.lua'
-Plug 'Yggdroot/indentLine'
 
 " makes nvim-completely transparent
 Plug 'xiyaowong/nvim-transparent' 
@@ -89,16 +90,17 @@ lua << EOF
     "cmp_config"
   }
 
-  local catppuccin = require("catppuccin")
-
-  -- configure it
-  catppuccin.setup({transparent_background="false"})
-
   require("nvim_comment").setup({
     hook = function()
       require("ts_context_commentstring.internal").update_commentstring()
     end,
   })
+
+  require("indent_blankline").setup {
+    -- for example, context is off by default, use this to turn it on
+    show_current_context = true,
+    show_current_context_start = true,
+  }
 EOF
 
 let g:catppuccin_flavour = "mocha"

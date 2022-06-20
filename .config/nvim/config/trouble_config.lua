@@ -43,5 +43,5 @@ require("trouble").setup {
       information = "",
       other = "﫠"
   },
-  use_diagnostic_signs = false
+  use_diagnostic_signs = true
 }

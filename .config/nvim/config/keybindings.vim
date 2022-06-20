@@ -72,7 +72,6 @@ nnoremap <silent> <Leader>. :exe "vertical resize +10" <CR>
 " Keybindings for LSP related actions
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
-nnoremap <silent> gr <cmd>lua vim.lsp.buf.references()<CR>
 nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
 nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
 nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
@@ -81,6 +80,8 @@ nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 nnoremap <silent> <C-w> <cmd> lua vim.lsp.diagnostic.show_line_diagnostics() <CR>
 noremap <Leader>rn :Lspsaga rename<CR>
+
+nnoremap gr <cmd>TroubleToggle lsp_references<cr>
 
 "map <A-N> :NERDTreeToggle<CR>
 map <Leader>tt :vnew term://zsh<CR>

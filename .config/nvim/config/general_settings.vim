@@ -42,9 +42,9 @@ set fillchars+=vert:\||
 hi VertSplit guibg=#222133 
 
 " indent guides configuration
-let g:indentLine_concealcursor = 'inc'
-let g:indentLine_conceallevel = 1
-let g:indentLine_char_list = ['.']
+" let g:indentLine_concealcursor = 'inc'
+" let g:indentLine_conceallevel = 1
+" let g:indentLine_char_list = ['.']
 
 hi LineNr guibg=bg
 set foldcolumn=2
