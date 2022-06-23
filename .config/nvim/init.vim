@@ -60,6 +60,10 @@ Plug 'charliesbot/night-owl.vim'
 Plug 'ayu-theme/ayu-vim'
 Plug 'https://github.com/rose-pine/neovim.git'
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
+Plug 'frenzyexists/aquarium-vim', { 'branch': 'develop' }
+Plug 'bluz71/vim-nightfly-guicolors'
+Plug 'https://github.com/w0ng/vim-hybrid.git'
+Plug 'ellisonleao/gruvbox.nvim'
 
 call plug#end()
 
@@ -103,5 +107,6 @@ lua << EOF
   }
 EOF
 
-let g:catppuccin_flavour = "mocha"
-colorscheme catppuccin
+" let g:catppuccin_flavour = "mocha"
+" colorscheme catppuccin
+colorscheme codedark
