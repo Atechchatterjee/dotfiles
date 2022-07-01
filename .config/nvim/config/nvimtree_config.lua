@@ -4,7 +4,7 @@ require'nvim-tree'.setup {
   hijack_netrw        = true,
   open_on_setup       = false,
   ignore_ft_on_setup  = {},
-  open_on_tab         = false,
+  open_on_tab         = true,
   hijack_cursor       = false,
   update_cwd          = false,
   update_to_buf_dir   = {
@@ -43,7 +43,7 @@ require'nvim-tree'.setup {
     height = 30,
     hide_root_folder = false,
     side = 'left',
-    auto_resize = false,
+    auto_resize = true,
     mappings = {
       custom_only = false,
       list = {}
