@@ -21,6 +21,8 @@ Plug 'akinsho/bufferline.nvim'
 
 Plug 'lukas-reineke/indent-blankline.nvim'
 
+Plug 'ianding1/leetcode.vim'
+
 "auto-close tag configured with treesitter
 Plug 'windwp/nvim-ts-autotag'
 Plug 'kyazdani42/nvim-tree.lua'
@@ -51,12 +53,10 @@ Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 
 " Theme Plugins
-Plug 'kaicataldo/material.vim', { 'branch': 'main' }
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
 Plug 'chase/focuspoint-vim'
 Plug 'projekt0n/github-nvim-theme'
 Plug 'tomasiser/vim-code-dark'
-Plug 'charliesbot/night-owl.vim'
 Plug 'ayu-theme/ayu-vim'
 Plug 'https://github.com/rose-pine/neovim.git'
 Plug 'catppuccin/nvim', {'as': 'catppuccin'}
@@ -64,13 +64,16 @@ Plug 'frenzyexists/aquarium-vim', { 'branch': 'develop' }
 Plug 'bluz71/vim-nightfly-guicolors'
 Plug 'https://github.com/w0ng/vim-hybrid.git'
 Plug 'ellisonleao/gruvbox.nvim'
+Plug 'marko-cerovac/material.nvim'
+
+Plug 'tjdevries/colorbuddy.vim'
+Plug 'tjdevries/gruvbuddy.nvim'
+Plug 'jordanbrauer/citylights.nvim'
+Plug 'https://github.com/jordanbrauer/citylights.nvim.git'
 
 call plug#end()
 
-let BASE_DIR = "/home/anish/.config/nvim/"
-
-exec "source " BASE_DIR . "config/general_settings.vim"
-exec "source " BASE_DIR . "config/keybindings.vim"
+set guifont=Fira_Code:h16
 
 lua << EOF
   package.path = package.path .. ";" .. os.getenv("HOME") .. "/.config/nvim/config/?.lua"
@@ -105,8 +108,25 @@ lua << EOF
     show_current_context = true,
     show_current_context_start = true,
   }
+
+  require('material').setup({
+      italics = {
+      comments = true, 
+      keywords = false,
+      functions = false,
+      strings = false,
+      variables = false 
+    },
+  })
 EOF
 
-" let g:catppuccin_flavour = "mocha"
-" colorscheme catppuccin
-colorscheme codedark
+let g:material_style = "deep ocean"
+colorscheme material
+
+set linespace=10
+
+let BASE_DIR = "/home/anish/.config/nvim/"
+
+exec "source " BASE_DIR . "config/general_settings.vim"
+exec "source " BASE_DIR . "config/keybindings.vim"
+exec "source " BASE_DIR . "config/keybindings.vim"
