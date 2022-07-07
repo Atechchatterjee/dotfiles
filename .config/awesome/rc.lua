@@ -90,21 +90,6 @@ myawesomemenu = {
 local menu_awesome = { "awesome", myawesomemenu, beautiful.awesome_icon }
 local menu_terminal = { "open terminal", terminal }
 
---if has_fdo then
-    --mymainmenu = freedesktop.menu.build({
-        --before = { menu_awesome },
-        --after =  { menu_terminal }
-    --})
---else
-    --mymainmenu = awful.menu({
-        --items = {
-                  --menu_awesome,
-                  --{ "Debian", debian.menu.Debian_menu.Debian },
-                  --menu_terminal,
-                --}
-    --})
---end
-
 -- Menubar configuration
 menubar.utils.terminal = terminal -- Set the terminal for applications that require it
 -- }}}
@@ -120,13 +105,14 @@ local cw = calendar_widget()
 -- or customized
 local cw = calendar_widget({
     theme = 'nord',
-    placement = 'top_right',
+    placement = 'bottom_right',
     start_sunday = true,
     radius = 0,
 -- with customized next/previous (see table above)
     previous_month_button = 1,
     next_month_button = 3,
 })
+
 mytextclock:connect_signal("button::press",
     function(_, _, _, button)
         if button == 1 then cw.toggle() end
@@ -194,7 +180,7 @@ awful.screen.connect_for_each_screen(function(s)
     -- Each screen has its own tag table.
     awful.tag({ " 1 ", " 2 ", " 3 ", " 4 ", " 5 ", " 6 ", " 7 "}, s, awful.layout.layouts[1])
     --awful.tag({ " web ", " dev ", " term ", " conf ", " file ", " oth ", " ext "}, s, awful.layout.layouts[1])
-    --awful.tag({ "   ", "   ", "   ", "   ", "   ", "  ", "   "}, s, awful.layout.layouts[1])
+    -- awful.tag({ "   ", "   ", "   ", "   ", "   ", "  ", "   "}, s, awful.layout.layouts[1])
 
     -- Create a promptbox for each screen
     s.mypromptbox = awful.widget.prompt()
@@ -213,11 +199,6 @@ awful.screen.connect_for_each_screen(function(s)
         filter  = awful.widget.taglist.filter.all,
         buttons = taglist_buttons,
     }
-
-    beautiful.taglist_spacing = 5
-    beautiful.taglist_bg_focus = "#EBBCBA"
-    beautiful.taglist_fg_focus = "#000000"
-    beautiful.taglist_font="Isoveka 9"
 
     -- Custom task-list(from official docs)
     s.mytasklist = awful.widget.tasklist {
@@ -276,7 +257,7 @@ awful.screen.connect_for_each_screen(function(s)
     
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "top", screen = s, height = 30 })
+    s.mywibox = awful.wibar({ position = "bottom", screen = s, height = 30 })
 
 
     -- Add widgets to the wibox
@@ -322,12 +303,12 @@ awful.screen.connect_for_each_screen(function(s)
             }),
             wibox.widget.textbox('  '),
             mytextclock,
-            wibox.widget.textbox('  '),
-            --s.mylayoutbox,
-            --wibox.widget.textbox('    '),
-            --logout_menu_widget{
-                --font = 'SF Mono 11'
-            --},
+            wibox.widget.textbox(' '),
+            -- s.mylayoutbox,
+            logout_menu_widget{
+              font = 'SF Mono 10'
+            },
+            wibox.widget.textbox(' '),
         },
     }
 end)
@@ -614,7 +595,6 @@ awful.rules.rules = {
           "Tor Browser", -- Needs a fixed window size to avoid fingerprinting by screen size.
           "Wpa_gui",
           "veromix",
-          "Alacritty",
           "xtightvncviewer"},
 
         -- Note that the name property shown in xprop might be set slightly after creation of the client
