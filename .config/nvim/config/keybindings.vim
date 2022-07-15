@@ -30,7 +30,7 @@ nnoremap <C-h> :wincmd h <CR>
 nnoremap <C-l> :wincmd l <CR>
 nnoremap <C-j> :wincmd j <CR>
 nnoremap <C-k> :wincmd k <CR>
-noremap <A-r> :FloatermNew --name=ranger ranger<CR>
+" noremap <A-r> :FloatermNew --name=ranger ranger<CR>
 noremap <A-v> :FloatermNew --name="vifm" vifm<CR>
 noremap <A-t> :FloatermNew --width=0.4 --wintype=normal --position=right <CR>
 noremap <A-d> :FloatermNew --height=0.4 --wintype=normal --position=bottom <CR>
@@ -73,13 +73,18 @@ nnoremap <silent> <Leader>. :exe "vertical resize +10" <CR>
 nnoremap <silent> gd <cmd>lua vim.lsp.buf.definition()<CR>
 nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
-nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+" noremap  <A-r> <cmd>lua vim.lsp.buf.rename()<CR>
+" nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
+noremap  <A-r> <cmd>Lspsaga rename<CR>
+nnoremap <silent> K <cmd>Lspsaga hover_doc<CR>
+nnoremap <silent> <C-w> <cmd>Lspsaga show_line_diagnostics<CR>
 nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
 nnoremap <silent> <C-S-k> <cmd>lua vim.lsp.buf.signature_help()<CR>
 nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
-nnoremap <silent> <C-w> <cmd> lua vim.lsp.diagnostic.show_line_diagnostics() <CR>
-noremap <Leader>rn :Lspsaga rename<CR>
+" nnoremap <silent> <C-w> <cmd> lua vim.lsp.diagnostic.show_line_diagnostics() <CR>
+nnoremap <silent> ca <cmd>lua vim.lsp.buf.code_action()<CR>
+" noremap <Leader>rn :Lspsaga rename<CR>
 
 nnoremap gr <cmd>TroubleToggle lsp_references<cr>
 

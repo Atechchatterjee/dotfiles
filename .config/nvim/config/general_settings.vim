@@ -12,7 +12,7 @@ set nobackup                    " No auto backups
 set noswapfile                  " No swap
 set t_Co=256                    " Set if term supports 256 colors.
 set number
-set clipboard=unnamedplus       " Copy/paste between vim and other programs.
+" set clipboard=unnamedplus       " Copy/paste between vim and other programs.
 set laststatus=2
 set noshowmode
 set expandtab                   " Use spaces instead of tabs.
@@ -23,6 +23,8 @@ set termguicolors
 set nowrap
 set background=dark
 set nocursorline
+
+set linespace=10
 
 let mapleader = " "
 let g:rehash256 = 1
@@ -39,12 +41,9 @@ autocmd FileType html,css,typescriptreact,javascriptreact, EmmetInstall
 
 " Split bar config
 set fillchars+=vert:\||
-hi VertSplit guibg=#222133 
+" hi VertSplit guibg=#222133 
 
-" indent guides configuration
-" let g:indentLine_concealcursor = 'inc'
-" let g:indentLine_conceallevel = 1
-" let g:indentLine_char_list = ['.']
+highlight Cursor guifg=black guibg=white
 
 hi LineNr guibg=bg
 set foldcolumn=2

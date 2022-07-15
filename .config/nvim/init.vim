@@ -44,6 +44,7 @@ Plug 'hrsh7th/vim-vsnip'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'glepnir/lspsaga.nvim'
 Plug 'folke/trouble.nvim'
+Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
 
 " Telescope
 Plug 'nvim-lua/plenary.nvim'
@@ -51,6 +52,7 @@ Plug 'nvim-telescope/telescope.nvim'
 
 " Treesitter
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'nvim-treesitter/playground'
 
 " Theme Plugins
 Plug 'folke/tokyonight.nvim', { 'branch': 'main' }
@@ -65,15 +67,17 @@ Plug 'bluz71/vim-nightfly-guicolors'
 Plug 'https://github.com/w0ng/vim-hybrid.git'
 Plug 'ellisonleao/gruvbox.nvim'
 Plug 'marko-cerovac/material.nvim'
+Plug 'https://github.com/overcache/NeoSolarized.git'
 
 Plug 'tjdevries/colorbuddy.vim'
 Plug 'tjdevries/gruvbuddy.nvim'
 Plug 'jordanbrauer/citylights.nvim'
 Plug 'https://github.com/jordanbrauer/citylights.nvim.git'
+Plug 'navarasu/onedark.nvim'
 
 call plug#end()
 
-set guifont=Fira_Code:h16
+set guifont=JetBrains_Mono:h13
 
 lua << EOF
   package.path = package.path .. ";" .. os.getenv("HOME") .. "/.config/nvim/config/?.lua"
@@ -97,6 +101,8 @@ lua << EOF
     "cmp_config"
   }
 
+  require("lspsaga.codeaction")
+
   require("nvim_comment").setup({
     hook = function()
       require("ts_context_commentstring.internal").update_commentstring()
@@ -109,16 +115,38 @@ lua << EOF
     show_current_context_start = true,
   }
 
+  local saga = require("lspsaga")
+  saga.init_lsp_saga()
+
   require('material').setup({
-      italics = {
+    italics = {
       comments = true, 
-      keywords = false,
+      keywords = true,
       functions = false,
       strings = false,
       variables = false 
     },
+    disable = {
+      colored_cursor = true,
+      background = true
+    },
+    contrast = {
+      sidebars = false,
+      floating_windows = false,
+      popup_menu = false,
+      non_current_windows = false,
+      line_numbers = true,
+      cursor_line = true
+    },
+    lualine_style="stealth"
   })
+
+  require("onedark").setup {
+    style = "darker"
+  }
 EOF
+
+set background=dark
 
 let g:material_style = "deep ocean"
 colorscheme material
@@ -127,6 +155,5 @@ set linespace=10
 
 let BASE_DIR = "/home/anish/.config/nvim/"
 
+exec "source " BASE_DIR . "config/keybindings.vim"
 exec "source " BASE_DIR . "config/general_settings.vim"
-exec "source " BASE_DIR . "config/keybindings.vim"
-exec "source " BASE_DIR . "config/keybindings.vim"
