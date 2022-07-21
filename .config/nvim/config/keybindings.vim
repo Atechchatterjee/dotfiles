@@ -25,6 +25,10 @@ map <C-q> :bd <CR>
 
 nmap <C-s> :Prettier :w <CR>
 
+" vsnip
+imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
+
 inoremap jj <Esc>
 nnoremap <C-h> :wincmd h <CR>
 nnoremap <C-l> :wincmd l <CR>
@@ -35,7 +39,7 @@ noremap <A-v> :FloatermNew --name="vifm" vifm<CR>
 noremap <A-t> :FloatermNew --width=0.4 --wintype=normal --position=right <CR>
 noremap <A-d> :FloatermNew --height=0.4 --wintype=normal --position=bottom <CR>
 
-let g:floaterm_keymap_new = '<Leader>f'
+" let g:floaterm_keymap_new = '<Leader>f'
 let g:floaterm_keymap_toggle = '<F1>'
 let g:floaterm_keymap_next = '<F3>'
 let g:floaterm_keymap_prev = '<F2>'
@@ -100,8 +104,9 @@ nnoremap <C-j> <C-w>j
 nnoremap <C-k> <C-w>k
 nnoremap <C-l> <C-w>l
 
-nnoremap <Leader>ff <cmd>Telescope find_files<CR>
+
 nnoremap <Leader>fg <cmd>Telescope live_grep<cr>
+nnoremap <Leader>ff <cmd>Telescope find_files<CR> 
 nnoremap <Leader>fb <cmd>Telescope buffers<cr>
 nnoremap <Leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <Leader>fc <cmd>Telescope colorscheme theme=dropdown<cr>

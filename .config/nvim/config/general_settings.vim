@@ -26,11 +26,11 @@ set nocursorline
 
 set linespace=10
 
-let mapleader = " "
+let mapleader = "\<Space>"
 let g:rehash256 = 1
 let g:webdevicons_enable = 1
 
-let g:transparent_enabled = v:true
+let g:transparent_enabled = v:false
 let g:nvim_tree_indent_markers = 1
 let g:nvim_tree_quit_on_open = 1
 let g:user_emmet_install_global = 0
@@ -40,7 +40,7 @@ let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 autocmd FileType html,css,typescriptreact,javascriptreact, EmmetInstall
 
 " Split bar config
-set fillchars+=vert:\||
+" set fillchars+=vert:\||
 " hi VertSplit guibg=#222133 
 
 highlight Cursor guifg=black guibg=white

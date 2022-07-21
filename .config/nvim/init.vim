@@ -1,6 +1,6 @@
+" General Plugins
 call plug#begin('~/.vim/plugged')
 
-" General Plugins
 Plug 'honza/vim-snippets'
 Plug 'https://github.com/vifm/vifm.vim.git'
 Plug 'voldikss/vim-floaterm'
@@ -41,6 +41,7 @@ Plug 'hrsh7th/cmp-buffer'
 Plug 'hrsh7th/cmp-path'
 Plug 'hrsh7th/cmp-cmdline'
 Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/vim-vsnip-integ'
 Plug 'hrsh7th/nvim-cmp'
 Plug 'glepnir/lspsaga.nvim'
 Plug 'folke/trouble.nvim'
@@ -131,12 +132,12 @@ lua << EOF
       background = true
     },
     contrast = {
-      sidebars = false,
-      floating_windows = false,
+      sidebars = true,
+      floating_windows = true,
       popup_menu = false,
       non_current_windows = false,
       line_numbers = true,
-      cursor_line = true
+      cursor_line = false
     },
     lualine_style="stealth"
   })
@@ -155,5 +156,5 @@ set linespace=10
 
 let BASE_DIR = "/home/anish/.config/nvim/"
 
-exec "source " BASE_DIR . "config/keybindings.vim"
 exec "source " BASE_DIR . "config/general_settings.vim"
+exec "source " BASE_DIR . "config/keybindings.vim"
