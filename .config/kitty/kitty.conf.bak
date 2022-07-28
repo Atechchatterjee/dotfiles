@@ -1,18 +1,20 @@
 font_family JetBrains Mono
-font_size 12
-bold_font JetBrains Mono Bold
-italic_font 
-bold_italic_font 
+font_size 13.5
 cursor_shape block
-background_opacity 0.9
+background_opacity 1
 window_padding_width 7
 cursor_blink_interval 0
-pointer_shape_when_grabbed arrow
-adjust_line_height  1
+adjust_line_height  6
+open_url_with brave
+#tab_bar_style powerline
+#remember_window_size yes
 
 # BEGIN_KITTY_THEME
-# Hybrid
+# Kaolin Aurora
 include current-theme.conf
 # END_KITTY_THEME
-#background #21252D
+# dark-grey
+# background #1D1D1D 
+# dark-blue
+# background #0D1117
 # cursor #fefefe
