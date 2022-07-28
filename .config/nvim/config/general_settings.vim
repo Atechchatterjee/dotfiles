@@ -3,22 +3,22 @@ filetype plugin indent on
 
 syntax enable
 
-set path+=**					" Searches current directory recursively.
-set wildmenu					" Display all matches when tab complete.
+set path+=**					
+set wildmenu					
 set hlsearch
-set incsearch                   " Incremental search
-set hidden                      " Needed to keep multiple buffers open
-set nobackup                    " No auto backups
-set noswapfile                  " No swap
-set t_Co=256                    " Set if term supports 256 colors.
+set incsearch                  
+set hidden                     
+set nobackup                   
+set noswapfile                 
+set t_Co=256                   
 set number
-" set clipboard=unnamedplus       " Copy/paste between vim and other programs.
+" set clipboard=unnamedplus     
 set laststatus=2
 set noshowmode
-set expandtab                   " Use spaces instead of tabs.
-set smarttab                    " Be smart using tabs ;)
-set shiftwidth=2                " One tab == four spaces.
-set tabstop=2                   " One tab == four spaces.
+set expandtab                   
+set smarttab                    
+set shiftwidth=2                
+set tabstop=2                   
 set termguicolors 
 set nowrap
 set background=dark

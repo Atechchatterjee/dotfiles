@@ -5,7 +5,7 @@ require('bufferline').setup {
     }
   },
   options={
-    mode = "buffers",
+    mode = "tabs",
     numbers = "ordinal",
     close_command = "bdelete! %d",
     right_mouse_command = "bdelete! %d",
@@ -52,7 +52,7 @@ require('bufferline').setup {
     show_close_icon = false,
     show_tab_indicators = true,
     persist_buffer_sort = true,
-    separator_style = "thick",
+    separator_style = {' ', ' '},
     enforce_regular_tabs = false,
     always_show_bufferline = true,
     sort_by = 'id',

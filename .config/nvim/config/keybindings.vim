@@ -51,19 +51,18 @@ vnoremap <C-X> +x
 vnoremap <C-C> +y
 
 "switch tabs
-noremap <Leader>1 1gt
-noremap <Leader>2 2gt
-noremap <Leader>3 3gt
-noremap <Leader>4 4gt
-noremap <Leader>5 5gt
-noremap <Leader>6 6gt
-noremap <Leader>7 7gt
-noremap <Leader>8 8gt
-noremap <Leader>9 9gt
-noremap <Leader>0 :tablast<cr>
-noremap <Leader>p :Autoformat<CR>
 noremap <tab> :BufferLineCycleNext<CR>
 noremap <S-tab> :BufferLineCyclePrev<CR>
+
+nnoremap <silent><leader>1 <Cmd>BufferLineGoToBuffer 1<CR>
+nnoremap <silent><leader>2 <Cmd>BufferLineGoToBuffer 2<CR>
+nnoremap <silent><leader>3 <Cmd>BufferLineGoToBuffer 3<CR>
+nnoremap <silent><leader>4 <Cmd>BufferLineGoToBuffer 4<CR>
+nnoremap <silent><leader>5 <Cmd>BufferLineGoToBuffer 5<CR>
+nnoremap <silent><leader>6 <Cmd>BufferLineGoToBuffer 6<CR>
+nnoremap <silent><leader>7 <Cmd>BufferLineGoToBuffer 7<CR>
+nnoremap <silent><leader>8 <Cmd>BufferLineGoToBuffer 8<CR>
+nnoremap <silent><leader>9 <Cmd>BufferLineGoToBuffer 9<CR>
 
 noremap <C-+> <C-_> <C-n>
 
@@ -106,7 +105,7 @@ nnoremap <C-l> <C-w>l
 
 
 nnoremap <Leader>fg <cmd>Telescope live_grep<cr>
-nnoremap <Leader>ff <cmd>Telescope find_files<CR> 
+nnoremap <Leader>ff <cmd>Telescope find_files<cr>
 nnoremap <Leader>fb <cmd>Telescope buffers<cr>
 nnoremap <Leader>fh <cmd>Telescope help_tags<cr>
 nnoremap <Leader>fc <cmd>Telescope colorscheme theme=dropdown<cr>

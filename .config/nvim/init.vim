@@ -23,6 +23,8 @@ Plug 'lukas-reineke/indent-blankline.nvim'
 
 Plug 'ianding1/leetcode.vim'
 
+Plug 'glepnir/dashboard-nvim'
+
 "auto-close tag configured with treesitter
 Plug 'windwp/nvim-ts-autotag'
 Plug 'kyazdani42/nvim-tree.lua'
@@ -78,7 +80,7 @@ Plug 'navarasu/onedark.nvim'
 
 call plug#end()
 
-set guifont=JetBrains_Mono:h13
+set guifont=Dank_Mono:h17
 
 lua << EOF
   package.path = package.path .. ";" .. os.getenv("HOME") .. "/.config/nvim/config/?.lua"
@@ -123,7 +125,7 @@ lua << EOF
     italics = {
       comments = true, 
       keywords = true,
-      functions = false,
+      functions = true,
       strings = false,
       variables = false 
     },
@@ -145,14 +147,15 @@ lua << EOF
   require("onedark").setup {
     style = "darker"
   }
+  local db = require("dashboard")
 EOF
 
 set background=dark
 
 let g:material_style = "deep ocean"
-colorscheme material
-
-set linespace=10
+let g:tokyonight_style = "night"
+let g:tokyonight_lualine_bold = 1
+colorscheme tokyonight
 
 let BASE_DIR = "/home/anish/.config/nvim/"
 
