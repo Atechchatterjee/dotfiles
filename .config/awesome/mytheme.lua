@@ -7,14 +7,14 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
-local primary_color = {}
+local primary_color = {
+  ["900"] = "#1A2034",
+  ["500"] = "#292a3f"
+}
 
 local secondary_color = "#434C5B"
 
-primary_color["900"] = "#07070A"
-primary_color["500"] = "#1E1E2B"
-
-theme.font          = "Ubuntu Mono Ligaturized 11"
+theme.font          = "SF Mono Bold 10"
 theme.bg_normal     = primary_color["900"]
 theme.bg_focus      = "#535d6c"
 theme.bg_urgent     = "#ff0000"
@@ -26,8 +26,8 @@ theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
-theme.useless_gap   = dpi(3)
-theme.border_width  = dpi(1)
+theme.useless_gap   = dpi(0)
+theme.border_width  = dpi(0)
 theme.border_normal = "#000000"
 theme.border_focus  = "#ffffff"
 theme.border_marked = "#3B3E79"
@@ -36,11 +36,11 @@ theme.wibar = "#24283B"
 theme.taglist_bg_occupied = primary_color["500"]
 theme.taglist_bg_focus = secondary_color
 theme.taglist_fg_focus = "#ffffff"
-theme.taglist_font = "Cascadia Code 9"
+theme.taglist_font = "SF Mono Medium 9"
 
 theme.tasklist_bg_focus = primary_color["500"]
 theme.tasklist_bg_urgent = "#3a415e00"
-theme.tasklist_font="Ubuntu Mono Ligaturized 11"
+theme.tasklist_font="SF Mono Medium 9"
 
 -- Generate taglist squares:
 local taglist_square_size = dpi(0)

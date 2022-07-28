@@ -105,7 +105,7 @@ local cw = calendar_widget()
 -- or customized
 local cw = calendar_widget({
     theme = 'nord',
-    placement = 'bottom_right',
+    placement = 'top',
     start_sunday = true,
     radius = 0,
 -- with customized next/previous (see table above)
@@ -257,7 +257,7 @@ awful.screen.connect_for_each_screen(function(s)
     
 
     -- Create the wibox
-    s.mywibox = awful.wibar({ position = "bottom", screen = s, height = 30 })
+    s.mywibox = awful.wibar({ position = "top", screen = s, height = 30 })
 
 
     -- Add widgets to the wibox
@@ -286,7 +286,7 @@ awful.screen.connect_for_each_screen(function(s)
                 font="Play 10",
                 warning_msg_title="Battery Problem",
                 warning_msg_text="Battery is running low, Plug into power",
-                warning_msg_position="bottom-right"
+                warning_msg_position="top-right"
             },
             wibox.widget.textbox('  '),
             volume_widget{
@@ -722,7 +722,8 @@ client.connect_signal("unfocus", function(c) c.border_color = beautiful.border_n
 -- Startup Applications
 awful.spawn.with_shell("picom --experimental-backends -b")
 awful.spawn.with_shell("xrandr --output HDMI-A-0 --primary")
-awful.spawn.with_shell("xrandr --output eDP --off")
+-- awful.spawn.with_shell("xrandr --output eDP --off")
+-- awful.spawn.with_shell("xrandr --output eDP --scale 0.9x0.9")
 awful.spawn.with_shell("~/.fehbg")
 awful.spawn.with_shell("nm-applet")
 
