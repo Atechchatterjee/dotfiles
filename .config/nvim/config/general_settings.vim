@@ -22,7 +22,7 @@ set tabstop=2
 set termguicolors 
 set nowrap
 set background=dark
-set nocursorline
+set cursorline
 
 set linespace=10
 
@@ -41,7 +41,7 @@ autocmd FileType html,css,typescriptreact,javascriptreact, EmmetInstall
 
 " Split bar config
 " set fillchars+=vert:\||
-" hi VertSplit guibg=#222133 
+"hi VertSplit guibg=#222133 
 
 highlight Cursor guifg=black guibg=white
 

@@ -5,18 +5,18 @@ nnoremap <A-N> :NvimTreeToggle<CR>
 "toggle between terminal and editor
 tnoremap <c-h> <C-\><C-n><C-w>h
 
-"toggle spelling mistakes
+" toggle spelling mistakes
 noremap <F5> :setlocal spell! <CR>
 
 nmap ( {
 nmap ) }
 
-nmap <C-_> :CommentToggle <CR>
-vmap <C-_> :'<,'>CommentToggle<CR>
+"nmap <C-_> :CommentToggle <CR>
+"vmap <C-_> :'<,'>CommentToggle<CR>
  
 "for gui-client
-nmap <C-/>   <Plug>NERDCommenterToggle
-vmap <C-/>   <Plug>NERDCommenterToggle<CR>gv
+nmap <C-/>  :CommentToggle<CR>
+vmap <C-/>  :'<,'>CommentToggle<CR> 
 
 " BufferLine mappings
 map <C-t> :BufferLinePick <CR>
@@ -78,7 +78,7 @@ nnoremap <silent> gD <cmd>lua vim.lsp.buf.declaration()<CR>
 nnoremap <silent> gi <cmd>lua vim.lsp.buf.implementation()<CR>
 " noremap  <A-r> <cmd>lua vim.lsp.buf.rename()<CR>
 " nnoremap <silent> K <cmd>lua vim.lsp.buf.hover()<CR>
-noremap  <A-r> <cmd>Lspsaga rename<CR>
+" noremap  <A-r> <cmd>Lspsaga rename<CR>
 nnoremap <silent> K <cmd>Lspsaga hover_doc<CR>
 nnoremap <silent> <C-w> <cmd>Lspsaga show_line_diagnostics<CR>
 nnoremap <silent> gh <cmd>lua require'lspsaga.provider'.lsp_finder()<CR>
@@ -87,7 +87,7 @@ nnoremap <silent> <C-n> <cmd>lua vim.lsp.diagnostic.goto_prev()<CR>
 nnoremap <silent> <C-p> <cmd>lua vim.lsp.diagnostic.goto_next()<CR>
 " nnoremap <silent> <C-w> <cmd> lua vim.lsp.diagnostic.show_line_diagnostics() <CR>
 nnoremap <silent> ca <cmd>lua vim.lsp.buf.code_action()<CR>
-" noremap <Leader>rn :Lspsaga rename<CR>
+noremap <Leader>rn :Lspsaga rename<CR>
 
 nnoremap gr <cmd>TroubleToggle lsp_references<cr>
 

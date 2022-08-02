@@ -1,7 +1,7 @@
 require('bufferline').setup {
   highlights = {
     fill = {
-      guibg = "#201F30"
+      guibg = "#092236"
     }
   },
   options={

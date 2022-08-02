@@ -20,6 +20,17 @@ require'nvim-tree'.setup {
       error = "",
     }
   },
+  renderer = {
+    indent_markers = {
+      enable = true,
+      icons = {
+        corner = "└ ",
+        edge = "│ ",
+        item = "│ ",
+        none = "  ",
+      },
+    }
+  },
   update_focused_file = {
     enable      = false,
     update_cwd  = false,

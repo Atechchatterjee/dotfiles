@@ -1,7 +1,64 @@
 -- Setup nvim-cmp.
 local cmp = require'cmp'
 
+local winhighlight = {
+  winhighlight = "Normal:NormalFloat,FloatBorder:FloatBorder,CursorLine:PmenuSel",
+}
+
+local lspkind = require('lspkind')
+
+lspkind.init({
+    mode = 'symbol_text',
+    preset = 'codicons',
+
+    symbol_map = {
+      Text = " ",
+      Method = " ",
+      Function = " ",
+      Constructor = " ",
+      Field = "ﰠ ",
+      Variable = " ",
+      Class = "ﴯ ",
+      Interface = " ",
+      Module = " ",
+      Property = "ﰠ ",
+      Unit = "塞 ",
+      Value = " ",
+      Enum = " ",
+      Keyword = " ",
+      Snippet = " ",
+      Color = " ",
+      File = " ",
+      Reference = " ",
+      Folder = " ",
+      EnumMember = " ",
+      Constant = " ",
+      Struct = "פּ" ,
+      Event = " ",
+      Operator = " ",
+      TypeParameter = ""
+    },
+})
+
 cmp.setup({
+formatting = {
+  fields = {'menu', 'abbr', 'kind'},
+  with_text = false,
+  mode = 'symbol',
+  maxwidth = 50,
+  format = lspkind.cmp_format({
+        mode = 'symbol',
+        maxwidth = 100,
+
+        before = function (_, item)
+          return item
+        end
+      })
+},
+window = {
+  completion = cmp.config.window.bordered(winhighlight),
+  documentation = cmp.config.window.bordered(winhighlight),
+},
 snippet = {
   --REQUIRED - you must specify a snippet engine
   expand = function(args)
@@ -18,7 +75,8 @@ mapping = {
     c = cmp.mapping.close(),
   }),
   ['<CR>'] = cmp.mapping.confirm({ select = true }),
-  ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' })
+  ['<Tab>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 's' }),
+  ['<S-Tab>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 's' })
 },
 sources = cmp.config.sources({
   { name = 'nvim_lsp' },

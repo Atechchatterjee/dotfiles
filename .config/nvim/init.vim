@@ -19,6 +19,8 @@ Plug 'https://github.com/terrortylor/nvim-comment'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'akinsho/bufferline.nvim'
 
+" Plug 'Xuyuanp/scrollbar.nvim'
+
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 Plug 'ianding1/leetcode.vim'
@@ -48,6 +50,7 @@ Plug 'hrsh7th/nvim-cmp'
 Plug 'glepnir/lspsaga.nvim'
 Plug 'folke/trouble.nvim'
 Plug 'iamcco/markdown-preview.nvim', { 'do': 'cd app && yarn install' }
+Plug 'onsails/lspkind.nvim'
 
 " Telescope
 Plug 'nvim-lua/plenary.nvim'
@@ -77,10 +80,16 @@ Plug 'tjdevries/gruvbuddy.nvim'
 Plug 'jordanbrauer/citylights.nvim'
 Plug 'https://github.com/jordanbrauer/citylights.nvim.git'
 Plug 'navarasu/onedark.nvim'
+Plug 'rebelot/kanagawa.nvim'
+Plug 'sainnhe/sonokai'
 
 call plug#end()
 
 set guifont=Dank_Mono:h17
+let g:nightflyWinSeparator = 0
+let g:nightflyNormalFloat = v:true
+
+set fillchars=horiz:━,horizup:┻,horizdown:┳,vert:┃,vertleft:┨,vertright:┣,verthoriz:╋
 
 lua << EOF
   package.path = package.path .. ";" .. os.getenv("HOME") .. "/.config/nvim/config/?.lua"
@@ -147,6 +156,7 @@ lua << EOF
   require("onedark").setup {
     style = "darker"
   }
+
   local db = require("dashboard")
 EOF
 
@@ -155,9 +165,17 @@ set background=dark
 let g:material_style = "deep ocean"
 let g:tokyonight_style = "night"
 let g:tokyonight_lualine_bold = 1
-colorscheme tokyonight
+
+let g:sonokai_style = 'atlantis'
+let g:sonokai_better_performance = 1
+
+set termguicolors
+colorscheme nightfly
+
 
 let BASE_DIR = "/home/anish/.config/nvim/"
 
 exec "source " BASE_DIR . "config/general_settings.vim"
 exec "source " BASE_DIR . "config/keybindings.vim"
+
+highlight NvimTreeNormal guibg=#030F1C
