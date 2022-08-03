@@ -85,7 +85,7 @@ Plug 'sainnhe/sonokai'
 
 call plug#end()
 
-set guifont=Dank_Mono:h17
+set guifont=Cascadia_Code:h15
 let g:nightflyWinSeparator = 0
 let g:nightflyNormalFloat = v:true
 
@@ -158,6 +158,14 @@ lua << EOF
   }
 
   local db = require("dashboard")
+
+  -- add icons to gutter for nvim-cmp diagnostics
+  local signs = { Error = " ", Warning = " ", Hint = " ", Information = " " }
+
+  for type, icon in pairs(signs) do
+    local hl = "DiagnosticSign" .. type
+    vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
+  end
 EOF
 
 set background=dark
@@ -171,7 +179,6 @@ let g:sonokai_better_performance = 1
 
 set termguicolors
 colorscheme nightfly
-
 
 let BASE_DIR = "/home/anish/.config/nvim/"
 
