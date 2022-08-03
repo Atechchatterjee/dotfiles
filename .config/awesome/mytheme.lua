@@ -7,12 +7,19 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
+-- local primary_color = {
+--   ["900"] = "#1A2034",
+--   ["500"] = "#292a3f"
+-- }
+--
+-- local secondary_color = "#434C5B"
+
 local primary_color = {
-  ["900"] = "#1A2034",
-  ["500"] = "#292a3f"
+  ["900"] = "#011627",
+  ["500"] = "#022642"
 }
 
-local secondary_color = "#434C5B"
+local secondary_color = "#01345B"
 
 theme.font          = "SF Mono Bold 10"
 theme.bg_normal     = primary_color["900"]
@@ -26,10 +33,10 @@ theme.fg_focus      = "#ffffff"
 theme.fg_urgent     = "#ffffff"
 theme.fg_minimize   = "#ffffff"
 
-theme.useless_gap   = dpi(0)
-theme.border_width  = dpi(0)
+theme.useless_gap   = dpi(2)
+theme.border_width  = dpi(2)
 theme.border_normal = "#000000"
-theme.border_focus  = "#ffffff"
+theme.border_focus  = "#7BA5F9"
 theme.border_marked = "#3B3E79"
 theme.wibar = "#24283B"
 
