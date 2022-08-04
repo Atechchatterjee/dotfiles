@@ -25,6 +25,7 @@ set VISUAL "nvim"
 setxkbmap -option "caps:escape"
 
 abbr h "cd ~"
+abbr dev "~/automate-dev.sh"
 abbr sz "source ~/.zshrc"
 abbr ov "nvim ~/.vimrc"
 abbr of "nvim ~/dotfiles/omf.fish"
@@ -64,10 +65,10 @@ abbr start-docker "sudo systemctl start docker"
 abbr brightnessinc "xdotool key XF86MonBrightnessUp"
 abbr brightnessdec "xdotool key XF86MonBrightnessDown"
 
-alias la 'exa -al --color=always --group-directories-first' 
-alias ls 'exa -a --color=always --group-directories-first' 
-alias ll 'exa -l --color=always --group-directories-first'  
-alias lt 'exa -aT --color=always --group-directories-first' 
+alias la 'exa -al --icons --color=always --group-directories-first' 
+alias ls 'exa --icons -a --color=always --group-directories-first' 
+alias ll 'exa -l -g --icons --color=always --group-directories-first'  
+alias lt 'exa -aT --icons --color=always --group-directories-first' 
 alias cp "cp -i"
 alias tmux "tmux -u"
 alias yarn "yarnpkg"
@@ -90,7 +91,11 @@ function jrun
 end
 
 function gccrun
-	gcc $argv.c -o $argv && ./$argv
+	gcc $argv.c -o $argv -lm && ./$argv
+end
+
+function gcprun
+	gcc $argv.cpp -lstdc++ -lm -o $argv && ./$argv
 end
 
 function create_react_app
