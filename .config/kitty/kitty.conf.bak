@@ -1,16 +1,18 @@
-font_family JetBrains Mono
-font_size 13.5
+font_family Ubuntu Mono Ligaturized
+/* italic_font Fira Code Italic */
+/* bold_font Fira Code Bold */
+font_size 15
 cursor_shape block
 background_opacity 1
-window_padding_width 7
+window_padding_width 5
 cursor_blink_interval 0
-adjust_line_height  6
-open_url_with brave
+adjust_line_height 6
+open_url_with brave-browser
 #tab_bar_style powerline
 #remember_window_size yes
 
 # BEGIN_KITTY_THEME
-# Kaolin Aurora
+# Default
 include current-theme.conf
 # END_KITTY_THEME
 # dark-grey

@@ -2,10 +2,10 @@
 require'nvim-treesitter.configs'.setup {
   highlight = {
     enable = true,
-    additional_vim_regex_highlighting = {'org'}
-    -- additional_vim_regex_highlighting = false,
+    -- additional_vim_regex_highlighting = {'org'}
+    additional_vim_regex_highlighting = false,
   },
-  enable_autocmd = false,
+  enable_autocmd = true,
   autotag = {
       enable = true,
       filetypes = { "html" , "xml", "typescriptreact", "javascriptreact" },

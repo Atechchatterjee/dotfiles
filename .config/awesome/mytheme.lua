@@ -7,19 +7,19 @@ local themes_path = gfs.get_themes_dir()
 
 local theme = {}
 
--- local primary_color = {
---   ["900"] = "#1A2034",
---   ["500"] = "#292a3f"
--- }
---
--- local secondary_color = "#434C5B"
-
 local primary_color = {
-  ["900"] = "#011627",
-  ["500"] = "#022642"
+  ["900"] = "#0F111A",
+  ["500"] = "#292a3f"
 }
 
-local secondary_color = "#01345B"
+local secondary_color = "#434C5B"
+
+-- local primary_color = {
+--   ["900"] = "#011627",
+--   ["500"] = "#022642"
+-- }
+--
+-- local secondary_color = "#01345B"
 
 theme.font          = "SF Mono Bold 10"
 theme.bg_normal     = primary_color["900"]

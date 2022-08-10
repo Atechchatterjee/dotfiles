@@ -11,8 +11,8 @@ noremap <F5> :setlocal spell! <CR>
 nmap ( {
 nmap ) }
 
-"nmap <C-_> :CommentToggle <CR>
-"vmap <C-_> :'<,'>CommentToggle<CR>
+nmap <C-_> :CommentToggle <CR>
+vmap <C-_> :'<,'>CommentToggle<CR>
  
 "for gui-client
 nmap <C-/>  :CommentToggle<CR>
@@ -43,6 +43,8 @@ noremap <A-d> :FloatermNew --height=0.4 --wintype=normal --position=bottom <CR>
 let g:floaterm_keymap_toggle = '<F1>'
 let g:floaterm_keymap_next = '<F3>'
 let g:floaterm_keymap_prev = '<F2>'
+
+inoremap <C-BS> <C-W>
 
 "CTRL-X and SHIFT-Del are Cut
 vnoremap <C-X> +x

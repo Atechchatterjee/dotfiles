@@ -30,7 +30,7 @@ let mapleader = "\<Space>"
 let g:rehash256 = 1
 let g:webdevicons_enable = 1
 
-let g:transparent_enabled = v:false
+" let g:transparent_enabled = v:false
 let g:nvim_tree_indent_markers = 1
 let g:nvim_tree_quit_on_open = 1
 let g:user_emmet_install_global = 0

@@ -19,8 +19,6 @@ Plug 'https://github.com/terrortylor/nvim-comment'
 Plug 'JoosepAlviste/nvim-ts-context-commentstring'
 Plug 'akinsho/bufferline.nvim'
 
-" Plug 'Xuyuanp/scrollbar.nvim'
-
 Plug 'lukas-reineke/indent-blankline.nvim'
 
 Plug 'ianding1/leetcode.vim'
@@ -32,7 +30,7 @@ Plug 'windwp/nvim-ts-autotag'
 Plug 'kyazdani42/nvim-tree.lua'
 
 " makes nvim-completely transparent
-Plug 'xiyaowong/nvim-transparent' 
+" Plug 'xiyaowong/nvim-transparent' 
 Plug 'iamcco/markdown-preview.nvim'
 Plug 'iamcco/markdown-preview.nvim'
 Plug 'https://github.com/tpope/vim-fugitive.git'
@@ -77,17 +75,19 @@ Plug 'https://github.com/overcache/NeoSolarized.git'
 
 Plug 'tjdevries/colorbuddy.vim'
 Plug 'tjdevries/gruvbuddy.nvim'
+Plug 'Yagua/nebulous.nvim'
 Plug 'jordanbrauer/citylights.nvim'
 Plug 'https://github.com/jordanbrauer/citylights.nvim.git'
 Plug 'navarasu/onedark.nvim'
 Plug 'rebelot/kanagawa.nvim'
 Plug 'sainnhe/sonokai'
+Plug 'haishanh/night-owl.vim'
 
 call plug#end()
 
 set guifont=Cascadia_Code:h15
 let g:nightflyWinSeparator = 0
-let g:nightflyNormalFloat = v:true
+let g:nightflyNormalFloat = v:false
 
 set fillchars=horiz:━,horizup:┻,horizdown:┳,vert:┃,vertleft:┨,vertright:┣,verthoriz:╋
 
@@ -140,7 +140,7 @@ lua << EOF
     },
     disable = {
       colored_cursor = true,
-      background = true
+      background = false
     },
     contrast = {
       sidebars = true,
@@ -171,18 +171,18 @@ EOF
 set background=dark
 
 let g:material_style = "deep ocean"
-let g:tokyonight_style = "night"
-let g:tokyonight_lualine_bold = 1
-
-let g:sonokai_style = 'atlantis'
-let g:sonokai_better_performance = 1
+" let g:tokyonight_style = "night"
+" let g:tokyonight_lualine_bold = 1
+"
+" let g:sonokai_style = 'atlantis'
+" let g:sonokai_better_performance = 1
 
 set termguicolors
-colorscheme nightfly
+colorscheme material
 
 let BASE_DIR = "/home/anish/.config/nvim/"
 
 exec "source " BASE_DIR . "config/general_settings.vim"
 exec "source " BASE_DIR . "config/keybindings.vim"
 
-highlight NvimTreeNormal guibg=#030F1C
+"highlight NvimTreeNormal guibg=#030F1C
