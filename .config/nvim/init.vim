@@ -168,6 +168,9 @@ lua << EOF
   end
 EOF
 
+let g:leetcode_browser="firefox"
+let g:leetcode_solution_filetype="java"
+
 set background=dark
 
 let g:material_style = "deep ocean"

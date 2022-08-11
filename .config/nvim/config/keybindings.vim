@@ -29,7 +29,12 @@ nmap <C-s> :Prettier :w <CR>
 imap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
 smap <expr> <C-j>   vsnip#expandable()  ? '<Plug>(vsnip-expand)'         : '<C-j>'
 
-inoremap jj <Esc>
+"leetcode
+nnoremap <leader>ll :LeetCodeList<cr>
+nnoremap <leader>lt :LeetCodeTest<cr>
+nnoremap <leader>ls :LeetCodeSubmit<cr>
+nnoremap <leader>li :LeetCodeSignIn<cr>
+
 nnoremap <C-h> :wincmd h <CR>
 nnoremap <C-l> :wincmd l <CR>
 nnoremap <C-j> :wincmd j <CR>
