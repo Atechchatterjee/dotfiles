@@ -1,7 +1,7 @@
-" General Plugins
+"General Plugins
 call plug#begin('~/.vim/plugged')
 
-Plug 'honza/vim-snippets'
+Plug 'honza/vim-sniPpets'
 Plug 'https://github.com/vifm/vifm.vim.git'
 Plug 'voldikss/vim-floaterm'
 Plug 'https://github.com/skammer/vim-css-color.git'
@@ -30,7 +30,7 @@ Plug 'windwp/nvim-ts-autotag'
 Plug 'kyazdani42/nvim-tree.lua'
 
 " makes nvim-completely transparent
-" Plug 'xiyaowong/nvim-transparent' 
+Plug 'xiyaowong/nvim-transparent' 
 Plug 'iamcco/markdown-preview.nvim'
 Plug 'iamcco/markdown-preview.nvim'
 Plug 'https://github.com/tpope/vim-fugitive.git'
@@ -81,13 +81,18 @@ Plug 'https://github.com/jordanbrauer/citylights.nvim.git'
 Plug 'navarasu/onedark.nvim'
 Plug 'rebelot/kanagawa.nvim'
 Plug 'sainnhe/sonokai'
-Plug 'haishanh/night-owl.vim'
+Plug 'https://github.com/rebelot/kanagawa.nvim'
+Plug 'shaunsingh/oxocarbon.nvim', { 'do': './install.sh' }
+Plug 'olivercederborg/poimandres.nvim'
+Plug 'Julpikar/night-owl.nvim'
+Plug 'bluz71/vim-moonfly-colors', { 'branch': 'cterm-compat' }
 
 call plug#end()
 
 set guifont=Cascadia_Code:h15
-let g:nightflyWinSeparator = 0
-let g:nightflyNormalFloat = v:false
+
+" let g:nightflyWinSeparator = 0
+" let g:nightflyNormalFloat = v:false
 
 set fillchars=horiz:━,horizup:┻,horizdown:┳,vert:┃,vertleft:┨,vertright:┣,verthoriz:╋
 
@@ -131,6 +136,10 @@ lua << EOF
   saga.init_lsp_saga()
 
   require('material').setup({
+
+  })
+
+  require('material').setup({
     italics = {
       comments = true, 
       keywords = true,
@@ -170,22 +179,17 @@ EOF
 
 let g:leetcode_browser="firefox"
 let g:leetcode_solution_filetype="java"
+let g:leetcode_solution_filetype="python"
+let g:leetcode_solution_filetype="golang"
 
 set background=dark
 
-let g:material_style = "deep ocean"
-" let g:tokyonight_style = "night"
-" let g:tokyonight_lualine_bold = 1
-"
-" let g:sonokai_style = 'atlantis'
-" let g:sonokai_better_performance = 1
-
-set termguicolors
-colorscheme material
-
 let BASE_DIR = "/home/anish/.config/nvim/"
 
+set termguicolors
+let g:tokyonight_style = "night"
+let g:tokyonight_lualine_bold = 1
+
+colorscheme tokyonight
 exec "source " BASE_DIR . "config/general_settings.vim"
 exec "source " BASE_DIR . "config/keybindings.vim"
-
-"highlight NvimTreeNormal guibg=#030F1C

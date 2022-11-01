@@ -2,7 +2,7 @@ function prettier_formatter() -- formatter for typescript, javascript, typescrip
   return {
     exe = "prettier",
     args = {"--stdin-filepath", vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--double-quote'},
-    stdin = true
+    stdin = true,
   }
 end
 

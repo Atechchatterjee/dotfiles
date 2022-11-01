@@ -7,7 +7,6 @@ require'nvim-treesitter.configs'.setup {
   },
   enable_autocmd = true,
   autotag = {
-      enable = true,
       filetypes = { "html" , "xml", "typescriptreact", "javascriptreact" },
   },
   context_commentstring = {

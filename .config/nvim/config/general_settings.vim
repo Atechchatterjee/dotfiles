@@ -11,8 +11,7 @@ set hidden
 set nobackup                   
 set noswapfile                 
 set t_Co=256                   
-set number
-" set clipboard=unnamedplus     
+set relativenumber number
 set laststatus=2
 set noshowmode
 set expandtab                   
@@ -26,11 +25,13 @@ set cursorline
 
 set linespace=10
 
+highlight LineNr guifg=gray
+
 let mapleader = "\<Space>"
 let g:rehash256 = 1
 let g:webdevicons_enable = 1
 
-" let g:transparent_enabled = v:false
+let g:transparent_enabled = v:false
 let g:nvim_tree_indent_markers = 1
 let g:nvim_tree_quit_on_open = 1
 let g:user_emmet_install_global = 0
@@ -38,10 +39,6 @@ let g:user_emmet_install_global = 0
 let $NVIM_TUI_ENABLE_TRUE_COLOR=1
 
 autocmd FileType html,css,typescriptreact,javascriptreact, EmmetInstall
-
-" Split bar config
-" set fillchars+=vert:\||
-"hi VertSplit guibg=#222133 
 
 highlight Cursor guifg=black guibg=white
 
@@ -52,6 +49,9 @@ hi foldcolumn guibg=bg
 " enable mouse functionality
 set mouse=nicr
 set mouse=a
+
+nnoremap <leader>ss :mksession! ~/.vim/Session.vim<CR>:wqa<CR>
+nnoremap <leader>so :so ~/.vim/Session.vim<CR>
 
 " formats file on save
 augroup FormatAutogroup
@@ -66,7 +66,7 @@ set guioptions-=L  "remove left-hand scroll bar
 set guifont=Fira\ Code\ NF:h18
 
 " typescript indend
-let g:typescript_indent_disable = 1
+let g:typescript_indent_disable = 0
 let g:typescript_compiler_binary = 'tsc'
 let g:tsx_ext_required = 1
 

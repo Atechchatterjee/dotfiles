@@ -7,7 +7,7 @@ require'lualine'.setup {
       -- section_separators = { left = '', right = '' },
       component_separators = { left = '', right = '' },
       disabled_filetypes = {},
-      always_divide_middle = true,
+      always_divide_middle = false,
     },
     sections = {
       lualine_a = {'mode'},
