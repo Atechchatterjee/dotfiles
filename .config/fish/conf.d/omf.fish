@@ -22,6 +22,7 @@ xset r rate 250 100
 
 set EDITOR "nvim"
 set VISUAL "nvim"
+
 setxkbmap -option "caps:escape"
 
 abbr h "cd ~"
@@ -64,6 +65,11 @@ abbr dc "sudo docker-compose up --build"
 abbr start-docker "sudo systemctl start docker"
 abbr brightnessinc "xdotool key XF86MonBrightnessUp"
 abbr brightnessdec "xdotool key XF86MonBrightnessDown"
+abbr ... "cd ../../"
+abbr .... "cd ../../../"
+abbr set-keys "setxkbmap us -option caps:escape && xmodmap -e 'keycode 9=grave asciitilde'"
+abbr inverted "xrandr -o inverted"
+abbr normal "xrandr -o normal"
 
 alias la 'exa -al --icons --color=always --group-directories-first' 
 alias ls 'exa --icons -a --color=always --group-directories-first' 
@@ -72,10 +78,7 @@ alias lt 'exa -aT --icons --color=always --group-directories-first'
 alias cp "cp -i"
 alias tmux "tmux -u"
 alias yarn "yarnpkg"
-alias ... "cd ../../"
-alias .... "cd ../../../"
 alias config '/usr/bin/git --git-dir=$HOME/dotfiles.git/ --work-tree=$HOME'
-alias set-keys "setxkbmap us -option caps:escape && xmodmap -e 'keycode 9=grave asciitilde'"
 alias brightness "xrandr --output eDP --brightness"
 
 function grun
@@ -115,6 +118,8 @@ end
 function connect_wifi
 	nmcli d wifi connect $argv
 end
+
+export PATH="$HOME/.cargo/bin:$PATH"
 
 # Load Oh My Fish configuration.
 source $OMF_PATH/init.fish
